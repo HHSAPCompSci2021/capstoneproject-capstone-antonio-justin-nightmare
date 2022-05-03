@@ -1,4 +1,6 @@
 package screens;
+import java.awt.event.KeyEvent;
+
 import core.DrawingSurface;
 
 public class GameScreen extends Screen{
@@ -12,5 +14,12 @@ public class GameScreen extends Screen{
 		surface.background(0,100,100);
 		surface.fill(100,0,100);
 		surface.rect(20, 20, 200, 200);
+		processKeyPresses();
+	}
+	
+	private void processKeyPresses() {
+		if (surface.isPressed(KeyEvent.VK_W)) {
+			System.out.println("W pressed");
+		}
 	}
 }
