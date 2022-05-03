@@ -1,3 +1,4 @@
+package GameElements;
 
 public class Tower {
 	int price,attackDamage;

@@ -1,3 +1,4 @@
+package GameElements;
 
 public class Weapon {
 	int attackDamage;

@@ -1,3 +1,4 @@
+package GameElements;
 
 public class PlayerCharacter {
 	private Weapon weapon;
