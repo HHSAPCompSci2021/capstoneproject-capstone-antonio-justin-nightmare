@@ -8,7 +8,7 @@ public class Enemy {
 	} 
 	
 	public void act(){
-		
+		move(findPath());
 	}
 	
 	private Point findPath() {
@@ -19,7 +19,7 @@ public class Enemy {
 		
 	}
 	
-	private void move() {
+	private void move(Point p) {
 		
 	}
 }
