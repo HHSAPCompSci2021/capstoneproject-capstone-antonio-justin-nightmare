@@ -18,8 +18,9 @@ public class Main {
 		window.setSize(1280, 720);
 		window.setMinimumSize(new Dimension(1280,720));
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		window.setResizable(true);
-
+		window.setResizable(false);
+		window.setLocation(0,0);
+		
 		window.setVisible(true);
 		
 		
