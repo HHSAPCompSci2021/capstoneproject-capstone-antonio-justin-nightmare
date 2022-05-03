@@ -1,10 +1,15 @@
 package GameElements;
 
-public class PlayerCharacter {
+public class PlayerCharacter extends GameElement{
 	private Weapon weapon;
 	
-	public PlayerCharacter() {
-		weapon = new Weapon();
+	public PlayerCharacter(int x, int y) {
+		super(x,y);
+		weapon = new Weapon(x,y);
+	}
+	
+	public void draw() {
+		
 	}
 	
 	public void move() {

@@ -1,12 +1,17 @@
 package GameElements;
 import java.awt.Point;
 
-public class Enemy {
+public class Enemy extends GameElement{
 	private int health;
 	
-	public Enemy() {
+	public Enemy(int x, int y) {
+		super(x,y);
 		health = 10;
 	} 
+	
+	public void draw() {
+		
+	}
 	
 	public void act(){
 		move(findPath());
