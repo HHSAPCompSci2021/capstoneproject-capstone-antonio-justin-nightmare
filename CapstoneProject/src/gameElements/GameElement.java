@@ -1,4 +1,4 @@
-package GameElements;
+package gameElements;
 
 public abstract class GameElement {
 	protected int posX, posY;

@@ -1,4 +1,4 @@
-package GameElements;
+package gameElements;
 import java.awt.Point;
 
 public class Enemy extends GameElement{

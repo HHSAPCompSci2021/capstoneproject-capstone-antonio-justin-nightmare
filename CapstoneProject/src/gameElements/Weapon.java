@@ -1,4 +1,4 @@
-package GameElements;
+package gameElements;
 
 public class Weapon extends GameElement{
 	int attackDamage;

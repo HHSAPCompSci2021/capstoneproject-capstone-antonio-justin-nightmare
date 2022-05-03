@@ -1,4 +1,4 @@
-package GameElements;
+package gameElements;
 
 public class Tower extends GameElement{
 	int price,attackDamage;

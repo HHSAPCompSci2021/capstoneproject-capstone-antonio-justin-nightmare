@@ -1,4 +1,4 @@
-package GameElements;
+package gameElements;
 
 public class Projectile extends GameElement{
 	private int damage;
