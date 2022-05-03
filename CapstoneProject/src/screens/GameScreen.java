@@ -11,7 +11,7 @@ public class GameScreen extends Screen{
 	}
 
 	public void draw() {
-		surface.background(0,100,100);
+		surface.background(150,150,200);
 		surface.fill(100,0,100);
 		surface.rect(20, 20, 200, 200);
 		processKeyPresses();
