@@ -9,12 +9,18 @@ public class Enemy extends GameElement{
 		health = 10;
 	} 
 	
+	@Override
 	public void draw() {
 		
 	}
 	
-	public void act(){
+	/**
+	 * Moves the enemy by 1 step
+	 * @return true if enemy is still alive, false if it is not
+	 */
+	public boolean act(){
 		move(findPath());
+		return true;
 	}
 	
 
