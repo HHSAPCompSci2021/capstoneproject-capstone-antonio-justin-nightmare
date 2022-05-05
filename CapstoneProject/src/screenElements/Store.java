@@ -17,4 +17,9 @@ public class Store {
 		surface.rect(x, y, width, height);
 		surface.pop();
 	}
+
+	public void next() {
+		// TODO Auto-generated method stub
+		
+	}
 }

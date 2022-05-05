@@ -22,7 +22,9 @@ public class GameScreen extends Screen{
 	public void draw() {
 		surface.background(150,150,200);
 		grid.draw(surface);
+		grid.next();
 		store.draw(surface);
+		store.next();
 		processKeyPresses();
 	}
 	
