@@ -1,5 +1,7 @@
 package gameElements;
 
+import core.DrawingSurface;
+
 public abstract class GameElement {
 	protected int posX, posY;
 	
@@ -8,5 +10,5 @@ public abstract class GameElement {
 		posY = y;
 	}
 	
-	public abstract void draw();
+	public abstract void draw(DrawingSurface surface);
 }

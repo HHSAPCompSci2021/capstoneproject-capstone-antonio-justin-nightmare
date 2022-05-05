@@ -1,5 +1,7 @@
 package gameElements;
 
+import core.DrawingSurface;
+
 public class Tower extends GameElement{
 	int price,attackDamage;
 	double attackSpeed;
@@ -11,7 +13,7 @@ public class Tower extends GameElement{
 		attackSpeed = 1;
 	}
 	
-	public void draw() {
+	public void draw(DrawingSurface surface) {
 		
 	}
 	

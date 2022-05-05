@@ -1,5 +1,7 @@
 package gameElements;
 
+import core.DrawingSurface;
+
 public class Projectile extends GameElement{
 	private int damage;
 	
@@ -8,7 +10,7 @@ public class Projectile extends GameElement{
 		this.damage = damage;
 	}
 	
-	public void draw() {
+	public void draw(DrawingSurface surface) {
 		
 	}
 	

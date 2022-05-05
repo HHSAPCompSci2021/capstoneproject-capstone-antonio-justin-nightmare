@@ -1,5 +1,7 @@
 package gameElements;
 
+import core.DrawingSurface;
+
 public class Weapon extends GameElement{
 	int attackDamage;
 	double attackSpeed;
@@ -10,7 +12,7 @@ public class Weapon extends GameElement{
 		attackSpeed = 1;
 	}
 	
-	public void draw() {
+	public void draw(DrawingSurface surface) {
 		
 	}
 	

@@ -2,6 +2,7 @@ package screens;
 import java.awt.event.KeyEvent;
 
 import core.DrawingSurface;
+import gameElements.*;
 import screenElements.Grid;
 import screenElements.Store;
 
@@ -17,6 +18,7 @@ public class GameScreen extends Screen{
 		grid = new Grid(BORDER_WIDTH,BORDER_WIDTH,960,HEIGHT - BORDER_WIDTH*2);
 		store = new Store(1000,BORDER_WIDTH,WIDTH-1000-BORDER_WIDTH,HEIGHT - BORDER_WIDTH*2);
 		this.surface = surface;
+		grid.addToGrid(new Enemy(10,10));
 	}
 
 	public void draw() {

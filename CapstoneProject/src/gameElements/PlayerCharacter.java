@@ -1,5 +1,7 @@
 package gameElements;
 
+import core.DrawingSurface;
+
 public class PlayerCharacter extends GameElement{
 	private Weapon weapon;
 	
@@ -8,7 +10,7 @@ public class PlayerCharacter extends GameElement{
 		weapon = new Weapon(x,y);
 	}
 	
-	public void draw() {
+	public void draw(DrawingSurface surface) {
 		
 	}
 	

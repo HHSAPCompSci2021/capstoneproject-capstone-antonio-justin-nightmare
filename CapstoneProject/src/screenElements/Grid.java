@@ -13,6 +13,7 @@ public class Grid {
 		this.y = y;
 		this.width = width;
 		this.height = height;
+		enemies = new ArrayList<Enemy>();
 	}
 	
 	public void draw(DrawingSurface surface) {
@@ -23,7 +24,7 @@ public class Grid {
 		
 		// Draws all the enemies
 		for (Enemy e:enemies) {
-			e.draw();
+			e.draw(null);
 		}
 		surface.pop();
 	}

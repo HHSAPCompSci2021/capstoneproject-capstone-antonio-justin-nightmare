@@ -1,6 +1,8 @@
 package gameElements;
 import java.awt.Point;
 
+import core.DrawingSurface;
+
 public class Enemy extends GameElement{
 	private int health;
 	
@@ -10,8 +12,8 @@ public class Enemy extends GameElement{
 	} 
 	
 	@Override
-	public void draw() {
-		
+	public void draw(DrawingSurface surface) {
+		surface.circle(posX, posY, 10);
 	}
 	
 	/**
