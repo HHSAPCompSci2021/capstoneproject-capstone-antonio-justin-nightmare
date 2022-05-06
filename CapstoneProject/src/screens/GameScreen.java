@@ -49,7 +49,7 @@ public class GameScreen extends Screen{
 				float cellY = grid.getY() + i*cellWidth;
 				
 				boolean inX = cellX <= surface.mouseX && surface.mouseX < cellX + cellWidth;
-				boolean inY = cellY - cellWidth <= surface.mouseY && surface.mouseY < cellY;
+				boolean inY = cellY <= surface.mouseY && surface.mouseY < cellY + cellWidth;
 				
 				if (inX && inY) {
 					surface.fill(0, 255, 0);
