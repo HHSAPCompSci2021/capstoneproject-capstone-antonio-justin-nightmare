@@ -36,6 +36,8 @@ public class DrawingSurface extends PApplet implements ScreenSwitcher{
 		activeScreen.draw();
 		
 		pop();
+		fill(100,0,0);
+		rect(500,500,100,100);
 	}
 	
 	public void keyPressed() {
