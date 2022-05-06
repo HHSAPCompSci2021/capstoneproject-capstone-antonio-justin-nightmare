@@ -61,7 +61,7 @@ public class Enemy extends GameElement{
 			return new Point(posX+moveDist[0],posY+moveDist[1]);
 		} else {
 			g.removeFromGrid(this);
-			return null;
+			return new Point(0,0);
 		}
 	} 
 	
