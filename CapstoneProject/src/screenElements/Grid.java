@@ -17,6 +17,8 @@ public class Grid extends ScreenElement{
 		rows = height/CELL_WIDTH;
 		enemies = new ArrayList<Enemy>();
 		upperGoal = new int[] {x+width,y+height/2-40};
+		lowerGoal = new int[] {x+width,y+height/2+40};
+
 	}
 	
 	public void draw(DrawingSurface surface) {
@@ -57,4 +59,13 @@ public class Grid extends ScreenElement{
 	public int getCellWidth() {
 		return CELL_WIDTH;
 	}
+	
+	public int[] getUpperGoal() {
+		return upperGoal;
+	}
+	
+	public int[] getLowerGoal() {
+		return lowerGoal;
+	}
+
 }

@@ -3,6 +3,8 @@ package gameElements;
 import core.DrawingSurface;
 import screenElements.Grid;
 
+import java.awt.Point;
+import java.util.ArrayList;
 public class Enemy extends GameElement{
 	private int health;
 	
@@ -44,13 +46,23 @@ public class Enemy extends GameElement{
 		return health > 0;
 	}
 	
-	private int[] findPath(Grid g) {
-		return new int[] {posX+1,posY};
+	private Point findPath(Grid g) {
+		ArrayList<int[]> possibleDirs = new ArrayList<int[]>();
+		if (posY < g.getUpperGoal()[1]) {
+			possibleDirs.add(new int[] {0,1});
+		} else if (posY > g.getLowerGoal()[1]) {
+			possibleDirs.add(new int[] {0,-1});
+		}
+		if (posX < g.getUpperGoal()[0]) {
+			possibleDirs.add(new int[] {1,0});
+		}
+		int[] moveDist = possibleDirs.get((int)(Math.random()*possibleDirs.size()));
+		return new Point(posX+moveDist[0],posY+moveDist[1]);
 	} 
 	
-	private void move(int[] p) {
-		posX = p[0];
-		posY = p[1];
+	private void move(Point p) {
+		posX = (int) p.getX();
+		posY = (int) p.getY();
 	}
 	
 	private boolean isInBounds(Grid g) {
