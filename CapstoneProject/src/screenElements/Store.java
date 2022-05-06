@@ -2,13 +2,9 @@ package screenElements;
 
 import core.DrawingSurface;
 
-public class Store {
-	private int x,y,width,height;
+public class Store extends ScreenElement{
 	public Store (int x, int y, int width, int height) {
-		this.x = x;
-		this.y = y;
-		this.width = width;
-		this.height = height;
+		super(x,y,width,height);
 	}
 	
 	public void draw(DrawingSurface surface) {

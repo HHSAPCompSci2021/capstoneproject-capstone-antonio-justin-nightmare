@@ -5,14 +5,10 @@ import java.util.ArrayList;
 import core.DrawingSurface;
 import gameElements.*;
 
-public class Grid {
-	private int x,y,width,height;
+public class Grid extends ScreenElement{
 	private ArrayList<Enemy> enemies;
 	public Grid(int x, int y, int width, int height) {
-		this.x = x;
-		this.y = y;
-		this.width = width;
-		this.height = height;
+		super(x,y,width,height);
 		enemies = new ArrayList<Enemy>();
 	}
 	
@@ -24,20 +20,29 @@ public class Grid {
 		
 		// Draws all the enemies
 		for (Enemy e:enemies) {
-			e.draw(surface);
+			e.draw(surface,this);
 		}
 		surface.pop();
 	}
 
 	public void next() {
 		for (Enemy e:enemies) {
-			if (!e.act()) {
-				enemies.remove(e);
-			}
+			e.act(this);
 		}
 	}
 	
 	public void addToGrid(Enemy e) {
 		enemies.add(e);
+	}
+	
+	public void removeFromGrid(Enemy e) {
+		enemies.remove(e);
+	}
+	public int getX() {
+		return x;
+	}
+	
+	public int getY() {
+		return y;
 	}
 }
