@@ -22,7 +22,7 @@ public class Enemy extends GameElement{
 			surface.fill(200,200,0);
 			surface.circle(posX, posY, 10);
 		} else {
-			g.removeFromGrid(this);
+			//g.removeFromGrid(this);
 		}
 	}
 	/**
