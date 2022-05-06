@@ -23,6 +23,7 @@ public class GameScreen extends Screen{
 
 	public void draw() {
 		surface.background(150,150,200);
+		fillGrid();
 		grid.draw(surface);
 		grid.next();
 		store.draw(surface);
@@ -33,6 +34,32 @@ public class GameScreen extends Screen{
 	private void processKeyPresses() {
 		if (surface.isPressed(KeyEvent.VK_W)) {
 			System.out.println("W pressed");
+		}
+	}
+	
+	private void fillGrid() {
+		float cellWidth = grid.getCellWidth();
+		
+		surface.fill(255);
+		surface.stroke(255);
+		
+		for (int i = 0; i < grid.getRows(); i++) {
+			for (int j = 0; j < grid.getCols(); j++) {
+				float cellX = grid.getX() + j*cellWidth;
+				float cellY = grid.getY() + i*cellWidth;
+				
+				boolean inX = cellX <= surface.mouseX && surface.mouseX < cellX + cellWidth;
+				boolean inY = cellY - cellWidth <= surface.mouseY && surface.mouseY < cellY;
+				
+				if (inX && inY) {
+					surface.fill(0, 255, 0);
+					surface.stroke(0, 255, 0);
+				}
+				
+				surface.rect(cellX, cellY, cellWidth, cellWidth);
+				surface.fill(255);
+				surface.stroke(255);
+			}
 		}
 	}
 }
