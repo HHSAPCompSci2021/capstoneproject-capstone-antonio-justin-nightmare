@@ -1,5 +1,4 @@
 package gameElements;
-import java.awt.Point;
 
 import core.DrawingSurface;
 import screenElements.Grid;

@@ -1,4 +1,5 @@
 package screens;
+import java.awt.Point;
 import java.awt.event.KeyEvent;
 
 import core.DrawingSurface;
@@ -48,8 +49,9 @@ public class GameScreen extends Screen{
 				float cellX = grid.getX() + j*cellWidth;
 				float cellY = grid.getY() + i*cellWidth;
 				
-				boolean inX = cellX <= surface.mouseX && surface.mouseX < cellX + cellWidth;
-				boolean inY = cellY <= surface.mouseY && surface.mouseY < cellY + cellWidth;
+				Point assumedCoords = surface.actualCoordinatesToAssumed(new Point(surface.mouseX,surface.mouseY));
+				boolean inX = cellX <= assumedCoords.getX() && assumedCoords.getX() < cellX + cellWidth;
+				boolean inY = cellY <= assumedCoords.getY() && assumedCoords.getY() < cellY + cellWidth;
 				
 				if (inX && inY) {
 					surface.fill(0, 255, 0);

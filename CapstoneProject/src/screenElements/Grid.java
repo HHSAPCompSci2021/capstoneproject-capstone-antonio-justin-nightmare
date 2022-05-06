@@ -10,11 +10,13 @@ public class Grid extends ScreenElement{
 	private int rows;
 	private static final int CELL_WIDTH = 10;
 	private ArrayList<Enemy> enemies;
+	private int[] upperGoal,lowerGoal;
 	public Grid(int x, int y, int width, int height) {
 		super(x,y,width,height);
 		cols = width/CELL_WIDTH;
 		rows = height/CELL_WIDTH;
 		enemies = new ArrayList<Enemy>();
+		upperGoal = new int[] {x+width,y+height/2-40};
 	}
 	
 	public void draw(DrawingSurface surface) {
