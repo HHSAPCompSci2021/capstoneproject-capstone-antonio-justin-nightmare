@@ -56,8 +56,13 @@ public class Enemy extends GameElement{
 		if (posX < g.getUpperGoal()[0]) {
 			possibleDirs.add(new int[] {1,0});
 		}
-		int[] moveDist = possibleDirs.get((int)(Math.random()*possibleDirs.size()));
-		return new Point(posX+moveDist[0],posY+moveDist[1]);
+		if (possibleDirs.size() > 0) {
+			int[] moveDist = possibleDirs.get((int)(Math.random()*possibleDirs.size()));
+			return new Point(posX+moveDist[0],posY+moveDist[1]);
+		} else {
+			g.removeFromGrid(this);
+			return null;
+		}
 	} 
 	
 	private void move(Point p) {
