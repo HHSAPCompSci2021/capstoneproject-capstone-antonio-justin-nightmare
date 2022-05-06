@@ -24,7 +24,7 @@ public class Grid {
 		
 		// Draws all the enemies
 		for (Enemy e:enemies) {
-			e.draw(null);
+			e.draw(surface);
 		}
 		surface.pop();
 	}
