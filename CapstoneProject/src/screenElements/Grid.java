@@ -33,6 +33,8 @@ public class Grid extends ScreenElement{
 		startingPoints.add(new Point(20, 95));
 		goal = new Point(95, 34);
 		frontier = new LinkedList<Point>();
+		
+		breadthFirstSearch();
 	}
 	
 	public void draw(DrawingSurface surface) {
@@ -45,8 +47,6 @@ public class Grid extends ScreenElement{
 		for (Enemy e:enemies) {
 			e.draw(surface,this);
 		}
-		
-		breadthFirstSearch();
 		
 		surface.pop();
 	}
