@@ -4,16 +4,12 @@ import core.DrawingSurface;
 import screenElements.Grid;
 
 import java.awt.Point;
-import java.util.LinkedList;
-import java.util.Queue;
 public class Enemy extends GameElement{
 	private int health;
-	private Queue<Point> frontier;
 	
 	public Enemy(int x, int y) {
 		super(x,y);
 		health = 10;
-		frontier = new LinkedList<Point>();
 	}
 	
 	@Override
@@ -39,9 +35,6 @@ public class Enemy extends GameElement{
 	 */
 	public boolean act(Grid g){
 //		move(findPath(g));
-		
-		// for testing
-		findPath(g);
 		return true;
 	}
 	
@@ -74,43 +67,7 @@ public class Enemy extends GameElement{
 //			return new Point(0,0);
 //		}
 		
-		frontier.add(new Point(posX, posY));
-		boolean[][] reachedSpaces = new boolean[g.getCols()][g.getRows()];
-		reachedSpaces[posX][posY] = true;
-		
-		while(frontier.size() != 0) {
-			Point currentSpace = frontier.poll();
-			Point[] adjacentSpaces = new Point[4];
-			
-			adjacentSpaces[0] = getValidPoint(currentSpace.x+1, currentSpace.y, g);
-			adjacentSpaces[1] = getValidPoint(currentSpace.x, currentSpace.y+1, g);
-			adjacentSpaces[2] = getValidPoint(currentSpace.x, currentSpace.y-1, g);
-			adjacentSpaces[3] = getValidPoint(currentSpace.x-1, currentSpace.y, g);
-			
-			for (int i = 0; i < adjacentSpaces.length; i++) {
-				if (adjacentSpaces[i] == null) {
-					continue;
-				}
-				
-				if (!reachedSpaces[adjacentSpaces[i].x][adjacentSpaces[i].y]) {
-					frontier.add(adjacentSpaces[i]);
-					reachedSpaces[adjacentSpaces[i].x][adjacentSpaces[i].y] = true;
-					
-					// for testing
-					g.setSpace(adjacentSpaces[i].x, adjacentSpaces[i].y);
-				}
-			}
-		}
-		
 		return null;
-	}
-	
-	private Point getValidPoint(int x, int y, Grid g) {
-		if (x < 0 || x >= g.getCols() || y < 0 || y >= g.getRows()) {
-			return null;
-		}
-		
-		return new Point(x, y);
 	}
 	
 	private void move(Point p) {
