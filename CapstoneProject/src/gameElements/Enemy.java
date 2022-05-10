@@ -19,9 +19,9 @@ public class Enemy extends GameElement{
 	
 	public void draw(DrawingSurface surface, Grid g) {
 		if (isInBounds(g)) {
-//			surface.fill(200,200,0);
-//			surface.circle(posX, posY, 10);
-//			act(g);
+			surface.fill(200,200,0);
+			surface.circle(posX, posY, 10);
+			act(g);
 		} else {
 			//g.removeFromGrid(this);
 		}

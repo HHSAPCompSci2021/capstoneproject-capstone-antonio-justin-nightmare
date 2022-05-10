@@ -13,6 +13,7 @@ public class Grid extends ScreenElement{
 	private int rows;
 	private static final int CELL_WIDTH = 10;
 	private ArrayList<Enemy> enemies;
+	private ArrayList<Tower> towers;
 	private Point goal;
 	private int[][] gridMatrix;
 	public static final int EMPTY = 0;
@@ -25,6 +26,7 @@ public class Grid extends ScreenElement{
 		rows = height/CELL_WIDTH;
 		gridMatrix = new int[cols][rows];
 		enemies = new ArrayList<Enemy>();
+		towers = new ArrayList<Tower>();
 		goal = new Point(95, 34);
 		frontier = new LinkedList<Point>();
 	}
@@ -114,12 +116,20 @@ public class Grid extends ScreenElement{
 		breadthFirstSearch();
 	}
 	
-	public void addToGrid(Enemy e) {
-		enemies.add(e);
+	public void addToGrid(GameElement e) {
+		if (e instanceof Enemy) {
+			enemies.add((Enemy)e);
+		} else if (e instanceof Tower) {
+			towers.add((Tower)e);
+		}
 	}
 	
-	public void removeFromGrid(Enemy e) {
-		enemies.remove(e);
+	public void removeFromGrid(GameElement e) {
+		if (e instanceof Enemy) {
+			enemies.remove(e);
+		} else if (e instanceof Tower) {
+			towers.remove(e);
+		}
 	}
 	
 	public int getRows() {
