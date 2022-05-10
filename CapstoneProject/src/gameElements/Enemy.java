@@ -34,7 +34,7 @@ public class Enemy extends GameElement{
 	 */
 	public boolean act(Grid g){
 //		move(findPath(g));
-		return true;
+		return health > 0;
 	}
 	
 
