@@ -13,7 +13,6 @@ public class Grid extends ScreenElement{
 	private int rows;
 	private static final int CELL_WIDTH = 10;
 	private ArrayList<Enemy> enemies;
-	private ArrayList<Point> startingPoints;
 	private Point goal;
 //	key for grid matrix:
 //	0: empty
@@ -27,10 +26,6 @@ public class Grid extends ScreenElement{
 		rows = height/CELL_WIDTH;
 		gridMatrix = new int[cols][rows];
 		enemies = new ArrayList<Enemy>();
-		startingPoints = new ArrayList<Point>();
-		startingPoints.add(new Point(0, 34));
-		startingPoints.add(new Point(20, 0));
-		startingPoints.add(new Point(20, 95));
 		goal = new Point(95, 34);
 		frontier = new LinkedList<Point>();
 		
@@ -51,10 +46,15 @@ public class Grid extends ScreenElement{
 		surface.pop();
 	}
 	
-	private Point breadthFirstSearch() {
-		frontier.add(new Point(startingPoints.get(0).x, startingPoints.get(0).y));
+	// Returns a 2D array of points. Each point in the array are the coordinates of where
+	// the enemy should from their current coordinates, where the current coordinates is
+	// the 2D index of the point in the array. In other words, this method returns a
+	// flow field of where the enemy should given any coordinates in the grid.
+	private Point[][] breadthFirstSearch() {
+		Point[][] flowField = new Point[cols][rows];
+		frontier.add(new Point(goal.x, goal.y));
 		boolean[][] reachedSpaces = new boolean[cols][rows];
-		reachedSpaces[startingPoints.get(0).x][startingPoints.get(0).y] = true;
+		reachedSpaces[goal.x][goal.y] = true;
 		
 		while(frontier.size() != 0) {
 			Point currentSpace = frontier.poll();
@@ -73,6 +73,7 @@ public class Grid extends ScreenElement{
 				if (!reachedSpaces[adjacentSpaces[i].x][adjacentSpaces[i].y]) {
 					frontier.add(adjacentSpaces[i]);
 					reachedSpaces[adjacentSpaces[i].x][adjacentSpaces[i].y] = true;
+					flowField[adjacentSpaces[i].x][adjacentSpaces[i].y] = new Point(currentSpace.x, currentSpace.y);
 					
 					// for testing
 					gridMatrix[adjacentSpaces[i].x][adjacentSpaces[i].y] = 1;
@@ -80,7 +81,7 @@ public class Grid extends ScreenElement{
 			}
 		}
 		
-		return null;
+		return flowField;
 	}
 	
 	private Point getValidPoint(int x, int y) {
