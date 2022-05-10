@@ -18,7 +18,7 @@ public class Projectile extends GameElement{
 	
 	public void draw(DrawingSurface surface) {
 		System.out.println("drawing");
-		surface.fill(255,255,0);
+		surface.stroke(255,255,0);
 		surface.line(posX, posY, target.getX(), target.getY());
 	}
 	
