@@ -20,6 +20,7 @@ public class Grid extends ScreenElement{
 	public static final int PATH_SPACE = 1;
 	public static final int BLOCKED_SPACE = 2;
 	private Queue<Point> frontier;
+	private Point[][] flowField;
 	public Grid(int x, int y, int width, int height) {
 		super(x,y,width,height);
 		cols = width/CELL_WIDTH;
@@ -123,7 +124,11 @@ public class Grid extends ScreenElement{
 	
 	// for testing
 	public void go() {
-		breadthFirstSearch();
+		flowField = breadthFirstSearch();
+	}
+	
+	public Point[][] getFlowField() {
+		return flowField;
 	}
 	
 	public void addToGrid(GameElement e) {

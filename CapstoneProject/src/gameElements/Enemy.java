@@ -48,7 +48,32 @@ public class Enemy extends GameElement{
 		return health > 0;
 	}
 	
-	private Point findPath(Grid g) {
+	private Point findNextPos(Grid g) {
+		Point currentSpace = getCurrentSpace(g);
+		Point nextSpace = g.getFlowField()[currentSpace.x][currentSpace.y];
+		if (nextSpace == null) {
+			return new Point(posX, posY);
+		}
+		
+		int moveX = 0;
+		int moveY = 0;
+		
+		if (currentSpace.x - nextSpace.x > 0) {
+			moveX = 1;
+		}
+		else if (currentSpace.x - nextSpace.x < 0) {
+			moveX = -1;
+		}
+		
+		if (currentSpace.y - nextSpace.y > 0) {
+			moveY = 1;
+		}
+		else if (currentSpace.y - nextSpace.y < 0) {
+			moveY = -1;
+		}
+		
+		return new Point(posX + moveX, posY + moveY);
+		
 //		ArrayList<int[]> possibleDirs = new ArrayList<int[]>();
 //		if (posY < g.getUpperGoal()[1]) {
 //			possibleDirs.add(new int[] {0,1});
@@ -65,8 +90,12 @@ public class Enemy extends GameElement{
 //			g.removeFromGrid(this);
 //			return new Point(0,0);
 //		}
-		
-		return null;
+	}
+	
+	private Point getCurrentSpace(Grid g) {
+		int col = posX/g.getCellWidth();
+		int row = posY/g.getCellWidth();
+		return new Point(col, row);
 	}
 	
 	private void move(Point p) {
