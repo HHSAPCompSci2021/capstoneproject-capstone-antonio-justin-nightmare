@@ -17,14 +17,13 @@ public class Projectile extends GameElement{
 	}
 	
 	public void draw(DrawingSurface surface) {
-		System.out.println("drawing");
+		//System.out.println("drawing");
 		surface.stroke(255,255,0);
 		surface.line(posX, posY, target.getX(), target.getY());
 	}
 	
 	public boolean act() {
-		System.out.println("dealing damage");
-		return target.takeDamage(0);
+		return target.takeDamage(damage);
 	}
 	
 	public void move() {

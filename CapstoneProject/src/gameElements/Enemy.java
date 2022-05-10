@@ -21,6 +21,8 @@ public class Enemy extends GameElement{
 		if (isInBounds(g)) {
 			surface.fill(200,200,0);
 			surface.circle(posX, posY, 10);
+			surface.fill(0,0,0);
+			surface.text(health, posX, posY);
 			act(g);
 		} else {
 			//g.removeFromGrid(this);
