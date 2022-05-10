@@ -41,10 +41,20 @@ public class Grid extends ScreenElement{
 		for (Enemy e:enemies) {
 			e.draw(surface,this);
 		}
-		
+		for (Tower t:towers) {
+			t.draw(surface);
+		}
 		surface.pop();
 	}
 	
+	public void next() {
+		for (Enemy e:enemies) {
+			e.act(this);
+		}
+		for (Tower t:towers) {
+			t.act(enemies);
+		}
+	}
 	// Returns a 2D array of points. Each point in the array are the coordinates of where
 	// the enemy should from their current coordinates, where the current coordinates is
 	// the 2D index of the point in the array. In other words, this method returns a

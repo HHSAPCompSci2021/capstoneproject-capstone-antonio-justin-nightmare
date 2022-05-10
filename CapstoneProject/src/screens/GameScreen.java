@@ -21,12 +21,14 @@ public class GameScreen extends Screen{
 		store = new Store(1000,BORDER_WIDTH,WIDTH-1000-BORDER_WIDTH,HEIGHT - BORDER_WIDTH*2);
 		this.surface = surface;
 		grid.addToGrid(new Enemy(40,30));
+		grid.addToGrid(new Tower(50,50));
 	}
 
 	public void draw() {
 		surface.background(150,150,200);
 		fillGrid();
 		grid.draw(surface);
+		grid.next();
 		store.draw(surface);
 		processKeyPresses();
 	}
