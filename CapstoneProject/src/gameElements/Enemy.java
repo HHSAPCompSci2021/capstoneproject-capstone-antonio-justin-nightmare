@@ -25,9 +25,6 @@ public class Enemy extends GameElement{
 		} else {
 			//g.removeFromGrid(this);
 		}
-		
-		// for testing
-		act(g);
 	}
 	/**
 	 * Moves the enemy by 1 step
