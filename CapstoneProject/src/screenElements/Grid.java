@@ -11,10 +11,16 @@ public class Grid extends ScreenElement{
 	private static final int CELL_WIDTH = 10;
 	private ArrayList<Enemy> enemies;
 	private int[] upperGoal,lowerGoal;
+//	key for grid matrix:
+//	0: empty
+//	1: enemy
+//	2: tower
+	private int[][] gridMatrix;
 	public Grid(int x, int y, int width, int height) {
 		super(x,y,width,height);
 		cols = width/CELL_WIDTH;
 		rows = height/CELL_WIDTH;
+		gridMatrix = new int[cols][rows];
 		enemies = new ArrayList<Enemy>();
 		upperGoal = new int[] {x+width,y+height/2-40};
 		lowerGoal = new int[] {x+width,y+height/2+40};
@@ -32,12 +38,6 @@ public class Grid extends ScreenElement{
 			e.draw(surface,this);
 		}
 		surface.pop();
-	}
-
-	public void next() {
-		for (Enemy e:enemies) {
-			e.act(this);
-		}
 	}
 	
 	public void addToGrid(Enemy e) {
@@ -67,5 +67,18 @@ public class Grid extends ScreenElement{
 	public int[] getLowerGoal() {
 		return lowerGoal;
 	}
-
+	
+	public int[][] getGridMatrix() {
+		return gridMatrix;
+	}
+	
+	// for testing
+	public void go() {
+		enemies.get(0).act(this);
+	}
+	
+	// for testing
+	public void setSpace(int x, int y) {
+		gridMatrix[x][y] = 1;
+	}
 }

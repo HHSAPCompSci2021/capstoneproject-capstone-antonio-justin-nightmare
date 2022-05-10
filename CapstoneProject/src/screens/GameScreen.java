@@ -19,23 +19,15 @@ public class GameScreen extends Screen{
 		grid = new Grid(BORDER_WIDTH,BORDER_WIDTH,960,HEIGHT - BORDER_WIDTH*2);
 		store = new Store(1000,BORDER_WIDTH,WIDTH-1000-BORDER_WIDTH,HEIGHT - BORDER_WIDTH*2);
 		this.surface = surface;
-		grid.addToGrid(new Enemy(30,30));
+		grid.addToGrid(new Enemy(30,20));
 	}
 
 	public void draw() {
 		surface.background(150,150,200);
 		fillGrid();
 		grid.draw(surface);
-		grid.next();
 		store.draw(surface);
-		store.next();
 		processKeyPresses();
-	}
-	
-	private void processKeyPresses() {
-		if (surface.isPressed(KeyEvent.VK_W)) {
-			System.out.println("W pressed");
-		}
 	}
 	
 	private void fillGrid() {
@@ -44,10 +36,10 @@ public class GameScreen extends Screen{
 		surface.fill(255);
 		surface.stroke(255);
 		
-		for (int i = 0; i < grid.getRows(); i++) {
-			for (int j = 0; j < grid.getCols(); j++) {
-				float cellX = grid.getX() + j*cellWidth;
-				float cellY = grid.getY() + i*cellWidth;
+		for (int i = 0; i < grid.getCols(); i++) {
+			for (int j = 0; j < grid.getRows(); j++) {
+				float cellX = grid.getX() + i*cellWidth;
+				float cellY = grid.getY() + j*cellWidth;
 				
 				Point assumedCoords = surface.actualCoordinatesToAssumed(new Point(surface.mouseX,surface.mouseY));
 				boolean inX = cellX <= assumedCoords.getX() && assumedCoords.getX() < cellX + cellWidth;
@@ -58,10 +50,26 @@ public class GameScreen extends Screen{
 					surface.stroke(0, 255, 0);
 				}
 				
+				if (grid.getGridMatrix()[i][j] == 1) {
+					surface.fill(255, 0, 0);
+					surface.stroke(255, 0, 0);
+				}
+				
 				surface.rect(cellX, cellY, cellWidth, cellWidth);
 				surface.fill(255);
 				surface.stroke(255);
 			}
 		}
+	}
+	
+	private void processKeyPresses() {
+		if (surface.isPressed(KeyEvent.VK_W)) {
+			System.out.println("W pressed");
+		}
+	}
+	
+	// for testing
+	public void go() {
+		grid.go();
 	}
 }

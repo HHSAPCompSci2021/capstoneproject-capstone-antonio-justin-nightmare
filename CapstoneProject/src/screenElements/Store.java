@@ -13,9 +13,4 @@ public class Store extends ScreenElement{
 		surface.rect(x, y, width, height);
 		surface.pop();
 	}
-
-	public void next() {
-		// TODO Auto-generated method stub
-		
-	}
 }
