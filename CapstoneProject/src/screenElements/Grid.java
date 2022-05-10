@@ -14,11 +14,10 @@ public class Grid extends ScreenElement{
 	private static final int CELL_WIDTH = 10;
 	private ArrayList<Enemy> enemies;
 	private Point goal;
-//	key for grid matrix:
-//	0: empty
-//	1: enemy
-//	2: tower
 	private int[][] gridMatrix;
+	public static final int EMPTY = 0;
+	public static final int PATH_SPACE = 1;
+	public static final int BLOCKED_SPACE = 2;
 	private Queue<Point> frontier;
 	public Grid(int x, int y, int width, int height) {
 		super(x,y,width,height);
@@ -28,8 +27,6 @@ public class Grid extends ScreenElement{
 		enemies = new ArrayList<Enemy>();
 		goal = new Point(95, 34);
 		frontier = new LinkedList<Point>();
-		
-		breadthFirstSearch();
 	}
 	
 	public void draw(DrawingSurface surface) {
@@ -56,6 +53,9 @@ public class Grid extends ScreenElement{
 		boolean[][] reachedSpaces = new boolean[cols][rows];
 		reachedSpaces[goal.x][goal.y] = true;
 		
+		// for testing
+//		int n = 0;
+		// condition for testing: n < 100
 		while(frontier.size() != 0) {
 			Point currentSpace = frontier.poll();
 			Point[] adjacentSpaces = new Point[4];
@@ -76,9 +76,12 @@ public class Grid extends ScreenElement{
 					flowField[adjacentSpaces[i].x][adjacentSpaces[i].y] = new Point(currentSpace.x, currentSpace.y);
 					
 					// for testing
-					gridMatrix[adjacentSpaces[i].x][adjacentSpaces[i].y] = 1;
+					gridMatrix[adjacentSpaces[i].x][adjacentSpaces[i].y] = PATH_SPACE;
 				}
 			}
+			
+			// for testing
+//			n++;
 		}
 		
 		return flowField;
@@ -89,7 +92,21 @@ public class Grid extends ScreenElement{
 			return null;
 		}
 		
+		if (gridMatrix[x][y] == BLOCKED_SPACE) {
+			return null;
+		}
+		
 		return new Point(x, y);
+	}
+	
+	// for testing
+	public void setSpace(int x, int y) {
+		if (gridMatrix[x][y] != 2) {
+			gridMatrix[x][y] = 2;
+		}
+		else {
+			gridMatrix[x][y] = 0;
+		}
 	}
 	
 	// for testing
