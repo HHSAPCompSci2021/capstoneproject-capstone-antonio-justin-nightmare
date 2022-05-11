@@ -19,7 +19,6 @@ public class GameScreen extends Screen{
 	private double gold;
 	private int dragOffsetX, dragOffsetY;
 	private Rectangle currentDrag;
-	
 	// stuff for the store
 	
 	private Store store;

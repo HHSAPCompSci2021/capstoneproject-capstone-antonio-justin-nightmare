@@ -161,6 +161,10 @@ public class Grid extends ScreenElement{
 		}
 	}
 	
+	public void spawnWave(int waveNum) {
+		addToGrid(new Enemy(screenBorderWidth,94));
+	}
+	
 	public int getRows() {
 		return rows;
 	}
@@ -184,4 +188,5 @@ public class Grid extends ScreenElement{
 	public int getScreenBorderWidth() {
 		return screenBorderWidth;
 	}
+	
 }
