@@ -12,9 +12,11 @@ public class GameScreen extends Screen{
 	private static final int WIDTH = 1280;
 	private static final int HEIGHT = 720;
 	private static final int BORDER_WIDTH = 20;
+	private static final double GOLD_PER_SECOND = 60;
 	private DrawingSurface surface;
 	private Grid grid;
 	private Store store;
+	private double gold;
 	public GameScreen(DrawingSurface surface) {
 		super(WIDTH, HEIGHT);
 		grid = new Grid(BORDER_WIDTH,BORDER_WIDTH,960,HEIGHT - BORDER_WIDTH*2);
@@ -23,6 +25,7 @@ public class GameScreen extends Screen{
 		this.surface = surface;
 		grid.addToGrid(new Enemy(indexToPos(0),indexToPos(30)));
 		grid.addToGrid(new Tower(indexToPos(1),indexToPos(25)));
+		gold = 0;
 	}
 
 	public void draw() {

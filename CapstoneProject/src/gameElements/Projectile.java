@@ -21,12 +21,18 @@ public class Projectile extends GameElement{
 		damageStep = damageDelay;
 	}
 	
+	/**
+	 * Draws the projectile, currently from tower location to location of target
+	 */
 	public void draw(DrawingSurface surface) {
-		//System.out.println("drawing");
 		surface.stroke(255,255,0);
 		surface.line(posX, posY, target.getX(), target.getY());
 	}
 	
+	/**
+	 * Deals damage once it is the correct time
+	 * @return true if projectile has not yet dealt its damage (is still there), false if projectile has dealt its damage
+	 */
 	public boolean act() {
 		if (damageStep > 0) {
 			damageStep--;
