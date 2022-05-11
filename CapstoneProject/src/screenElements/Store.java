@@ -4,20 +4,22 @@ import java.awt.Rectangle;
 
 import core.DrawingSurface;
 import processing.core.PConstants;
+import screens.GameScreen;
 
 public class Store extends ScreenElement{
 	private int storeItemWidth;
 	private int headerSize;
 	private Rectangle storeItemRefRect;
 	private int storeItemX, storeItemY;
-	
-	public Store (int x, int y, int width, int height) {
+	private GameScreen gScreen;
+	public Store (int x, int y, int width, int height, GameScreen sc) {
 		super(x,y,width,height);
 		storeItemWidth = (int)(width*0.25);
 		headerSize = 30;
 		storeItemX = x+width/2;
 		storeItemY = y+storeItemWidth/2 + headerSize*2;
 		storeItemRefRect = new Rectangle(storeItemX, storeItemY, storeItemWidth, storeItemWidth);
+		gScreen = sc;
 	}
 	
 	public void draw(DrawingSurface surface) {

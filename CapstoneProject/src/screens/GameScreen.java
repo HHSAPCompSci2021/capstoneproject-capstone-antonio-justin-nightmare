@@ -13,7 +13,7 @@ public class GameScreen extends Screen{
 	private static final int WIDTH = 1280;
 	private static final int HEIGHT = 720;
 	private static final int BORDER_WIDTH = 20;
-	private static final double GOLD_PER_SECOND = 60;
+	private static final double GOLD_PER_SECOND = 5;
 	private DrawingSurface surface;
 	private Grid grid;
 	private Store store;
@@ -21,9 +21,9 @@ public class GameScreen extends Screen{
 	private int dragOffsetX, dragOffsetY;
 	public GameScreen(DrawingSurface surface) {
 		super(WIDTH, HEIGHT);
-		grid = new Grid(BORDER_WIDTH,BORDER_WIDTH,960,HEIGHT - BORDER_WIDTH*2);
+		grid = new Grid(BORDER_WIDTH,BORDER_WIDTH,960,HEIGHT - BORDER_WIDTH*2,this);
 		grid.setScreenBorderWidth(BORDER_WIDTH);
-		store = new Store(1000,BORDER_WIDTH,WIDTH-1000-BORDER_WIDTH,HEIGHT - BORDER_WIDTH*2);
+		store = new Store(1000,BORDER_WIDTH,WIDTH-1000-BORDER_WIDTH,HEIGHT - BORDER_WIDTH*2,this);
 		this.surface = surface;
 		grid.addToGrid(new Enemy(indexToPos(0),indexToPos(30)));
 		grid.addToGrid(new Tower(indexToPos(1),indexToPos(25)));
@@ -37,6 +37,13 @@ public class GameScreen extends Screen{
 		grid.next();
 		store.draw(surface);
 		processKeyPresses();
+		surface.push();
+		surface.fill(0,0,0);
+		surface.textAlign(surface.RIGHT);
+		//surface.textSize(100);
+		surface.text("Gold: "+(int)gold, WIDTH-BORDER_WIDTH-100, BORDER_WIDTH, 100,100);
+		surface.pop();
+		gold += GOLD_PER_SECOND/60;
 	}
 	
 	private void fillGrid() {
@@ -126,5 +133,13 @@ public class GameScreen extends Screen{
 		if (surface.isPressed(KeyEvent.VK_W)) {
 			System.out.println("W pressed");
 		}
+	}
+	
+	public void addGold(int amount) {
+		gold += amount;
+	}
+	
+	public void removeGold(int amount) {
+		gold -= amount;
 	}
 }

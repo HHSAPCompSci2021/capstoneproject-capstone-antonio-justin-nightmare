@@ -7,6 +7,7 @@ import java.util.Queue;
 
 import core.DrawingSurface;
 import gameElements.*;
+import screens.GameScreen;
 
 public class Grid extends ScreenElement{
 	private int cols;
@@ -23,7 +24,8 @@ public class Grid extends ScreenElement{
 	private Queue<Point> frontier;
 	private Point[][] flowField;
 	private int screenBorderWidth;
-	public Grid(int x, int y, int width, int height) {
+	GameScreen gScreen;
+	public Grid(int x, int y, int width, int height,GameScreen sc) {
 		super(x,y,width,height);
 		cols = width/CELL_WIDTH;
 		rows = height/CELL_WIDTH;
@@ -33,6 +35,7 @@ public class Grid extends ScreenElement{
 		goal = new Point(95, 34);
 		gridMatrix[goal.x][goal.y] = GOAL_SPACE;
 		frontier = new LinkedList<Point>();
+		gScreen = sc;
 	}
 	
 	public void draw(DrawingSurface surface) {
