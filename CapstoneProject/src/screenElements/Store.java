@@ -11,15 +11,13 @@ public class Store extends ScreenElement{
 	private int headerSize;
 	private Rectangle storeItemRefRect;
 	private int storeItemX, storeItemY;
-	private GameScreen gScreen;
-	public Store (int x, int y, int width, int height, GameScreen sc) {
+	public Store (int x, int y, int width, int height) {
 		super(x,y,width,height);
 		storeItemWidth = (int)(width*0.25);
 		headerSize = 30;
-		storeItemX = x+width/2;
-		storeItemY = y+storeItemWidth/2 + headerSize*2;
+		storeItemX = x + width/2 - storeItemWidth/2;
+		storeItemY = y+storeItemWidth/2 - storeItemWidth/2 + headerSize*2;
 		storeItemRefRect = new Rectangle(storeItemX, storeItemY, storeItemWidth, storeItemWidth);
-		gScreen = sc;
 	}
 	
 	public void draw(DrawingSurface surface) {
@@ -32,7 +30,6 @@ public class Store extends ScreenElement{
 		surface.text("Store", x + width*0.1f, y + width*0.1f + headerSize*0.5f);
 		surface.fill(0, 0, 255);
 		surface.stroke(0, 0, 255);
-		surface.rectMode(PConstants.CENTER);
 		surface.rect(storeItemRefRect.x, storeItemRefRect.y, storeItemWidth, storeItemWidth);
 		surface.pop();
 	}

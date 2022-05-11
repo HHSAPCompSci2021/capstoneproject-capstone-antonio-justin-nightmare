@@ -16,31 +16,19 @@ public class GameScreen extends Screen{
 	private static final double GOLD_PER_SECOND = 5;
 	private DrawingSurface surface;
 	private Grid grid;
+	private Store store;
 	private double gold;
 	private int dragOffsetX, dragOffsetY;
 	private Rectangle currentDrag;
-	// stuff for the store
-	
-	private Store store;
-	private int headerSize;
-	private Rectangle storeItemRefRect;
-	private int storeItemX, storeItemY;
 	public GameScreen(DrawingSurface surface) {
 		super(WIDTH, HEIGHT);
 		grid = new Grid(BORDER_WIDTH,BORDER_WIDTH,960,HEIGHT - BORDER_WIDTH*2,this);
 		grid.setScreenBorderWidth(BORDER_WIDTH);
-		store = new Store(1000,BORDER_WIDTH,WIDTH-1000-BORDER_WIDTH,HEIGHT - BORDER_WIDTH*2,this);
+		store = new Store(1000,BORDER_WIDTH,WIDTH-1000-BORDER_WIDTH,HEIGHT - BORDER_WIDTH*2);
 		this.surface = surface;
 		grid.addToGrid(new Enemy(indexToPos(0),indexToPos(30)));
 		grid.addToGrid(new Tower(indexToPos(1),indexToPos(25)));
 		gold = 0;
-		
-		// stuff for the store
-//		storeItemWidth = (int)(width*0.25);
-//		headerSize = 30;
-//		storeItemX = x+width/2;
-//		storeItemY = y+storeItemWidth/2 + headerSize*2;
-//		storeItemRefRect = new Rectangle(storeItemX, storeItemY, storeItemWidth, storeItemWidth);
 	}
 
 	public void draw() {
@@ -124,7 +112,7 @@ public class GameScreen extends Screen{
 			}
 		}
 		
-//		dragRect();
+		dragRect(store.getStoreItemRefRect());
 	}
 	
 	public void mouseDragged() {
