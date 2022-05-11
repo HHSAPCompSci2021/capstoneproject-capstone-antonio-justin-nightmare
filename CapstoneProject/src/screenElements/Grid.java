@@ -18,7 +18,8 @@ public class Grid extends ScreenElement{
 	private int[][] gridMatrix;
 	public static final int EMPTY_SPACE = 0;
 	public static final int BLOCKED_SPACE = -1;
-	public static final int GOAL_SPACE = 1;
+	public static final int PATH_SPACE = 1;
+	public static final int GOAL_SPACE = 2;
 	private Queue<Point> frontier;
 	private Point[][] flowField;
 	private int screenBorderWidth;
@@ -86,6 +87,7 @@ public class Grid extends ScreenElement{
 				if (!reachedSpaces[adjacentSpaces[i].x][adjacentSpaces[i].y]) {
 					frontier.add(adjacentSpaces[i]);
 					reachedSpaces[adjacentSpaces[i].x][adjacentSpaces[i].y] = true;
+					gridMatrix[adjacentSpaces[i].x][adjacentSpaces[i].y] = PATH_SPACE;
 					flowField[adjacentSpaces[i].x][adjacentSpaces[i].y] = new Point(currentSpace.x, currentSpace.y);
 				}
 			}
@@ -100,6 +102,10 @@ public class Grid extends ScreenElement{
 		}
 		
 		if (gridMatrix[x][y] == BLOCKED_SPACE) {
+			return null;
+		}
+		
+		if (gridMatrix[x][y] == PATH_SPACE) {
 			return null;
 		}
 		
