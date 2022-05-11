@@ -52,6 +52,10 @@ public class Enemy extends GameElement{
 		}
 		
 		Point nextSpace = flowField[currentSpace.x][currentSpace.y];
+		if (nextSpace == null) {
+			System.out.println("goal is not reachable");
+			return new Point(posX, posY);
+		}
 		
 		int moveX = 0;
 		int moveY = 0;
