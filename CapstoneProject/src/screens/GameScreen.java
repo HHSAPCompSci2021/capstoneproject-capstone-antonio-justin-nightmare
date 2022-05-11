@@ -22,7 +22,7 @@ public class GameScreen extends Screen{
 		store = new Store(1000,BORDER_WIDTH,WIDTH-1000-BORDER_WIDTH,HEIGHT - BORDER_WIDTH*2);
 		this.surface = surface;
 		grid.addToGrid(new Enemy(indexToPos(0),indexToPos(30)));
-//		grid.addToGrid(new Tower(50,50));
+		grid.addToGrid(new Tower(indexToPos(1),indexToPos(25)));
 	}
 
 	public void draw() {
