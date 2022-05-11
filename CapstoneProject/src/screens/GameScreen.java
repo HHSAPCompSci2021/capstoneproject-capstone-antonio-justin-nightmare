@@ -21,7 +21,7 @@ public class GameScreen extends Screen{
 		grid.setScreenBorderWidth(BORDER_WIDTH);
 		store = new Store(1000,BORDER_WIDTH,WIDTH-1000-BORDER_WIDTH,HEIGHT - BORDER_WIDTH*2);
 		this.surface = surface;
-		grid.addToGrid(new Enemy(indexToPos(0),indexToPos(0)));
+		grid.addToGrid(new Enemy(indexToPos(0),indexToPos(30)));
 //		grid.addToGrid(new Tower(50,50));
 	}
 
@@ -54,16 +54,16 @@ public class GameScreen extends Screen{
 					surface.stroke(0, 255, 0);
 				}
 				
-				if (grid.getGridMatrix()[i][j] == Grid.PATH_SPACE) {
-					// for testing
-					surface.fill(255, 0, 0);
-					surface.stroke(255, 0, 0);
-				}
-				
 				if (grid.getGridMatrix()[i][j] == Grid.BLOCKED_SPACE) {
 					// for testing
 					surface.fill(0, 0, 255);
 					surface.stroke(0, 0, 255);
+				}
+				
+				if (grid.getGridMatrix()[i][j] == Grid.GOAL_SPACE) {
+					// for testing
+					surface.fill(255, 200, 0);
+					surface.stroke(255, 200, 0);
 				}
 				
 				surface.rect(cellX, cellY, cellWidth, cellWidth);
