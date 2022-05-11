@@ -6,7 +6,7 @@ import screenElements.Grid;
 import java.awt.Point;
 public class Enemy extends GameElement{
 	private int health;
-	
+	private static final int goldValue = 10;
 	public Enemy(int x, int y) {
 		super(x,y);
 		health = 10;
@@ -104,5 +104,9 @@ public class Enemy extends GameElement{
 	private void move(Point p) {
 		posX = (int) p.getX();
 		posY = (int) p.getY();
+	}
+
+	public int getGoldValue() {
+		return goldValue;
 	}
 }

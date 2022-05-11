@@ -55,8 +55,13 @@ public class Grid extends ScreenElement{
 	}
 	
 	public void next() {
-		for (Enemy e:enemies) {
-			e.act(this);
+		for (int i = 0; i < enemies.size(); i++) {
+			Enemy currentE = enemies.get(i);
+			if (!currentE.act(this)) {
+				gScreen.addGold(currentE.getGoldValue());
+				enemies.remove(i);
+				i--;
+			}
 		}
 		for (Tower t:towers) {
 			t.act(enemies);

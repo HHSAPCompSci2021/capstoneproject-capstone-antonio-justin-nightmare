@@ -48,14 +48,16 @@ public class Tower extends GameElement{
 	}
 	
 	private void attack(ArrayList<Enemy> enemies) {
-		double shortestDist = Double.MAX_VALUE;
-		Enemy closestEnemy= null;
-		for (Enemy e:enemies) {
-			if (this.distanceTo(e) < shortestDist) {
-				shortestDist = this.distanceTo(e);
-				closestEnemy = e;
+		if (enemies.size() > 0) {
+			double shortestDist = Double.MAX_VALUE;
+			Enemy closestEnemy= null;
+			for (Enemy e:enemies) {
+				if (this.distanceTo(e) < shortestDist) {
+					shortestDist = this.distanceTo(e);
+					closestEnemy = e;
+				}
 			}
+			projectiles.add(new Projectile(attackDamage,posX,posY,closestEnemy));
 		}
-		projectiles.add(new Projectile(attackDamage,posX,posY,closestEnemy));
 	}
 }
