@@ -26,7 +26,6 @@ public class Tower extends GameElement{
 		surface.fill(0,200,200);
 		surface.rect(posX, posY, 10, 10);
 		for (Projectile p:projectiles) {
-//			System.out.println("drawing");
 			p.draw(surface);
 		}
 	}
@@ -41,7 +40,6 @@ public class Tower extends GameElement{
 			attackCooldown = TBA;
 		}
 		for (int i = 0; i < projectiles.size(); i++) {
-//			System.out.println("dealing damage");
 			if (!projectiles.get(i).act()) {
 				projectiles.remove(i);
 				i--;
