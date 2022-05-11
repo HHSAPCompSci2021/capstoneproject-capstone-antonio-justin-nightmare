@@ -28,7 +28,6 @@ public class Projectile extends GameElement{
 	}
 	
 	public boolean act() {
-		System.out.println(damageStep);
 		if (damageStep > 0) {
 			damageStep--;
 			return true;
