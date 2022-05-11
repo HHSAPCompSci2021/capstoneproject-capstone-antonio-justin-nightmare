@@ -18,10 +18,11 @@ public class GameScreen extends Screen{
 	public GameScreen(DrawingSurface surface) {
 		super(WIDTH, HEIGHT);
 		grid = new Grid(BORDER_WIDTH,BORDER_WIDTH,960,HEIGHT - BORDER_WIDTH*2);
+		grid.setScreenBorderWidth(BORDER_WIDTH);
 		store = new Store(1000,BORDER_WIDTH,WIDTH-1000-BORDER_WIDTH,HEIGHT - BORDER_WIDTH*2);
 		this.surface = surface;
-		grid.addToGrid(new Enemy(40,30));
-		grid.addToGrid(new Tower(50,50));
+		grid.addToGrid(new Enemy(indexToPos(0),indexToPos(0)));
+//		grid.addToGrid(new Tower(50,50));
 	}
 
 	public void draw() {
@@ -72,11 +73,9 @@ public class GameScreen extends Screen{
 		}
 	}
 	
-	public Point clickToIndex(Point p) {
-		float cellWidth = grid.getCellWidth();
-		
-		int gridX = (int)((p.x - 2*cellWidth)/cellWidth);
-		int gridY = (int)((p.y - 2*cellWidth)/cellWidth);
+	public Point posToIndex(Point p) {
+		int gridX = (int)((p.x - BORDER_WIDTH)/grid.getCellWidth());
+		int gridY = (int)((p.y - BORDER_WIDTH)/grid.getCellWidth());
 		
 		if (gridX < 0 || gridY < 0 || gridX >= grid.getCols() || gridY >= grid.getRows()) {
 			return null;
@@ -85,10 +84,15 @@ public class GameScreen extends Screen{
 		return new Point(gridX, gridY);
 	}
 	
+	// assumes index is in bounds
+	public int indexToPos(int index) {
+		return index*grid.getCellWidth() + BORDER_WIDTH + grid.getCellWidth()/2;
+	}
+	
 	public void mousePressed() {
 		if (surface.mouseButton == PConstants.LEFT) {
 			Point assumedCoords = surface.actualCoordinatesToAssumed(new Point(surface.mouseX,surface.mouseY));
-			Point cellCoord = clickToIndex(assumedCoords);
+			Point cellCoord = posToIndex(assumedCoords);
 			if (cellCoord != null) {
 				// for testing
 				grid.setSpace(cellCoord.x, cellCoord.y);

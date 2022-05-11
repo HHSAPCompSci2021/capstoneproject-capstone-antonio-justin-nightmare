@@ -33,7 +33,7 @@ public class Enemy extends GameElement{
 	 * @return true if enemy is still alive, false if it is not
 	 */
 	public boolean act(Grid g){
-//		move(findPath(g));
+		move(findNextPos(g));
 		return health > 0;
 	}
 	
@@ -50,25 +50,27 @@ public class Enemy extends GameElement{
 	
 	private Point findNextPos(Grid g) {
 		Point currentSpace = getCurrentSpace(g);
-		Point nextSpace = g.getFlowField()[currentSpace.x][currentSpace.y];
-		if (nextSpace == null) {
+		Point [][] flowField = g.getFlowField();
+		if (flowField == null) {
 			return new Point(posX, posY);
 		}
+		
+		Point nextSpace = flowField[currentSpace.x][currentSpace.y];
 		
 		int moveX = 0;
 		int moveY = 0;
 		
-		if (currentSpace.x - nextSpace.x > 0) {
+		if (nextSpace.x - currentSpace.x > 0) {
 			moveX = 1;
 		}
-		else if (currentSpace.x - nextSpace.x < 0) {
+		else if (nextSpace.x - currentSpace.x < 0) {
 			moveX = -1;
 		}
 		
-		if (currentSpace.y - nextSpace.y > 0) {
+		if (nextSpace.y - currentSpace.y > 0) {
 			moveY = 1;
 		}
-		else if (currentSpace.y - nextSpace.y < 0) {
+		else if (nextSpace.y - currentSpace.y < 0) {
 			moveY = -1;
 		}
 		
@@ -93,8 +95,9 @@ public class Enemy extends GameElement{
 	}
 	
 	private Point getCurrentSpace(Grid g) {
-		int col = posX/g.getCellWidth();
-		int row = posY/g.getCellWidth();
+		int col = (int)((posX - g.getScreenBorderWidth())/g.getCellWidth());
+		int row = (int)((posY - g.getScreenBorderWidth())/g.getCellWidth());
+		
 		return new Point(col, row);
 	}
 	

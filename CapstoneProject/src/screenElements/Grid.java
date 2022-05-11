@@ -21,6 +21,7 @@ public class Grid extends ScreenElement{
 	public static final int BLOCKED_SPACE = 2;
 	private Queue<Point> frontier;
 	private Point[][] flowField;
+	private int screenBorderWidth;
 	public Grid(int x, int y, int width, int height) {
 		super(x,y,width,height);
 		cols = width/CELL_WIDTH;
@@ -161,5 +162,13 @@ public class Grid extends ScreenElement{
 	
 	public int[][] getGridMatrix() {
 		return gridMatrix;
+	}
+	
+	public void setScreenBorderWidth(int w) {
+		screenBorderWidth = w;
+	}
+	
+	public int getScreenBorderWidth() {
+		return screenBorderWidth;
 	}
 }
