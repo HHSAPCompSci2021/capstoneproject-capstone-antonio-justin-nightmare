@@ -22,7 +22,7 @@ public class Enemy extends GameElement{
 		surface.circle(posX, posY, 10);
 		surface.fill(0,0,0);
 		surface.text(health, posX, posY);
-		act(g);
+//		act(g);
 	}
 	/**
 	 * Moves the enemy by 1 step
