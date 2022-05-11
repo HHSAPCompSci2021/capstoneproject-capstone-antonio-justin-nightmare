@@ -119,7 +119,13 @@ public class Grid extends ScreenElement{
 	
 	// for testing
 	public void go() {
+		resetGridMatrix();
 		flowField = breadthFirstSearch();
+	}
+	
+	private void resetGridMatrix() {
+		gridMatrix = new int[cols][rows];
+		gridMatrix[goal.x][goal.y] = GOAL_SPACE;
 	}
 	
 	public Point[][] getFlowField() {
