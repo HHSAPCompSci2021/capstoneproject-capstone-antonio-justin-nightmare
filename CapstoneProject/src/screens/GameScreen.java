@@ -1,5 +1,6 @@
 package screens;
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 
 import core.DrawingSurface;
@@ -17,6 +18,7 @@ public class GameScreen extends Screen{
 	private Grid grid;
 	private Store store;
 	private double gold;
+	private int dragOffsetX, dragOffsetY;
 	public GameScreen(DrawingSurface surface) {
 		super(WIDTH, HEIGHT);
 		grid = new Grid(BORDER_WIDTH,BORDER_WIDTH,960,HEIGHT - BORDER_WIDTH*2);

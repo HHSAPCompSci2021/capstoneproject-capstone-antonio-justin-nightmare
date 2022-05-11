@@ -124,8 +124,13 @@ public class Grid extends ScreenElement{
 	}
 	
 	private void resetGridMatrix() {
-		gridMatrix = new int[cols][rows];
-		gridMatrix[goal.x][goal.y] = GOAL_SPACE;
+		for (int col = 0; col < cols; col++) {
+			for (int row = 0; row < rows; row++) {
+				if (gridMatrix[col][row] == PATH_SPACE) {
+					gridMatrix[col][row] = EMPTY_SPACE;
+				}
+			}
+		}
 	}
 	
 	public Point[][] getFlowField() {
