@@ -21,7 +21,8 @@ public class GameScreen extends Screen{
 	private Rectangle currentDrag;
 	
 	// stuff for the store
-	private int ;
+	
+	private Store store;
 	private int headerSize;
 	private Rectangle storeItemRefRect;
 	private int storeItemX, storeItemY;
