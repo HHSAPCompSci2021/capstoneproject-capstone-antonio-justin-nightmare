@@ -49,6 +49,7 @@ public class GameScreen extends Screen{
 		fillGrid();
 		grid.draw(surface);
 		grid.next();
+		store.draw(surface);
 		processKeyPresses();
 		surface.push();
 		surface.fill(0,0,0);
