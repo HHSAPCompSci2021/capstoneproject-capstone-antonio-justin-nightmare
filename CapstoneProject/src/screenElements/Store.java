@@ -33,7 +33,7 @@ public class Store extends ScreenElement{
 		surface.fill(0, 0, 255);
 		surface.stroke(0, 0, 255);
 		surface.rectMode(PConstants.CENTER);
-		surface.rect(storeItemX, storeItemY, storeItemWidth, storeItemWidth);
+		surface.rect(storeItemRefRect.x, storeItemRefRect.y, storeItemWidth, storeItemWidth);
 		surface.pop();
 	}
 	

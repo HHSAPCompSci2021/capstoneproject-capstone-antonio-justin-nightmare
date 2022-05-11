@@ -16,9 +16,15 @@ public class GameScreen extends Screen{
 	private static final double GOLD_PER_SECOND = 5;
 	private DrawingSurface surface;
 	private Grid grid;
-	private Store store;
 	private double gold;
 	private int dragOffsetX, dragOffsetY;
+	private Rectangle currentDrag;
+	
+	// stuff for the store
+	private int ;
+	private int headerSize;
+	private Rectangle storeItemRefRect;
+	private int storeItemX, storeItemY;
 	public GameScreen(DrawingSurface surface) {
 		super(WIDTH, HEIGHT);
 		grid = new Grid(BORDER_WIDTH,BORDER_WIDTH,960,HEIGHT - BORDER_WIDTH*2,this);
@@ -28,6 +34,13 @@ public class GameScreen extends Screen{
 		grid.addToGrid(new Enemy(indexToPos(0),indexToPos(30)));
 		grid.addToGrid(new Tower(indexToPos(1),indexToPos(25)));
 		gold = 0;
+		
+		// stuff for the store
+//		storeItemWidth = (int)(width*0.25);
+//		headerSize = 30;
+//		storeItemX = x+width/2;
+//		storeItemY = y+storeItemWidth/2 + headerSize*2;
+//		storeItemRefRect = new Rectangle(storeItemX, storeItemY, storeItemWidth, storeItemWidth);
 	}
 
 	public void draw() {
@@ -35,7 +48,6 @@ public class GameScreen extends Screen{
 		fillGrid();
 		grid.draw(surface);
 		grid.next();
-		store.draw(surface);
 		processKeyPresses();
 		surface.push();
 		surface.fill(0,0,0);
@@ -107,20 +119,38 @@ public class GameScreen extends Screen{
 			Point cellCoord = posToIndex(assumedCoords);
 			if (cellCoord != null) {
 				// for testing
-				grid.setSpace(cellCoord.x, cellCoord.y);
+//				grid.setSpace(cellCoord.x, cellCoord.y);
 			}
+		}
+		
+//		dragRect();
+	}
+	
+	public void mouseDragged() {
+		// for testing
+//		if (surface.mouseButton == PConstants.LEFT) {
+//			Point assumedCoords = surface.actualCoordinatesToAssumed(new Point(surface.mouseX,surface.mouseY));
+//			Point cellCoord = posToIndex(assumedCoords);
+//			if (cellCoord != null) {
+//				grid.setSpace(cellCoord.x, cellCoord.y);
+//			}
+//		}
+		
+		if (currentDrag != null) {
+			currentDrag.x = surface.mouseX - dragOffsetX;
+			currentDrag.y = surface.mouseY - dragOffsetY;
 		}
 	}
 	
-	// for testing
-	public void mouseDragged() {
-		if (surface.mouseButton == PConstants.LEFT) {
-			Point assumedCoords = surface.actualCoordinatesToAssumed(new Point(surface.mouseX,surface.mouseY));
-			Point cellCoord = posToIndex(assumedCoords);
-			if (cellCoord != null) {
-				// for testing
-				grid.setSpace(cellCoord.x, cellCoord.y);
-			}
+	public void mouseReleased() {
+		currentDrag = null;
+	}
+	
+	public void dragRect(Rectangle r) {
+		if (r.contains(surface.mouseX, surface.mouseY)) {
+			currentDrag = r;
+			dragOffsetX = surface.mouseX - r.x;
+			dragOffsetY = surface.mouseY - r.y;
 		}
 	}
 	
@@ -130,9 +160,9 @@ public class GameScreen extends Screen{
 	}
 	
 	private void processKeyPresses() {
-		if (surface.isPressed(KeyEvent.VK_W)) {
-			System.out.println("W pressed");
-		}
+//		if (surface.isPressed(KeyEvent.VK_W)) {
+//			System.out.println("W pressed");
+//		}
 	}
 	
 	public void addGold(int amount) {
