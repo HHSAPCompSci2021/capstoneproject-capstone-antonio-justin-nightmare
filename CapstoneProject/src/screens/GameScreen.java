@@ -97,7 +97,19 @@ public class GameScreen extends Screen{
 				// for testing
 				grid.setSpace(cellCoord.x, cellCoord.y);
 			}
-		} 
+		}
+	}
+	
+	// for testing
+	public void mouseDragged() {
+		if (surface.mouseButton == PConstants.LEFT) {
+			Point assumedCoords = surface.actualCoordinatesToAssumed(new Point(surface.mouseX,surface.mouseY));
+			Point cellCoord = posToIndex(assumedCoords);
+			if (cellCoord != null) {
+				// for testing
+				grid.setSpace(cellCoord.x, cellCoord.y);
+			}
+		}
 	}
 	
 	// for testing

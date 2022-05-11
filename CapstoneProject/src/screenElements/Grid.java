@@ -108,8 +108,8 @@ public class Grid extends ScreenElement{
 	
 	// for testing
 	public void setSpace(int x, int y) {
-		if (gridMatrix[x][y] != 2) {
-			gridMatrix[x][y] = 2;
+		if (gridMatrix[x][y] != BLOCKED_SPACE) {
+			gridMatrix[x][y] = BLOCKED_SPACE;
 		}
 		else {
 			gridMatrix[x][y] = 0;
