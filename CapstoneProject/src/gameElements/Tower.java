@@ -15,7 +15,7 @@ public class Tower extends GameElement{
 		super(x,y);
 		price = 100;
 		attackDamage = 2;
-		attackSpeed = 1;
+		attackSpeed = 10;
 		TBA = (int) (60/attackSpeed);
 		attackCooldown = TBA;
 		projectiles = new ArrayList<Projectile>();

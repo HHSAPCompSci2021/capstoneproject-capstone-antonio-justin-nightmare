@@ -25,6 +25,7 @@ public class Grid extends ScreenElement{
 	private Point[][] flowField;
 	private int screenBorderWidth;
 	private GameScreen gScreen;
+	private int waveNum;
 	public Grid(int x, int y, int width, int height,GameScreen sc) {
 		super(x,y,width,height);
 		cols = width/CELL_WIDTH;
@@ -36,6 +37,7 @@ public class Grid extends ScreenElement{
 		gridMatrix[goal.x][goal.y] = GOAL_SPACE;
 		frontier = new LinkedList<Point>();
 		gScreen = sc;
+		waveNum = 1;
 	}
 	
 	public void draw(DrawingSurface surface) {
@@ -129,6 +131,8 @@ public class Grid extends ScreenElement{
 	public void go() {
 		resetGridMatrix();
 		flowField = breadthFirstSearch();
+		spawnWave(waveNum);
+		waveNum++;
 	}
 	
 	private void resetGridMatrix() {
@@ -162,7 +166,9 @@ public class Grid extends ScreenElement{
 	}
 	
 	public void spawnWave(int waveNum) {
-		addToGrid(new Enemy(screenBorderWidth,94));
+		for (int i = 0; i < waveNum; i++) {
+			addToGrid(new Enemy(gScreen.indexToPos(0),gScreen.indexToPos((int)(Math.random()*60))));
+		}
 	}
 	
 	public int getRows() {
