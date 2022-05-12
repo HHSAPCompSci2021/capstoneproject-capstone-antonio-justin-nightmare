@@ -13,7 +13,6 @@ public class GameScreen extends Screen{
 	private static final int WIDTH = 1280;
 	private static final int HEIGHT = 720;
 	private static final int BORDER_WIDTH = 20;
-	//private static final double GOLD_PER_SECOND = 5;
 	private DrawingSurface surface;
 	private Grid grid;
 	private Store store;
@@ -23,6 +22,7 @@ public class GameScreen extends Screen{
 	private boolean hasClickedTower;
 	private boolean isDraggingTower;
 	private int draggedTowerAlpha;
+	private int baseHealth;
 	public GameScreen(DrawingSurface surface) {
 		super(WIDTH, HEIGHT);
 		grid = new Grid(BORDER_WIDTH,BORDER_WIDTH,960,HEIGHT - BORDER_WIDTH*2,this);
@@ -36,6 +36,7 @@ public class GameScreen extends Screen{
 		hasClickedTower = false;
 		isDraggingTower = false;
 		draggedTowerAlpha = 50;
+		baseHealth = 20;
 	}
 
 	public void draw() {
@@ -53,10 +54,9 @@ public class GameScreen extends Screen{
 		surface.fill(0,0,0);
 		surface.textAlign(surface.RIGHT);
 		//surface.textSize(100);
-		surface.text("Gold: "+(int)gold, WIDTH-BORDER_WIDTH-100, BORDER_WIDTH, 100,100);
+		surface.text("Gold: "+(int)gold, WIDTH-BORDER_WIDTH-100, BORDER_WIDTH, 100,20);
+		surface.text("Base health: "+baseHealth, WIDTH-BORDER_WIDTH-100, BORDER_WIDTH+20,100,20);
 		surface.pop();
-		
-		//gold += GOLD_PER_SECOND/60;
 	}
 	
 	private void fillGrid() {
@@ -194,5 +194,9 @@ public class GameScreen extends Screen{
 	
 	public void removeGold(int amount) {
 		gold -= amount;
+	}
+	
+	public void takeDamage(int amount) {
+		baseHealth -= amount;
 	}
 }
