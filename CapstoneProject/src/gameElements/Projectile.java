@@ -9,7 +9,7 @@ public class Projectile extends GameElement{
 	public Projectile(int damage, int x, int y) {
 		super(x,y);
 		this.damage = damage;
-		damageDelay = 20;
+		damageDelay = 5;
 		damageStep = damageDelay;
 	}
 	
