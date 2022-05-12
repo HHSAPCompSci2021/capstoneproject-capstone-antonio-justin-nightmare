@@ -29,7 +29,7 @@ public class GameScreen extends Screen{
 		grid.setScreenBorderWidth(BORDER_WIDTH);
 		store = new Store(1000,BORDER_WIDTH,WIDTH-1000-BORDER_WIDTH,HEIGHT - BORDER_WIDTH*2,this);
 		this.surface = surface;
-		grid.addToGrid(new Enemy(indexToPos(0),indexToPos(30)));
+		//grid.addToGrid(new Enemy(indexToPos(0),indexToPos(30)));
 		grid.addToGrid(new Tower(indexToPos(1),indexToPos(25)));
 		gold = 0;
 		storeItemRect = new Rectangle();
@@ -39,24 +39,28 @@ public class GameScreen extends Screen{
 		baseHealth = 20;
 	}
 
-	public void draw() {
-		surface.background(150,150,200);
-		fillGrid();
-		grid.draw(surface);
-		grid.next();
-		store.draw(surface);
-		surface.fill(store.getItemColor().getRed(), store.getItemColor().getGreen(), store.getItemColor().getBlue(), draggedTowerAlpha);
-		surface.stroke(store.getItemColor().getRed(), store.getItemColor().getGreen(), store.getItemColor().getBlue(), draggedTowerAlpha);
-		surface.rect(storeItemRect.x, storeItemRect.y, storeItemRect.width, storeItemRect.height);
-		processKeyPresses();
-		
-		surface.push();
-		surface.fill(0,0,0);
-		surface.textAlign(surface.RIGHT);
-		//surface.textSize(100);
-		surface.text("Gold: "+(int)gold, WIDTH-BORDER_WIDTH-100, BORDER_WIDTH, 100,20);
-		surface.text("Base health: "+baseHealth, WIDTH-BORDER_WIDTH-100, BORDER_WIDTH+20,100,20);
-		surface.pop();
+	public void draw() { 
+		if (baseHealth > 0) {
+			surface.background(150,150,200);
+			fillGrid();
+			grid.draw(surface);
+			grid.next();
+			store.draw(surface);
+			surface.fill(store.getItemColor().getRed(), store.getItemColor().getGreen(), store.getItemColor().getBlue(), draggedTowerAlpha);
+			surface.stroke(store.getItemColor().getRed(), store.getItemColor().getGreen(), store.getItemColor().getBlue(), draggedTowerAlpha);
+			surface.rect(storeItemRect.x, storeItemRect.y, storeItemRect.width, storeItemRect.height);
+			processKeyPresses();
+			
+			surface.push();
+			surface.fill(0,0,0);
+			surface.textAlign(PConstants.RIGHT);
+			surface.textSize(15);
+			surface.text("Gold: "+(int)gold, WIDTH-BORDER_WIDTH-200, BORDER_WIDTH, 200,20);
+			surface.text("Base health: "+baseHealth, WIDTH-BORDER_WIDTH-200, BORDER_WIDTH+20,200,20);
+			surface.pop();
+		} else {
+			surface.switchScreen(ScreenSwitcher.END_SCREEN);
+		}
 	}
 	
 	private void fillGrid() {

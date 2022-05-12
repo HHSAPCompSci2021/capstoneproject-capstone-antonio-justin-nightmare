@@ -21,6 +21,7 @@ public class Enemy extends GameElement{
 		surface.fill(200,200,0);
 		surface.circle(posX, posY, 10);
 		surface.fill(0,0,0);
+		surface.textSize(10);
 		surface.text(health, posX, posY);
 //		act(g);
 	}
