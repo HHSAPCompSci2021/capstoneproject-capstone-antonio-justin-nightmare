@@ -12,7 +12,7 @@ import screens.GameScreen;
 public class Grid extends ScreenElement{
 	private int cols;
 	private int rows;
-	private static final int CELL_WIDTH = 10;
+	private static final int CELL_WIDTH = 20;
 	private ArrayList<Enemy> enemies;
 	private ArrayList<Tower> towers;
 	private Point goal;
@@ -33,7 +33,7 @@ public class Grid extends ScreenElement{
 		gridMatrix = new int[cols][rows];
 		enemies = new ArrayList<Enemy>();
 		towers = new ArrayList<Tower>();
-		goal = new Point(95, 34);
+		goal = new Point(cols-1, rows/2);
 		gridMatrix[goal.x][goal.y] = GOAL_SPACE;
 		frontier = new LinkedList<Point>();
 		gScreen = sc;
@@ -167,7 +167,7 @@ public class Grid extends ScreenElement{
 	
 	public void spawnWave(int waveNum) {
 		for (int i = 0; i < waveNum; i++) {
-			addToGrid(new Enemy(gScreen.indexToPos(0),gScreen.indexToPos((int)(Math.random()*60))));
+			addToGrid(new Enemy(gScreen.indexToPos(0),gScreen.indexToPos((int)(Math.random()*rows))));
 		}
 	}
 	
