@@ -45,7 +45,7 @@ public class GameScreen extends Screen{
 			grid.next();
 			store.draw(surface);
 			surface.fill(store.getItemColor().getRed(), store.getItemColor().getGreen(), store.getItemColor().getBlue(), draggedTowerAlpha);
-			surface.stroke(store.getItemColor().getRed(), store.getItemColor().getGreen(), store.getItemColor().getBlue(), draggedTowerAlpha);
+			surface.stroke(0);
 			surface.rect(storeItemRect.x, storeItemRect.y, storeItemRect.width, storeItemRect.height);
 			processKeyPresses();
 			
@@ -84,12 +84,6 @@ public class GameScreen extends Screen{
 						surface.stroke(0, 255, 0);
 						test = true;
 					}
-				}
-				
-				if (grid.getGridMatrix()[col][row] == Grid.BLOCKED_SPACE) {
-					// for testing
-					surface.fill(0, 0, 255);
-					surface.stroke(0, 0, 255);
 				}
 				
 				if (grid.getGridMatrix()[col][row] == Grid.GOAL_SPACE) {
@@ -157,22 +151,7 @@ public class GameScreen extends Screen{
 	}
 	
 	public void mouseReleased() {
-		Point assumedCoords = surface.actualCoordinatesToAssumed(new Point(surface.mouseX,surface.mouseY));
-		if (isDraggingTower) {
-			Point gridPos = realPosToGridPos(assumedCoords);
-			if (gridPos != null) {
-				if (gridPos.x-1 >= 0 && gridPos.x < grid.getCols() && gridPos.y-1 >= 0 && gridPos.y < grid.getRows()) {
-					grid.setSpace(gridPos.x, gridPos.y, Grid.BLOCKED_SPACE);
-					grid.setSpace(gridPos.x-1, gridPos.y, Grid.BLOCKED_SPACE);
-					grid.setSpace(gridPos.x, gridPos.y-1, Grid.BLOCKED_SPACE);
-					grid.setSpace(gridPos.x-1, gridPos.y-1, Grid.BLOCKED_SPACE);
-					int x = indexToPosNoBuffer(gridPos.x);
-					int y = indexToPosNoBuffer(gridPos.y);
-					grid.addToGrid(new Tower(x, y, grid.getCellWidth()*2, store));
-				}
-			}
-		}
-		
+		placeTower();
 		isDraggingTower = false;
 		hasClickedTower = false;
 		storeItemRect.x = 0;
@@ -181,8 +160,41 @@ public class GameScreen extends Screen{
 		storeItemRect.height = 0;
 	}
 	
+	private void placeTower() {
+		if (!isDraggingTower) {
+			return;
+		}
+		
+		Point assumedCoords = surface.actualCoordinatesToAssumed(new Point(surface.mouseX,surface.mouseY));
+		Point gridPos = realPosToGridPos(assumedCoords);
+		if (gridPos == null) {
+			return;
+		}
+		if (gridPos.x-1 < 0 || gridPos.x >= grid.getCols() || gridPos.y-1 < 0 || gridPos.y >= grid.getRows()) {
+			return;
+		}
+		if (checkDoesTowerOverlap(gridPos.x, gridPos.y)) {
+			return;
+		}
+		
+		grid.setSpace(gridPos.x, gridPos.y, Grid.BLOCKED_SPACE);
+		grid.setSpace(gridPos.x-1, gridPos.y, Grid.BLOCKED_SPACE);
+		grid.setSpace(gridPos.x, gridPos.y-1, Grid.BLOCKED_SPACE);
+		grid.setSpace(gridPos.x-1, gridPos.y-1, Grid.BLOCKED_SPACE);
+		int x = indexToPosNoBuffer(gridPos.x);
+		int y = indexToPosNoBuffer(gridPos.y);
+		grid.addToGrid(new Tower(x, y, grid.getCellWidth()*2, store));
+	}
+	
 	private int indexToPosNoBuffer(int index) {
 		return index*grid.getCellWidth() + BORDER_WIDTH;
+	}
+	
+	private boolean checkDoesTowerOverlap(int col, int row) {
+		return grid.getGridMatrix()[col][row] == Grid.BLOCKED_SPACE ||
+				grid.getGridMatrix()[col-1][row] == Grid.BLOCKED_SPACE ||
+				grid.getGridMatrix()[col][row-1] == Grid.BLOCKED_SPACE ||
+				grid.getGridMatrix()[col-1][row-1] == Grid.BLOCKED_SPACE;
 	}
 	
 	public void dragTower(Rectangle r) {

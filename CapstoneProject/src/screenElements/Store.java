@@ -8,6 +8,7 @@ import processing.core.PConstants;
 import screens.GameScreen;
 
 public class Store extends ScreenElement{
+	private Color color;
 	private int itemWidth;
 	private int headerSize;
 	private Rectangle itemRefRect;
@@ -16,6 +17,7 @@ public class Store extends ScreenElement{
 	private GameScreen gScreen;
 	public Store (int x, int y, int width, int height, GameScreen sc) {
 		super(x,y,width,height);
+		color = new Color(200, 150, 0);
 		itemWidth = (int)(width*0.25);
 		headerSize = 30;
 		itemX = x + width/2 - itemWidth/2;
@@ -27,14 +29,14 @@ public class Store extends ScreenElement{
 	
 	public void draw(DrawingSurface surface) {
 		surface.push();
-		surface.fill(0, 200, 0);
+		surface.fill(color.getRed(), color.getGreen(), color.getBlue());
 		surface.stroke(0);
 		surface.rect(x, y, width, height);
 		surface.fill(0);
 		surface.textSize(headerSize);
 		surface.text("Store", x + width*0.1f, y + width*0.1f + headerSize*0.5f);
 		surface.fill(itemColor.getRed(), itemColor.getGreen(), itemColor.getBlue());
-		surface.stroke(itemColor.getRed(), itemColor.getGreen(), itemColor.getBlue());
+		surface.stroke(0);
 		surface.rect(itemX, itemY, itemWidth, itemWidth);
 		surface.pop();
 	}
