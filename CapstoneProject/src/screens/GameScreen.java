@@ -13,7 +13,7 @@ public class GameScreen extends Screen{
 	private static final int WIDTH = 1280;
 	private static final int HEIGHT = 720;
 	private static final int BORDER_WIDTH = 20;
-	private static final double GOLD_PER_SECOND = 5;
+	//private static final double GOLD_PER_SECOND = 5;
 	private DrawingSurface surface;
 	private Grid grid;
 	private Store store;
@@ -56,7 +56,7 @@ public class GameScreen extends Screen{
 		surface.text("Gold: "+(int)gold, WIDTH-BORDER_WIDTH-100, BORDER_WIDTH, 100,100);
 		surface.pop();
 		
-		gold += GOLD_PER_SECOND/60;
+		//gold += GOLD_PER_SECOND/60;
 	}
 	
 	private void fillGrid() {
