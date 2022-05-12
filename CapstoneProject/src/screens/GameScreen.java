@@ -67,10 +67,10 @@ public class GameScreen extends Screen{
 		surface.fill(255);
 		surface.stroke(255);
 		
-		for (int i = 0; i < grid.getCols(); i++) {
-			for (int j = 0; j < grid.getRows(); j++) {
-				float cellX = grid.getX() + i*cellWidth;
-				float cellY = grid.getY() + j*cellWidth;
+		for (int col = 0; col < grid.getCols(); col++) {
+			for (int row = 0; row < grid.getRows(); row++) {
+				float cellX = grid.getX() + col*cellWidth;
+				float cellY = grid.getY() + row*cellWidth;
 				
 				boolean test = false;
 				
@@ -86,13 +86,13 @@ public class GameScreen extends Screen{
 					}
 				}
 				
-				if (grid.getGridMatrix()[i][j] == Grid.BLOCKED_SPACE) {
+				if (grid.getGridMatrix()[col][row] == Grid.BLOCKED_SPACE) {
 					// for testing
 					surface.fill(0, 0, 255);
 					surface.stroke(0, 0, 255);
 				}
 				
-				if (grid.getGridMatrix()[i][j] == Grid.GOAL_SPACE) {
+				if (grid.getGridMatrix()[col][row] == Grid.GOAL_SPACE) {
 					// for testing
 					surface.fill(255, 200, 0);
 					surface.stroke(255, 200, 0);
@@ -161,13 +161,15 @@ public class GameScreen extends Screen{
 		if (isDraggingTower) {
 			Point gridPos = realPosToGridPos(assumedCoords);
 			if (gridPos != null) {
-				grid.setSpace(gridPos.x, gridPos.y, Grid.BLOCKED_SPACE);
-				grid.setSpace(gridPos.x-1, gridPos.y, Grid.BLOCKED_SPACE);
-				grid.setSpace(gridPos.x, gridPos.y-1, Grid.BLOCKED_SPACE);
-				grid.setSpace(gridPos.x-1, gridPos.y-1, Grid.BLOCKED_SPACE);
-				int x = indexToPosNoBuffer(gridPos.x);
-				int y = indexToPosNoBuffer(gridPos.y);
-				grid.addToGrid(new Tower(x, y, grid.getCellWidth()*2, store));
+				if (gridPos.x-1 >= 0 && gridPos.x < grid.getCols() && gridPos.y-1 >= 0 && gridPos.y < grid.getRows()) {
+					grid.setSpace(gridPos.x, gridPos.y, Grid.BLOCKED_SPACE);
+					grid.setSpace(gridPos.x-1, gridPos.y, Grid.BLOCKED_SPACE);
+					grid.setSpace(gridPos.x, gridPos.y-1, Grid.BLOCKED_SPACE);
+					grid.setSpace(gridPos.x-1, gridPos.y-1, Grid.BLOCKED_SPACE);
+					int x = indexToPosNoBuffer(gridPos.x);
+					int y = indexToPosNoBuffer(gridPos.y);
+					grid.addToGrid(new Tower(x, y, grid.getCellWidth()*2, store));
+				}
 			}
 		}
 		
