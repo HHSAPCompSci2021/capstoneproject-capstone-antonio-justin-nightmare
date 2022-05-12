@@ -1,5 +1,6 @@
 package screenElements;
 
+import java.awt.Color;
 import java.awt.Rectangle;
 
 import core.DrawingSurface;
@@ -7,17 +8,19 @@ import processing.core.PConstants;
 import screens.GameScreen;
 
 public class Store extends ScreenElement{
-	private int storeItemWidth;
+	private int itemWidth;
 	private int headerSize;
-	private Rectangle storeItemRefRect;
-	private int storeItemX, storeItemY;
+	private Rectangle itemRefRect;
+	private int itemX, itemY;
+	private Color itemColor;
 	public Store (int x, int y, int width, int height) {
 		super(x,y,width,height);
-		storeItemWidth = (int)(width*0.25);
+		itemWidth = (int)(width*0.25);
 		headerSize = 30;
-		storeItemX = x + width/2 - storeItemWidth/2;
-		storeItemY = y+storeItemWidth/2 - storeItemWidth/2 + headerSize*2;
-		storeItemRefRect = new Rectangle(storeItemX, storeItemY, storeItemWidth, storeItemWidth);
+		itemX = x + width/2 - itemWidth/2;
+		itemY = y+itemWidth/2 - itemWidth/2 + headerSize*2;
+		itemRefRect = new Rectangle(itemX, itemY, itemWidth, itemWidth);
+		itemColor = new Color(0, 0, 255);
 	}
 	
 	public void draw(DrawingSurface surface) {
@@ -28,13 +31,17 @@ public class Store extends ScreenElement{
 		surface.fill(0);
 		surface.textSize(headerSize);
 		surface.text("Store", x + width*0.1f, y + width*0.1f + headerSize*0.5f);
-		surface.fill(0, 0, 255);
-		surface.stroke(0, 0, 255);
-		surface.rect(storeItemRefRect.x, storeItemRefRect.y, storeItemWidth, storeItemWidth);
+		surface.fill(itemColor.getRed(), itemColor.getGreen(), itemColor.getBlue());
+		surface.stroke(itemColor.getRed(), itemColor.getGreen(), itemColor.getBlue());
+		surface.rect(itemX, itemY, itemWidth, itemWidth);
 		surface.pop();
 	}
 	
 	public Rectangle getStoreItemRefRect() {
-		return storeItemRefRect;
+		return itemRefRect;
+	}
+	
+	public Color getItemColor() {
+		return itemColor;
 	}
 }

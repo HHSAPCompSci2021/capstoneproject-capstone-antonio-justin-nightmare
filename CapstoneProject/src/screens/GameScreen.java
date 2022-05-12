@@ -19,7 +19,9 @@ public class GameScreen extends Screen{
 	private Store store;
 	private double gold;
 	private int dragOffsetX, dragOffsetY;
-	private Rectangle currentDrag;
+	private Rectangle storeItemRect;
+	private boolean hasClickedTower;
+	private int draggedTowerAlpha;
 	public GameScreen(DrawingSurface surface) {
 		super(WIDTH, HEIGHT);
 		grid = new Grid(BORDER_WIDTH,BORDER_WIDTH,960,HEIGHT - BORDER_WIDTH*2,this);
@@ -29,6 +31,9 @@ public class GameScreen extends Screen{
 		grid.addToGrid(new Enemy(indexToPos(0),indexToPos(30)));
 		grid.addToGrid(new Tower(indexToPos(1),indexToPos(25)));
 		gold = 0;
+		storeItemRect = new Rectangle();
+		hasClickedTower = false;
+		draggedTowerAlpha = 100;
 	}
 
 	public void draw() {
@@ -37,13 +42,18 @@ public class GameScreen extends Screen{
 		grid.draw(surface);
 		grid.next();
 		store.draw(surface);
+		surface.fill(store.getItemColor().getRed(), store.getItemColor().getGreen(), store.getItemColor().getBlue(), draggedTowerAlpha);
+		surface.stroke(store.getItemColor().getRed(), store.getItemColor().getGreen(), store.getItemColor().getBlue(), draggedTowerAlpha);
+		surface.rect(storeItemRect.x, storeItemRect.y, storeItemRect.width, storeItemRect.height);
 		processKeyPresses();
+		
 		surface.push();
 		surface.fill(0,0,0);
 		surface.textAlign(surface.RIGHT);
 		//surface.textSize(100);
 		surface.text("Gold: "+(int)gold, WIDTH-BORDER_WIDTH-100, BORDER_WIDTH, 100,100);
 		surface.pop();
+		
 		gold += GOLD_PER_SECOND/60;
 	}
 	
@@ -103,6 +113,10 @@ public class GameScreen extends Screen{
 	}
 	
 	public void mousePressed() {
+		if (store.getStoreItemRefRect().contains(surface.mouseX, surface.mouseY)) {
+			dragTower(store.getStoreItemRefRect());
+		}
+		
 		if (surface.mouseButton == PConstants.LEFT) {
 			Point assumedCoords = surface.actualCoordinatesToAssumed(new Point(surface.mouseX,surface.mouseY));
 			Point cellCoord = posToIndex(assumedCoords);
@@ -111,11 +125,14 @@ public class GameScreen extends Screen{
 //				grid.setSpace(cellCoord.x, cellCoord.y);
 			}
 		}
-		
-		dragRect(store.getStoreItemRefRect());
 	}
 	
 	public void mouseDragged() {
+		if (storeItemRect != null) {
+			storeItemRect.x = surface.mouseX - dragOffsetX;
+			storeItemRect.y = surface.mouseY - dragOffsetY;
+		}
+		
 		// for testing
 //		if (surface.mouseButton == PConstants.LEFT) {
 //			Point assumedCoords = surface.actualCoordinatesToAssumed(new Point(surface.mouseX,surface.mouseY));
@@ -124,23 +141,27 @@ public class GameScreen extends Screen{
 //				grid.setSpace(cellCoord.x, cellCoord.y);
 //			}
 //		}
-		
-		if (currentDrag != null) {
-			currentDrag.x = surface.mouseX - dragOffsetX;
-			currentDrag.y = surface.mouseY - dragOffsetY;
-		}
 	}
 	
 	public void mouseReleased() {
-		currentDrag = null;
+		storeItemRect.x = 0;
+		storeItemRect.y = 0;
+		storeItemRect.width = 0;
+		storeItemRect.height = 0;
+		hasClickedTower = false;
 	}
 	
-	public void dragRect(Rectangle r) {
-		if (r.contains(surface.mouseX, surface.mouseY)) {
-			currentDrag = r;
-			dragOffsetX = surface.mouseX - r.x;
-			dragOffsetY = surface.mouseY - r.y;
+	public void dragTower(Rectangle r) {
+		if (!hasClickedTower) {
+			storeItemRect.x = r.x;
+			storeItemRect.y = r.y;
+			storeItemRect.width = r.width;
+			storeItemRect.height = r.height;
+			hasClickedTower = true;
 		}
+		
+		dragOffsetX = surface.mouseX - storeItemRect.x;
+		dragOffsetY = surface.mouseY - storeItemRect.y;
 	}
 	
 	// for testing
