@@ -29,8 +29,14 @@ public class Enemy extends GameElement{
 	 * @return true if enemy is still alive, false if it is not
 	 */
 	public boolean act(Grid g){
-		move(findNextPos(g));
-		return health > 0;
+		Point nextPos = findNextPos(g);
+		if (!nextPos.equals(new Point(posX,posY))) {
+			move(nextPos);
+			return health > 0;
+		} else {
+			g.takeDamage(1);
+			return false;
+		}
 	}
 	
 

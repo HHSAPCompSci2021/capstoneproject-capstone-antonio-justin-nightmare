@@ -195,4 +195,7 @@ public class Grid extends ScreenElement{
 		return screenBorderWidth;
 	}
 	
+	public void takeDamage(int amount) {
+		gScreen.takeDamage(amount);
+	}
 }
