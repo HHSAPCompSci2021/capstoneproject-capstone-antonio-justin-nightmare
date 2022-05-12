@@ -21,7 +21,7 @@ public class Store extends ScreenElement{
 		itemX = x + width/2 - itemWidth/2;
 		itemY = y+itemWidth/2 - itemWidth/2 + headerSize*2;
 		itemRefRect = new Rectangle(itemX, itemY, itemWidth, itemWidth);
-		itemColor = new Color(0, 0, 255);
+		itemColor = new Color(0, 200, 200);
 		gScreen = sc;
 	}
 	

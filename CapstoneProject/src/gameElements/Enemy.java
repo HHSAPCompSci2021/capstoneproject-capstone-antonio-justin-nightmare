@@ -6,20 +6,22 @@ import screenElements.Grid;
 import java.awt.Point;
 public class Enemy extends GameElement{
 	private int health;
+	private int diameter;
 	private static final int goldValue = 10;
 	public Enemy(int x, int y) {
 		super(x,y);
 		health = 10;
+		diameter = 18;
 	}
 	
 	@Override
 	public void draw(DrawingSurface surface) {
-		surface.circle(posX, posY, 10);
+		surface.circle(posX, posY, diameter);
 	}
 	
 	public void draw(DrawingSurface surface, Grid g) {
 		surface.fill(200,200,0);
-		surface.circle(posX, posY, 10);
+		surface.circle(posX, posY, diameter);
 		surface.fill(0,0,0);
 		surface.textSize(10);
 		surface.text(health, posX, posY);

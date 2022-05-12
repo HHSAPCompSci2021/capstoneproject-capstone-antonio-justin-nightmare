@@ -42,16 +42,14 @@ public class Grid extends ScreenElement{
 	
 	public void draw(DrawingSurface surface) {
 		surface.push();
-		// Sets the background
 		surface.noFill();
 		surface.rect(x, y, width, height);
 		
-		// Draws all the enemies
-		for (Enemy e:enemies) {
-			e.draw(surface,this);
-		}
 		for (Tower t:towers) {
 			t.draw(surface);
+		}
+		for (Enemy e:enemies) {
+			e.draw(surface,this);
 		}
 		surface.pop();
 	}
@@ -122,9 +120,8 @@ public class Grid extends ScreenElement{
 		return new Point(x, y);
 	}
 	
-	// for testing
-	public void setSpace(int x, int y) {
-		gridMatrix[x][y] = BLOCKED_SPACE;
+	public void setSpace(int col, int row, int val) {
+		gridMatrix[col][row] = val;
 	}
 	
 	// for testing

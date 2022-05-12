@@ -29,8 +29,7 @@ public class GameScreen extends Screen{
 		grid.setScreenBorderWidth(BORDER_WIDTH);
 		store = new Store(1000,BORDER_WIDTH,WIDTH-1000-BORDER_WIDTH,HEIGHT - BORDER_WIDTH*2,this);
 		this.surface = surface;
-		//grid.addToGrid(new Enemy(indexToPos(0),indexToPos(30)));
-		grid.addToGrid(new Tower(indexToPos(1),indexToPos(25)));
+		grid.addToGrid(new Tower(indexToPos(1),indexToPos(25), grid.getCellWidth(),store));
 		gold = 0;
 		storeItemRect = new Rectangle();
 		hasClickedTower = false;
@@ -113,7 +112,7 @@ public class GameScreen extends Screen{
 		}
 	}
 	
-	public Point posToIndex(Point p) {
+	public Point realPosToGridPos(Point p) {
 		int gridX = (int)((p.x - BORDER_WIDTH)/grid.getCellWidth());
 		int gridY = (int)((p.y - BORDER_WIDTH)/grid.getCellWidth());
 		
@@ -136,7 +135,7 @@ public class GameScreen extends Screen{
 		
 		// for testing
 //		Point assumedCoords = surface.actualCoordinatesToAssumed(new Point(surface.mouseX,surface.mouseY));
-//		Point cellCoord = posToIndex(assumedCoords);
+//		Point cellCoord = realPosToGridPos(assumedCoords);
 //		if (cellCoord != null) {
 //			grid.setSpace(cellCoord.x, cellCoord.y);
 //		}
@@ -151,7 +150,7 @@ public class GameScreen extends Screen{
 		// for testing
 //		if (surface.mouseButton == PConstants.LEFT) {
 //			Point assumedCoords = surface.actualCoordinatesToAssumed(new Point(surface.mouseX,surface.mouseY));
-//			Point cellCoord = posToIndex(assumedCoords);
+//			Point cellCoord = realPosToGridPos(assumedCoords);
 //			if (cellCoord != null) {
 //				grid.setSpace(cellCoord.x, cellCoord.y);
 //			}
@@ -159,12 +158,28 @@ public class GameScreen extends Screen{
 	}
 	
 	public void mouseReleased() {
+		Point assumedCoords = surface.actualCoordinatesToAssumed(new Point(surface.mouseX,surface.mouseY));
+		if (isDraggingTower) {
+			Point gridPos = realPosToGridPos(assumedCoords);
+			grid.setSpace(gridPos.x, gridPos.y, Grid.BLOCKED_SPACE);
+			grid.setSpace(gridPos.x-1, gridPos.y, Grid.BLOCKED_SPACE);
+			grid.setSpace(gridPos.x, gridPos.y-1, Grid.BLOCKED_SPACE);
+			grid.setSpace(gridPos.x-1, gridPos.y-1, Grid.BLOCKED_SPACE);
+			int x = indexToPosNoBuffer(gridPos.x);
+			int y = indexToPosNoBuffer(gridPos.y);
+			grid.addToGrid(new Tower(x, y, grid.getCellWidth()*2, store));
+		}
+		
+		isDraggingTower = false;
+		hasClickedTower = false;
 		storeItemRect.x = 0;
 		storeItemRect.y = 0;
 		storeItemRect.width = 0;
 		storeItemRect.height = 0;
-		hasClickedTower = false;
-		isDraggingTower = false;
+	}
+	
+	private int indexToPosNoBuffer(int index) {
+		return index*grid.getCellWidth() + BORDER_WIDTH;
 	}
 	
 	public void dragTower(Rectangle r) {
