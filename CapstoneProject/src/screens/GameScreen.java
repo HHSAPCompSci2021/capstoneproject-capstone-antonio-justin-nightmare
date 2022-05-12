@@ -29,7 +29,6 @@ public class GameScreen extends Screen{
 		grid.setScreenBorderWidth(BORDER_WIDTH);
 		store = new Store(1000,BORDER_WIDTH,WIDTH-1000-BORDER_WIDTH,HEIGHT - BORDER_WIDTH*2,this);
 		this.surface = surface;
-		grid.addToGrid(new Tower(indexToPos(1),indexToPos(25), grid.getCellWidth(),store));
 		gold = 0;
 		storeItemRect = new Rectangle();
 		hasClickedTower = false;
@@ -161,13 +160,15 @@ public class GameScreen extends Screen{
 		Point assumedCoords = surface.actualCoordinatesToAssumed(new Point(surface.mouseX,surface.mouseY));
 		if (isDraggingTower) {
 			Point gridPos = realPosToGridPos(assumedCoords);
-			grid.setSpace(gridPos.x, gridPos.y, Grid.BLOCKED_SPACE);
-			grid.setSpace(gridPos.x-1, gridPos.y, Grid.BLOCKED_SPACE);
-			grid.setSpace(gridPos.x, gridPos.y-1, Grid.BLOCKED_SPACE);
-			grid.setSpace(gridPos.x-1, gridPos.y-1, Grid.BLOCKED_SPACE);
-			int x = indexToPosNoBuffer(gridPos.x);
-			int y = indexToPosNoBuffer(gridPos.y);
-			grid.addToGrid(new Tower(x, y, grid.getCellWidth()*2, store));
+			if (gridPos != null) {
+				grid.setSpace(gridPos.x, gridPos.y, Grid.BLOCKED_SPACE);
+				grid.setSpace(gridPos.x-1, gridPos.y, Grid.BLOCKED_SPACE);
+				grid.setSpace(gridPos.x, gridPos.y-1, Grid.BLOCKED_SPACE);
+				grid.setSpace(gridPos.x-1, gridPos.y-1, Grid.BLOCKED_SPACE);
+				int x = indexToPosNoBuffer(gridPos.x);
+				int y = indexToPosNoBuffer(gridPos.y);
+				grid.addToGrid(new Tower(x, y, grid.getCellWidth()*2, store));
+			}
 		}
 		
 		isDraggingTower = false;
