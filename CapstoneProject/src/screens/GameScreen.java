@@ -21,6 +21,7 @@ public class GameScreen extends Screen{
 	private int dragOffsetX, dragOffsetY;
 	private Rectangle storeItemRect;
 	private boolean hasClickedTower;
+	private boolean isDraggingTower;
 	private int draggedTowerAlpha;
 	public GameScreen(DrawingSurface surface) {
 		super(WIDTH, HEIGHT);
@@ -33,7 +34,8 @@ public class GameScreen extends Screen{
 		gold = 0;
 		storeItemRect = new Rectangle();
 		hasClickedTower = false;
-		draggedTowerAlpha = 100;
+		isDraggingTower = false;
+		draggedTowerAlpha = 50;
 	}
 
 	public void draw() {
@@ -68,13 +70,18 @@ public class GameScreen extends Screen{
 				float cellX = grid.getX() + i*cellWidth;
 				float cellY = grid.getY() + j*cellWidth;
 				
-				Point assumedCoords = surface.actualCoordinatesToAssumed(new Point(surface.mouseX,surface.mouseY));
-				boolean inX = cellX <= assumedCoords.getX() && assumedCoords.getX() < cellX + cellWidth;
-				boolean inY = cellY <= assumedCoords.getY() && assumedCoords.getY() < cellY + cellWidth;
+				boolean test = false;
 				
-				if (inX && inY) {
-					surface.fill(0, 255, 0);
-					surface.stroke(0, 255, 0);
+				if (isDraggingTower) {
+					Point assumedCoords = surface.actualCoordinatesToAssumed(new Point(surface.mouseX,surface.mouseY));
+					boolean inX = cellX <= assumedCoords.getX() && assumedCoords.getX() < cellX + cellWidth;
+					boolean inY = cellY <= assumedCoords.getY() && assumedCoords.getY() < cellY + cellWidth;
+					
+					if (inX && inY) {
+						surface.fill(0, 255, 0);
+						surface.stroke(0, 255, 0);
+						test = true;
+					}
 				}
 				
 				if (grid.getGridMatrix()[i][j] == Grid.BLOCKED_SPACE) {
@@ -87,6 +94,12 @@ public class GameScreen extends Screen{
 					// for testing
 					surface.fill(255, 200, 0);
 					surface.stroke(255, 200, 0);
+				}
+				
+				if (test) {
+					surface.rect(cellX - cellWidth, cellY, cellWidth, cellWidth);
+					surface.rect(cellX, cellY - cellWidth, cellWidth, cellWidth);
+					surface.rect(cellX - cellWidth, cellY - cellWidth, cellWidth, cellWidth);
 				}
 				
 				surface.rect(cellX, cellY, cellWidth, cellWidth);
@@ -117,14 +130,12 @@ public class GameScreen extends Screen{
 			dragTower(store.getStoreItemRefRect());
 		}
 		
-		if (surface.mouseButton == PConstants.LEFT) {
-			Point assumedCoords = surface.actualCoordinatesToAssumed(new Point(surface.mouseX,surface.mouseY));
-			Point cellCoord = posToIndex(assumedCoords);
-			if (cellCoord != null) {
-				// for testing
-//				grid.setSpace(cellCoord.x, cellCoord.y);
-			}
-		}
+		// for testing
+//		Point assumedCoords = surface.actualCoordinatesToAssumed(new Point(surface.mouseX,surface.mouseY));
+//		Point cellCoord = posToIndex(assumedCoords);
+//		if (cellCoord != null) {
+//			grid.setSpace(cellCoord.x, cellCoord.y);
+//		}
 	}
 	
 	public void mouseDragged() {
@@ -149,6 +160,7 @@ public class GameScreen extends Screen{
 		storeItemRect.width = 0;
 		storeItemRect.height = 0;
 		hasClickedTower = false;
+		isDraggingTower = false;
 	}
 	
 	public void dragTower(Rectangle r) {
@@ -162,6 +174,7 @@ public class GameScreen extends Screen{
 		
 		dragOffsetX = surface.mouseX - storeItemRect.x;
 		dragOffsetY = surface.mouseY - storeItemRect.y;
+		isDraggingTower = true;
 	}
 	
 	// for testing
