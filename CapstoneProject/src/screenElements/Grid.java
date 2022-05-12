@@ -24,7 +24,7 @@ public class Grid extends ScreenElement{
 	private Queue<Point> frontier;
 	private Point[][] flowField;
 	private int screenBorderWidth;
-	GameScreen gScreen;
+	private GameScreen gScreen;
 	public Grid(int x, int y, int width, int height,GameScreen sc) {
 		super(x,y,width,height);
 		cols = width/CELL_WIDTH;

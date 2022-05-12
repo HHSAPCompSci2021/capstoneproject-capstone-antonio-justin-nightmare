@@ -13,7 +13,8 @@ public class Store extends ScreenElement{
 	private Rectangle itemRefRect;
 	private int itemX, itemY;
 	private Color itemColor;
-	public Store (int x, int y, int width, int height) {
+	private GameScreen gScreen;
+	public Store (int x, int y, int width, int height, GameScreen sc) {
 		super(x,y,width,height);
 		itemWidth = (int)(width*0.25);
 		headerSize = 30;
@@ -21,6 +22,7 @@ public class Store extends ScreenElement{
 		itemY = y+itemWidth/2 - itemWidth/2 + headerSize*2;
 		itemRefRect = new Rectangle(itemX, itemY, itemWidth, itemWidth);
 		itemColor = new Color(0, 0, 255);
+		gScreen = sc;
 	}
 	
 	public void draw(DrawingSurface surface) {
