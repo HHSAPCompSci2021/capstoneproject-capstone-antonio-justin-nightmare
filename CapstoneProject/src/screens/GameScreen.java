@@ -185,6 +185,7 @@ public class GameScreen extends Screen{
 				gMatrix[col][row] = grid.getGridMatrix()[col][row];
 			}
 		}
+		grid.clearGridPathSpaces(gMatrix);
 		
 		gMatrix[pos.x][pos.y] = Grid.BLOCKED_SPACE;
 		gMatrix[pos.x+1][pos.y] = Grid.BLOCKED_SPACE;

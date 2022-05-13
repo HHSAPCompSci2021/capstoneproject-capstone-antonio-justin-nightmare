@@ -130,17 +130,17 @@ public class Grid extends ScreenElement{
 	
 	// for testing
 	public void go() {
-		resetGridMatrix();
+		clearGridPathSpaces(gridMatrix);
 		flowField = breadthFirstSearch(gridMatrix);
 		spawnWave(waveNum);
 		waveNum++;
 	}
 	
-	private void resetGridMatrix() {
+	public void clearGridPathSpaces(int[][] matrix) {
 		for (int col = 0; col < cols; col++) {
 			for (int row = 0; row < rows; row++) {
-				if (gridMatrix[col][row] == PATH_SPACE) {
-					gridMatrix[col][row] = EMPTY_SPACE;
+				if (matrix[col][row] == PATH_SPACE) {
+					matrix[col][row] = EMPTY_SPACE;
 				}
 			}
 		}
