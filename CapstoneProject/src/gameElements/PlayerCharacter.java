@@ -28,6 +28,12 @@ public class PlayerCharacter extends GameElement{
 		posY = (int) realPosY;
 	}
 	
+	public void moveTo(int x, int y) {
+		realPosX = x;
+		realPosY = y;
+		posX = (int) realPosX;
+		posY = (int) realPosY;
+	}
 	public void attack() {
 		
 	}
