@@ -24,6 +24,7 @@ public class Grid extends ScreenElement{
 	private Point[][] flowField;
 	private GameScreen gScreen;
 	private int waveNum;
+	private ArrayList<int[]> activeWaves;
 	private Point[] startSpaces;
 	public Grid(int x, int y, int width, int height,GameScreen sc) {
 		super(x,y,width,height);
@@ -41,6 +42,7 @@ public class Grid extends ScreenElement{
 		towers = new ArrayList<Tower>();
 		gScreen = sc;
 		waveNum = 1;
+		activeWaves = new ArrayList<int[]>();
 		startSpaces = new Point[rows];
 		for (int i = 0; i < gridMatrix[0].length; i++) {
 			startSpaces[i] = new Point(0, i);
@@ -63,6 +65,18 @@ public class Grid extends ScreenElement{
 	}
 	
 	public void next() {
+		for (int i = 0; i < activeWaves.size(); i++) {
+			int[] currentWave = activeWaves.get(i);
+			//int currentWaveNum = currentWave[0];
+			int currentWaveLeft = currentWave[1];
+			if (currentWaveLeft > 0) {
+				addToGrid(new Enemy(gScreen.indexToPos(0),gScreen.indexToPos((int)(Math.random()*rows))));
+				currentWave[1]--;
+			} else {
+				activeWaves.remove(i);
+				i--;
+			}
+		}
 		for (int i = 0; i < enemies.size(); i++) {
 			Enemy currentE = enemies.get(i);
 			if (!currentE.act(this)) {
@@ -171,9 +185,12 @@ public class Grid extends ScreenElement{
 	
 	public void spawnWave() {
 		computeFlowField();
+		/*
 		for (int i = 0; i < waveNum; i++) {
 			addToGrid(new Enemy(gScreen.indexToPos(0),gScreen.indexToPos((int)(Math.random()*rows))));
 		}
+		*/
+		activeWaves.add(new int[] {waveNum,waveNum});
 		waveNum++;
 	}
 	
