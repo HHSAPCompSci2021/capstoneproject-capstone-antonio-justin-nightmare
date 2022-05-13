@@ -37,7 +37,7 @@ public class GameScreen extends Screen{
 		waveButtonHeight = 30;
 		waveButtonX = storeX + waveButtonPadding;
 		waveButtonY = BORDER_WIDTH + waveButtonPadding/2;
-		grid = new Grid(BORDER_WIDTH,BORDER_WIDTH,GRID_WIDTH,HEIGHT - BORDER_WIDTH, this);
+		grid = new Grid(BORDER_WIDTH,BORDER_WIDTH,GRID_WIDTH,HEIGHT - BORDER_WIDTH*2, this);
 		store = new Store(storeX, BORDER_WIDTH + waveButtonHeight + waveButtonPadding,
 				WIDTH-storeX-BORDER_WIDTH, HEIGHT - BORDER_WIDTH*2 - waveButtonHeight - waveButtonPadding, this);
 		this.surface = surface;
