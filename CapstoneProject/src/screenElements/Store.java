@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Rectangle;
 
 import core.DrawingSurface;
-import processing.core.PConstants;
 import screens.GameScreen;
 
 public class Store extends ScreenElement{

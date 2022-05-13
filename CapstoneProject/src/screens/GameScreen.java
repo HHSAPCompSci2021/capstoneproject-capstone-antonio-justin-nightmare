@@ -165,6 +165,9 @@ public class GameScreen extends Screen{
 		}
 		
 		Point assumedCoords = surface.actualCoordinatesToAssumed(new Point(surface.mouseX,surface.mouseY));
+		if (assumedCoords.x < BORDER_WIDTH || assumedCoords.x > GRID_WIDTH || assumedCoords.y < BORDER_WIDTH || assumedCoords.y > HEIGHT - BORDER_WIDTH*2) {
+			return;
+		}
 		Point gridPos = realPosToGridPos(assumedCoords);
 		if (gridPos == null) {
 			return;
