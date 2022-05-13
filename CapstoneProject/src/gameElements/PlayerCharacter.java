@@ -11,7 +11,8 @@ public class PlayerCharacter extends GameElement{
 	}
 	
 	public void draw(DrawingSurface surface) {
-		
+		surface.fill(0);
+		surface.circle(posX, posY, 10);
 	}
 	
 	public void move() {

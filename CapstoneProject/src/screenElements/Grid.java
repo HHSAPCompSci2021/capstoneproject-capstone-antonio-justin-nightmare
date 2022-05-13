@@ -27,6 +27,7 @@ public class Grid extends ScreenElement{
 	private ArrayList<int[]> activeWaves;
 	private int TIME_BETWEEN_SPAWNS = 60;
 	private Point[] startSpaces;
+	private PlayerCharacter player;
 	public Grid(int x, int y, int width, int height,GameScreen sc) {
 		super(x,y,width,height);
 		cols = width/CELL_WIDTH + 1;
@@ -48,6 +49,7 @@ public class Grid extends ScreenElement{
 		for (int i = 0; i < gridMatrix[0].length; i++) {
 			startSpaces[i] = new Point(0, i);
 		}
+		player = new PlayerCharacter((goalSpace.x-1)*CELL_WIDTH+gScreen.getBorderWidth(),(goalSpace.y)*CELL_WIDTH+gScreen.getBorderWidth());
 	}
 	
 	public void draw(DrawingSurface surface) {
@@ -55,7 +57,7 @@ public class Grid extends ScreenElement{
 		surface.fill(255);
 		surface.stroke(255);
 		surface.rect(x, y, width, height);
-		
+		player.draw(surface);
 		for (Tower t:towers) {
 			t.draw(surface);
 		}
