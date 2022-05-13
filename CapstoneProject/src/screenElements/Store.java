@@ -1,6 +1,7 @@
 package screenElements;
 
 import java.awt.Color;
+import java.awt.Point;
 import java.awt.Rectangle;
 
 import core.DrawingSurface;
@@ -10,9 +11,11 @@ public class Store extends ScreenElement{
 	private Color color;
 	private int itemWidth;
 	private int headerSize;
-	private Rectangle itemRefRect;
 	private int itemX, itemY;
 	private Color itemColor;
+	private boolean isItemSelected;
+	private Color highlightColor;
+	private int highlightWeight;
 	private GameScreen gScreen;
 	public Store (int x, int y, int width, int height, GameScreen sc) {
 		super(x,y,width,height);
@@ -21,8 +24,10 @@ public class Store extends ScreenElement{
 		headerSize = 30;
 		itemX = x + width/2 - itemWidth/2;
 		itemY = y+itemWidth/2 - itemWidth/2 + headerSize*2;
-		itemRefRect = new Rectangle(itemX, itemY, itemWidth, itemWidth);
 		itemColor = new Color(0, 200, 200);
+		isItemSelected = false;
+		highlightColor = new Color(0, 255, 0);
+		highlightWeight = 5;
 		gScreen = sc;
 	}
 	
@@ -35,16 +40,34 @@ public class Store extends ScreenElement{
 		surface.textSize(headerSize);
 		surface.text("Store", x + width*0.1f, y + width*0.1f + headerSize*0.5f);
 		surface.fill(itemColor.getRed(), itemColor.getGreen(), itemColor.getBlue());
-		surface.stroke(0);
+		if (isItemSelected) {
+			surface.stroke(highlightColor.getRed(), highlightColor.getGreen(), highlightColor.getBlue());
+			surface.strokeWeight(highlightWeight);
+		} else {
+			surface.stroke(0);
+			surface.strokeWeight(1);
+		}
 		surface.rect(itemX, itemY, itemWidth, itemWidth);
 		surface.pop();
 	}
 	
-	public Rectangle getStoreItemRefRect() {
-		return itemRefRect;
-	}
-	
 	public Color getItemColor() {
 		return itemColor;
+	}
+	
+	public boolean checkIsPointInItem(Point p) {
+		if (p.x >= itemX && p.x <= itemX+itemWidth && p.y >= itemY && p.y <= itemY+itemWidth) {
+			return true;
+		}
+		
+		return false;
+	}
+	
+	public void toggleItemSelect() {
+		isItemSelected = !isItemSelected;
+	}
+	
+	public boolean getIsItemSelected() {
+		return isItemSelected;
 	}
 }

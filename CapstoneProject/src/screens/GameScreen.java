@@ -21,11 +21,6 @@ public class GameScreen extends Screen{
 	private double gold;
 	private int highlightedX, highlightedY;
 	private Color highlightedColor;
-	private int dragOffsetX, dragOffsetY;
-	private Rectangle storeItemRect;
-	private boolean hasClickedTower;
-	private boolean isDraggingTower;
-	private int draggedTowerAlpha;
 	private int baseHealth;
 	public GameScreen(DrawingSurface surface) {
 		super(WIDTH, HEIGHT);
@@ -34,10 +29,6 @@ public class GameScreen extends Screen{
 		this.surface = surface;
 		gold = 0;
 		highlightedColor = new Color(0, 255, 0, 100);
-		storeItemRect = new Rectangle();
-		hasClickedTower = false;
-		isDraggingTower = false;
-		draggedTowerAlpha = 50;
 		baseHealth = 20;
 	}
 
@@ -48,9 +39,6 @@ public class GameScreen extends Screen{
 			grid.draw(surface);
 			grid.next();
 			store.draw(surface);
-			surface.fill(store.getItemColor().getRed(), store.getItemColor().getGreen(), store.getItemColor().getBlue(), draggedTowerAlpha);
-			surface.stroke(0);
-			surface.rect(storeItemRect.x, storeItemRect.y, storeItemRect.width, storeItemRect.height);
 			highlightGrid();
 			processKeyPresses();
 			
@@ -121,8 +109,9 @@ public class GameScreen extends Screen{
 	}
 	
 	public void mousePressed() {
-		if (store.getStoreItemRefRect().contains(surface.mouseX, surface.mouseY)) {
-			dragTower(store.getStoreItemRefRect());
+		Point assumedCoords = surface.actualCoordinatesToAssumed(new Point(surface.mouseX,surface.mouseY));
+		if (store.checkIsPointInItem(assumedCoords)) {
+			store.toggleItemSelect();
 		}
 		
 		// for testing
@@ -134,11 +123,6 @@ public class GameScreen extends Screen{
 	}
 	
 	public void mouseDragged() {
-		if (storeItemRect != null) {
-			storeItemRect.x = surface.mouseX - dragOffsetX;
-			storeItemRect.y = surface.mouseY - dragOffsetY;
-		}
-		
 		// for testing
 //		if (surface.mouseButton == PConstants.LEFT) {
 //			Point assumedCoords = surface.actualCoordinatesToAssumed(new Point(surface.mouseX,surface.mouseY));
@@ -150,20 +134,12 @@ public class GameScreen extends Screen{
 	}
 	
 	public void mouseReleased() {
-		placeTower();
-		isDraggingTower = false;
-		hasClickedTower = false;
-		storeItemRect.x = 0;
-		storeItemRect.y = 0;
-		storeItemRect.width = 0;
-		storeItemRect.height = 0;
+		if (store.getIsItemSelected()) {
+			placeTower();
+		}
 	}
 	
 	private void placeTower() {
-		if (!isDraggingTower) {
-			return;
-		}
-		
 		Point assumedCoords = surface.actualCoordinatesToAssumed(new Point(surface.mouseX,surface.mouseY));
 		if (assumedCoords.x < BORDER_WIDTH || assumedCoords.x > GRID_WIDTH || assumedCoords.y < BORDER_WIDTH || assumedCoords.y > HEIGHT - BORDER_WIDTH*2) {
 			return;
@@ -225,20 +201,6 @@ public class GameScreen extends Screen{
 		}
 		
 		return false;
-	}
-	
-	public void dragTower(Rectangle r) {
-		if (!hasClickedTower) {
-			storeItemRect.x = r.x;
-			storeItemRect.y = r.y;
-			storeItemRect.width = r.width;
-			storeItemRect.height = r.height;
-			hasClickedTower = true;
-		}
-		
-		dragOffsetX = surface.mouseX - storeItemRect.x;
-		dragOffsetY = surface.mouseY - storeItemRect.y;
-		isDraggingTower = true;
 	}
 	
 	public int getBorderWidth() {
