@@ -25,6 +25,7 @@ public class Grid extends ScreenElement{
 	private GameScreen gScreen;
 	private int waveNum;
 	private ArrayList<int[]> activeWaves;
+	private int TIME_BETWEEN_SPAWNS = 60;
 	private Point[] startSpaces;
 	public Grid(int x, int y, int width, int height,GameScreen sc) {
 		super(x,y,width,height);
@@ -67,11 +68,20 @@ public class Grid extends ScreenElement{
 	public void next() {
 		for (int i = 0; i < activeWaves.size(); i++) {
 			int[] currentWave = activeWaves.get(i);
-			//int currentWaveNum = currentWave[0];
+			int currentWaveNum = currentWave[0];
 			int currentWaveLeft = currentWave[1];
+			int timeToNextSpawn = currentWave[2];
 			if (currentWaveLeft > 0) {
-				addToGrid(new Enemy(gScreen.indexToPos(0),gScreen.indexToPos((int)(Math.random()*rows))));
-				currentWave[1]--;
+				if (currentWaveNum == currentWaveLeft) {
+					addToGrid(new Enemy(gScreen.indexToPos(0),gScreen.indexToPos((int)(Math.random()*rows))));
+					currentWave[1]--;
+				} else if (timeToNextSpawn < TIME_BETWEEN_SPAWNS) {
+					currentWave[2]++;
+				} else if (Math.random()*10<1) {
+					addToGrid(new Enemy(gScreen.indexToPos(0),gScreen.indexToPos((int)(Math.random()*rows))));
+					currentWave[1]--;
+					currentWave[2] = 0;
+				}
 			} else {
 				activeWaves.remove(i);
 				i--;
@@ -190,7 +200,7 @@ public class Grid extends ScreenElement{
 			addToGrid(new Enemy(gScreen.indexToPos(0),gScreen.indexToPos((int)(Math.random()*rows))));
 		}
 		*/
-		activeWaves.add(new int[] {waveNum,waveNum});
+		activeWaves.add(new int[] {waveNum,waveNum,0});
 		waveNum++;
 	}
 	
