@@ -181,8 +181,8 @@ public class GameScreen extends Screen{
 			return;
 		}
 		
-		int x = indexToPosNoBuffer(gridPos.x);
-		int y = indexToPosNoBuffer(gridPos.y);
+		int x = indexToPosNoBuffer(gridPos.x+1);
+		int y = indexToPosNoBuffer(gridPos.y+1);
 		Tower tower = new Tower(x, y, grid.getCellWidth()*2, store);
 		if (gold - tower.getPrice() < 0) {
 			return;

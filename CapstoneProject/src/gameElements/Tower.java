@@ -70,7 +70,7 @@ public class Tower extends GameElement{
 				}
 			}
 			if (closestEnemy != null) {
-				projectiles.add(new Projectile(attackDamage,posX+width/2,posY+width/2,closestEnemy));
+				projectiles.add(new Projectile(attackDamage,posX,posY,closestEnemy));
 			}
 		}
 	}
