@@ -263,5 +263,17 @@ public class Grid extends ScreenElement{
 				player.move(new double[] {diagonalSpeed*directions[0],diagonalSpeed*directions[1]});
 			}
 		}
+		int playerX = player.getX();
+		int playerY = player.getY();
+		if (playerX < gScreen.getBorderWidth()) {
+			player.moveTo(gScreen.getBorderWidth(), playerY);
+		} else if (playerX > gScreen.getBorderWidth() + CELL_WIDTH*cols) {
+			player.moveTo(gScreen.getBorderWidth() + CELL_WIDTH*cols, playerY);
+		}
+		if (playerY < gScreen.getBorderWidth()) {
+			player.moveTo(playerX, gScreen.getBorderWidth());
+		} else if (playerY > gScreen.getBorderWidth() + CELL_WIDTH*rows) {
+			player.moveTo(playerX, gScreen.getBorderWidth() + CELL_WIDTH*rows);
+		}
 	}
 }
