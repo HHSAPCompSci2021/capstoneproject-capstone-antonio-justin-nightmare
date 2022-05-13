@@ -2,6 +2,7 @@ package screens;
 import java.awt.Color;
 import java.awt.Point;
 import java.awt.event.KeyEvent;
+import java.util.Arrays;
 
 import core.DrawingSurface;
 import gameElements.*;
@@ -252,9 +253,21 @@ public class GameScreen extends Screen{
 	}
 	
 	private void processKeyPresses() {
-//		if (surface.isPressed(KeyEvent.VK_W)) {
-//			System.out.println("W pressed");
-//		}
+		int[] directions = {0,0};
+		// W is down and S is up because of the way the coordinates work
+		if (surface.isPressed(KeyEvent.VK_W)) {
+			directions[1]--;
+		} 
+		if (surface.isPressed(KeyEvent.VK_A)) {
+			directions[0]--;
+		}
+		if (surface.isPressed(KeyEvent.VK_S)) {
+			directions[1]++;
+		}
+		if (surface.isPressed(KeyEvent.VK_D)) {
+			directions[0]++;
+		}
+		grid.movePlayer(directions);
 	}
 	
 	public void addGold(int amount) {

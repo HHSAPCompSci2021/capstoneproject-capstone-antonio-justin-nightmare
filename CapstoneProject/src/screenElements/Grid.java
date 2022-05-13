@@ -246,4 +246,22 @@ public class Grid extends ScreenElement{
 		
 		return enemySpaces;
 	}
+	
+	/**
+	 * Moves the player in the specified direction (Will move at the same speed, even when diagonally moving)
+	 * @param directions First value: left-right movement, second value: up-down movement
+	 */
+	public void movePlayer(int[] directions) {
+		double moveSpeed = player.getMoveSpeed();
+		if (directions[0] == 0) {
+			player.move(new double[] {0,moveSpeed*directions[1]});
+		} else {
+			if (directions[1] == 0) {
+				player.move(new double[] {moveSpeed*directions[0],0});
+			} else {
+				double diagonalSpeed = Math.sqrt(2)*moveSpeed/2;
+				player.move(new double[] {diagonalSpeed*directions[0],diagonalSpeed*directions[1]});
+			}
+		}
+	}
 }
