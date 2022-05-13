@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.util.ArrayList;
 
 import core.DrawingSurface;
-import processing.core.PConstants;
 import screenElements.Store;
 
 public class Tower extends GameElement{
@@ -64,7 +63,7 @@ public class Tower extends GameElement{
 					closestEnemy = e;
 				}
 			}
-			projectiles.add(new Projectile(attackDamage,posX,posY,closestEnemy));
+			projectiles.add(new Projectile(attackDamage,posX+width/2,posY+width/2,closestEnemy));
 		}
 	}
 }
