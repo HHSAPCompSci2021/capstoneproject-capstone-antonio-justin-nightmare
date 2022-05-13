@@ -21,6 +21,7 @@ public class Enemy extends GameElement{
 	
 	public void draw(DrawingSurface surface, Grid g) {
 		surface.fill(200,200,0);
+		surface.stroke(100,100,0);
 		surface.circle(posX, posY, diameter);
 		surface.fill(0,0,0);
 		surface.textSize(10);

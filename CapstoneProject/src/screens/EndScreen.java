@@ -1,6 +1,7 @@
 package screens;
 
 import core.DrawingSurface;
+import processing.core.*;
 
 public class EndScreen extends Screen{
 	private static final int WIDTH = 1280;
@@ -12,6 +13,9 @@ public class EndScreen extends Screen{
 	}
 	
 	public void draw() {
-		surface.text("You died", 0, 0);
+		surface.background(255);
+		surface.fill(20);
+		surface.textAlign(PConstants.CENTER);
+		surface.text("You died\nPress g to restart", WIDTH/2, HEIGHT/2);
 	}
 }
