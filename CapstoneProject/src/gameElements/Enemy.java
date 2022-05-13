@@ -31,17 +31,16 @@ public class Enemy extends GameElement{
 	 * Moves the enemy by 1 step
 	 * @return true if enemy is still alive, false if it is not
 	 */
-	public boolean act(Grid g){
-		Point nextPos = findNextPos(g);
-		if (!nextPos.equals(new Point(posX,posY))) {
+	public boolean act(Grid g) {
+		Point currentSpace = getCurrentSpace(g);
+		if (currentSpace.equals(g.getGoalSpaces()[0]) || currentSpace.equals(g.getGoalSpaces()[1])) {
+			g.takeDamage(1);
+			return false;
+		} else {
+			Point nextPos = findNextPos(g);
 			move(nextPos);
 			return health > 0;
 		}
-		else {
-			g.takeDamage(1);
-			return false;
-		}
-		
 	}
 	
 

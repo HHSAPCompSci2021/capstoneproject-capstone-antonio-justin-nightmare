@@ -15,7 +15,7 @@ public class Grid extends ScreenElement{
 	private static final int CELL_WIDTH = 20;
 	private ArrayList<Enemy> enemies;
 	private ArrayList<Tower> towers;
-	private Point goal;
+	private Point goalSpace;
 	private int[][] gridMatrix;
 	public static final int EMPTY_SPACE = 0;
 	public static final int BLOCKED_SPACE = -1;
@@ -32,8 +32,8 @@ public class Grid extends ScreenElement{
 		gridMatrix = new int[cols][rows];
 		enemies = new ArrayList<Enemy>();
 		towers = new ArrayList<Tower>();
-		goal = new Point(cols-1, rows/2);
-		gridMatrix[goal.x][goal.y] = GOAL_SPACE;
+		goalSpace = new Point(cols-1, rows/2);
+		gridMatrix[goalSpace.x][goalSpace.y] = GOAL_SPACE;
 		gScreen = sc;
 		waveNum = 1;
 		startSpaces = new Point[rows];
@@ -77,11 +77,11 @@ public class Grid extends ScreenElement{
 	// flow field of where the enemy should given any coordinates in the grid.
 	public Point[][] breadthFirstSearch(int[][] matrix) {
 		Point[][] flowField = new Point[cols][rows];
-		flowField[goal.x][goal.y] = new Point(goal.x, goal.y);
+		flowField[goalSpace.x][goalSpace.y] = new Point(goalSpace.x, goalSpace.y);
 		Queue<Point> frontier = new LinkedList<Point>();
-		frontier.add(new Point(goal.x, goal.y));
+		frontier.add(new Point(goalSpace.x, goalSpace.y));
 		boolean[][] reachedSpaces = new boolean[cols][rows];
-		reachedSpaces[goal.x][goal.y] = true;
+		reachedSpaces[goalSpace.x][goalSpace.y] = true;
 		
 		while(frontier.size() != 0) {
 			Point currentSpace = frontier.poll();
@@ -194,5 +194,9 @@ public class Grid extends ScreenElement{
 	
 	public Point[] getStartSpaces() {
 		return startSpaces;
+	}
+	
+	public Point[] getGoalSpaces() {
+		return new Point[] {goalSpace, new Point(goalSpace.x, goalSpace.y-1)};
 	}
 }
