@@ -128,14 +128,6 @@ public class Grid extends ScreenElement{
 		gridMatrix[col][row] = val;
 	}
 	
-	// for testing
-	public void go() {
-		clearGridPathSpaces(gridMatrix);
-		flowField = breadthFirstSearch(gridMatrix);
-		spawnWave(waveNum);
-		waveNum++;
-	}
-	
 	public void clearGridPathSpaces(int[][] matrix) {
 		for (int col = 0; col < cols; col++) {
 			for (int row = 0; row < rows; row++) {
@@ -166,10 +158,13 @@ public class Grid extends ScreenElement{
 		}
 	}
 	
-	public void spawnWave(int waveNum) {
+	public void spawnWave() {
+		clearGridPathSpaces(gridMatrix);
+		flowField = breadthFirstSearch(gridMatrix);
 		for (int i = 0; i < waveNum; i++) {
 			addToGrid(new Enemy(gScreen.indexToPos(0),gScreen.indexToPos((int)(Math.random()*rows))));
 		}
+		waveNum++;
 	}
 	
 	public int getRows() {

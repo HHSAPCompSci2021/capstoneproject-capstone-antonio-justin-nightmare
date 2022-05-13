@@ -16,6 +16,6 @@ public class EndScreen extends Screen{
 		surface.background(255);
 		surface.fill(20);
 		surface.textAlign(PConstants.CENTER);
-		surface.text("You died\nPress g to restart", WIDTH/2, HEIGHT/2);
+		surface.text("You died\nPress Enter to restart", WIDTH/2, HEIGHT/2);
 	}
 }

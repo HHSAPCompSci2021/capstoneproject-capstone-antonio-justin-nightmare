@@ -2,7 +2,6 @@ package screenElements;
 
 import java.awt.Color;
 import java.awt.Point;
-import java.awt.Rectangle;
 
 import core.DrawingSurface;
 import screens.GameScreen;

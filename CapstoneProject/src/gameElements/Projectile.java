@@ -25,7 +25,7 @@ public class Projectile extends GameElement{
 	 * Draws the projectile, currently from tower location to location of target
 	 */
 	public void draw(DrawingSurface surface) {
-		surface.stroke(255,255,0);
+		surface.stroke(255,120,0);
 		surface.line(posX, posY, target.getX(), target.getY());
 	}
 	

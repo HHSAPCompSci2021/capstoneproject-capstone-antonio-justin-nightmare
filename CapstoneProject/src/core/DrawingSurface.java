@@ -41,14 +41,10 @@ public class DrawingSurface extends PApplet implements ScreenSwitcher{
 	}
 	
 	public void keyPressed() {
-		if (key == 'g') {
-			if (activeScreen instanceof GameScreen) {
-				GameScreen gs = (GameScreen)activeScreen;
-				gs.go();
-			} else if (activeScreen instanceof EndScreen){
+		if (key == ENTER || key == RETURN) {
+			if (activeScreen instanceof EndScreen) {
 				screens.set(ScreenSwitcher.GAME_SCREEN,new GameScreen(this));
 				switchScreen(ScreenSwitcher.GAME_SCREEN);
-				
 			}
 		}
 		

@@ -1,7 +1,6 @@
 package screens;
 import java.awt.Color;
 import java.awt.Point;
-import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 
 import core.DrawingSurface;
@@ -15,24 +14,40 @@ public class GameScreen extends Screen{
 	private static final int HEIGHT = 720;
 	private static final int BORDER_WIDTH = 20;
 	private static final int GRID_WIDTH = 960;
+	private int storeX;
+	private int statusOffset;
+	private int waveButtonPadding;
+	private int waveButtonWidth;
+	private int waveButtonHeight;
+	private int waveButtonX, waveButtonY;
 	private DrawingSurface surface;
 	private Grid grid;
 	private Store store;
+	private Color waveButtonColor;
 	private double gold;
 	private int highlightedX, highlightedY;
 	private Color highlightedColor;
 	private int baseHealth;
 	public GameScreen(DrawingSurface surface) {
 		super(WIDTH, HEIGHT);
-		grid = new Grid(BORDER_WIDTH,BORDER_WIDTH,GRID_WIDTH,HEIGHT - BORDER_WIDTH*2,this);
-		store = new Store(1000,BORDER_WIDTH,WIDTH-1000-BORDER_WIDTH,HEIGHT - BORDER_WIDTH*2,this);
+		storeX = 1000;
+		statusOffset = 220;
+		waveButtonPadding = 30;
+		waveButtonWidth = WIDTH-storeX-BORDER_WIDTH - waveButtonPadding*2;
+		waveButtonHeight = 30;
+		waveButtonX = storeX + waveButtonPadding;
+		waveButtonY = BORDER_WIDTH + waveButtonPadding/2;
+		grid = new Grid(BORDER_WIDTH,BORDER_WIDTH,GRID_WIDTH,HEIGHT - BORDER_WIDTH, this);
+		store = new Store(storeX, BORDER_WIDTH + waveButtonHeight + waveButtonPadding,
+				WIDTH-storeX-BORDER_WIDTH, HEIGHT - BORDER_WIDTH*2 - waveButtonHeight - waveButtonPadding, this);
 		this.surface = surface;
+		waveButtonColor = new Color(255, 200, 200);
 		gold = 0;
 		highlightedColor = new Color(0, 255, 0, 100);
 		baseHealth = 20;
 	}
 
-	public void draw() { 
+	public void draw() {
 		if (baseHealth > 0) {
 			surface.background(150,150,200);
 			fillGrid();
@@ -43,11 +58,29 @@ public class GameScreen extends Screen{
 			processKeyPresses();
 			
 			surface.push();
+			surface.fill(waveButtonColor.getRed(), waveButtonColor.getGreen(), waveButtonColor.getBlue());
+			surface.stroke(0);
+			surface.rect(waveButtonX, waveButtonY, waveButtonWidth, waveButtonHeight);
+			surface.fill(0);
+			surface.textSize(18);
+			surface.textAlign(PConstants.CENTER);
+			surface.text("Start Next Wave",
+					storeX + waveButtonPadding + waveButtonWidth/2,
+					BORDER_WIDTH + waveButtonPadding/2 + waveButtonHeight - 10);
+			surface.pop();
+			
+			surface.push();
 			surface.fill(0,0,0);
 			surface.textAlign(PConstants.RIGHT);
 			surface.textSize(15);
-			surface.text("Gold: "+(int)gold, WIDTH-BORDER_WIDTH-200, BORDER_WIDTH, 200,20);
-			surface.text("Base health: "+baseHealth, WIDTH-BORDER_WIDTH-200, BORDER_WIDTH+20,200,20);
+			surface.text("Gold: "+(int)gold,
+					WIDTH-BORDER_WIDTH-statusOffset,
+					BORDER_WIDTH + waveButtonHeight + waveButtonPadding,
+					200, 20);
+			surface.text("Base health: "+baseHealth,
+					WIDTH-BORDER_WIDTH-statusOffset,
+					BORDER_WIDTH+20 + waveButtonHeight + waveButtonPadding,
+					200, 20);
 			surface.pop();
 		} else {
 			surface.switchScreen(ScreenSwitcher.END_SCREEN);
@@ -110,8 +143,15 @@ public class GameScreen extends Screen{
 	
 	public void mousePressed() {
 		Point assumedCoords = surface.actualCoordinatesToAssumed(new Point(surface.mouseX,surface.mouseY));
+		
 		if (store.checkIsPointInItem(assumedCoords)) {
 			store.toggleItemSelect();
+		}
+		
+		boolean inWaveButtonX = assumedCoords.x >= waveButtonX && assumedCoords.x <= waveButtonX+waveButtonWidth;
+		boolean inWaveButtonY = assumedCoords.y >= waveButtonY && assumedCoords.y <= waveButtonY+waveButtonHeight;
+		if (inWaveButtonX && inWaveButtonY) {
+			grid.spawnWave();
 		}
 		
 		// for testing
@@ -206,11 +246,6 @@ public class GameScreen extends Screen{
 	
 	public int getBorderWidth() {
 		return BORDER_WIDTH;
-	}
-	
-	// for testing
-	public void go() {
-		grid.go();
 	}
 	
 	private void processKeyPresses() {
