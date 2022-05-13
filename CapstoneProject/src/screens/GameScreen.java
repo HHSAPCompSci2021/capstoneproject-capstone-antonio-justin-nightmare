@@ -52,6 +52,12 @@ public class GameScreen extends Screen{
 			surface.background(150,150,200);
 			grid.draw(surface);
 			grid.next();
+			surface.fill(255);
+			surface.stroke(255);
+			surface.rect(indexToPosNoBuffer(grid.getGoalSpaces()[0].x), indexToPosNoBuffer(grid.getGoalSpaces()[0].y),
+					grid.getCellWidth(), grid.getCellWidth());
+			surface.rect(indexToPosNoBuffer(grid.getGoalSpaces()[1].x), indexToPosNoBuffer(grid.getGoalSpaces()[1].y),
+					grid.getCellWidth(), grid.getCellWidth());
 			store.draw(surface);
 			highlightGrid();
 			processKeyPresses();
@@ -66,9 +72,6 @@ public class GameScreen extends Screen{
 			surface.text("Start Next Wave",
 					storeX + waveButtonPadding + waveButtonWidth/2,
 					BORDER_WIDTH + waveButtonPadding/2 + waveButtonHeight - 10);
-			surface.pop();
-			
-			surface.push();
 			surface.fill(0,0,0);
 			surface.textAlign(PConstants.RIGHT);
 			surface.textSize(15);

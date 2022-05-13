@@ -27,13 +27,18 @@ public class Grid extends ScreenElement{
 	private Point[] startSpaces;
 	public Grid(int x, int y, int width, int height,GameScreen sc) {
 		super(x,y,width,height);
-		cols = width/CELL_WIDTH;
+		cols = width/CELL_WIDTH + 1;
 		rows = height/CELL_WIDTH;
 		gridMatrix = new int[cols][rows];
-		enemies = new ArrayList<Enemy>();
-		towers = new ArrayList<Tower>();
 		goalSpace = new Point(cols-1, rows/2);
 		gridMatrix[goalSpace.x][goalSpace.y] = GOAL_SPACE;
+		for (int i = 0; i < gridMatrix[0].length; i++) {
+			if (gridMatrix[gridMatrix.length-1][i] != goalSpace.y) {
+				gridMatrix[gridMatrix.length-1][i] = BLOCKED_SPACE;
+			}
+		}
+		enemies = new ArrayList<Enemy>();
+		towers = new ArrayList<Tower>();
 		gScreen = sc;
 		waveNum = 1;
 		startSpaces = new Point[rows];
