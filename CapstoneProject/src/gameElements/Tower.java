@@ -66,4 +66,8 @@ public class Tower extends GameElement{
 			projectiles.add(new Projectile(attackDamage,posX+width/2,posY+width/2,closestEnemy));
 		}
 	}
+	
+	public int getPrice() {
+		return price;
+	}
 }

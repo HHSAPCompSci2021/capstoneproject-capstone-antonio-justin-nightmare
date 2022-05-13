@@ -42,7 +42,7 @@ public class GameScreen extends Screen{
 				WIDTH-storeX-BORDER_WIDTH, HEIGHT - BORDER_WIDTH*2 - waveButtonHeight - waveButtonPadding, this);
 		this.surface = surface;
 		waveButtonColor = new Color(255, 200, 200);
-		gold = 0;
+		gold = 400;
 		highlightedColor = new Color(0, 255, 0, 100);
 		baseHealth = 20;
 	}
@@ -171,13 +171,19 @@ public class GameScreen extends Screen{
 			return;
 		}
 		
+		int x = indexToPosNoBuffer(gridPos.x);
+		int y = indexToPosNoBuffer(gridPos.y);
+		Tower tower = new Tower(x, y, grid.getCellWidth()*2, store);
+		if (gold - tower.getPrice() < 0) {
+			return;
+		}
 		grid.setSpace(gridPos.x, gridPos.y, Grid.BLOCKED_SPACE);
 		grid.setSpace(gridPos.x+1, gridPos.y, Grid.BLOCKED_SPACE);
 		grid.setSpace(gridPos.x, gridPos.y+1, Grid.BLOCKED_SPACE);
 		grid.setSpace(gridPos.x+1, gridPos.y+1, Grid.BLOCKED_SPACE);
-		int x = indexToPosNoBuffer(gridPos.x);
-		int y = indexToPosNoBuffer(gridPos.y);
-		grid.addToGrid(new Tower(x, y, grid.getCellWidth()*2, store));
+		grid.computeFlowField();
+		grid.addToGrid(tower);
+		gold -= tower.getPrice();
 	}
 	
 	private int indexToPosNoBuffer(int index) {

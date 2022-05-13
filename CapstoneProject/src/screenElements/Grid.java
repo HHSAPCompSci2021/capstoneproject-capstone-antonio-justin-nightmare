@@ -139,6 +139,11 @@ public class Grid extends ScreenElement{
 		}
 	}
 	
+	public void computeFlowField() {
+		clearGridPathSpaces(gridMatrix);
+		flowField = breadthFirstSearch(gridMatrix);
+	}
+	
 	public Point[][] getFlowField() {
 		return flowField;
 	}
@@ -160,8 +165,7 @@ public class Grid extends ScreenElement{
 	}
 	
 	public void spawnWave() {
-		clearGridPathSpaces(gridMatrix);
-		flowField = breadthFirstSearch(gridMatrix);
+		computeFlowField();
 		for (int i = 0; i < waveNum; i++) {
 			addToGrid(new Enemy(gScreen.indexToPos(0),gScreen.indexToPos((int)(Math.random()*rows))));
 		}
