@@ -176,6 +176,9 @@ public class GameScreen extends Screen{
 		if (checkDoesTowerOverlap(gridPos.x, gridPos.y)) {
 			return;
 		}
+		if (checkIsPathBlocked(gridPos)) {
+			return;
+		}
 		
 		grid.setSpace(gridPos.x, gridPos.y, Grid.BLOCKED_SPACE);
 		grid.setSpace(gridPos.x-1, gridPos.y, Grid.BLOCKED_SPACE);
@@ -195,6 +198,31 @@ public class GameScreen extends Screen{
 				grid.getGridMatrix()[col-1][row] == Grid.BLOCKED_SPACE ||
 				grid.getGridMatrix()[col][row-1] == Grid.BLOCKED_SPACE ||
 				grid.getGridMatrix()[col-1][row-1] == Grid.BLOCKED_SPACE;
+	}
+	
+	private boolean checkIsPathBlocked(Point pos) {
+		int[][] gMatrix = new int[grid.getCols()][grid.getRows()];
+		for (int col = 0; col < grid.getCols(); col++) {
+			for (int row = 0; row < grid.getRows(); row++) {
+				gMatrix[col][row] = grid.getGridMatrix()[col][row];
+			}
+		}
+		
+		gMatrix[pos.x][pos.y] = Grid.BLOCKED_SPACE;
+		gMatrix[pos.x-1][pos.y] = Grid.BLOCKED_SPACE;
+		gMatrix[pos.x][pos.y-1] = Grid.BLOCKED_SPACE;
+		gMatrix[pos.x-1][pos.y-1] = Grid.BLOCKED_SPACE;
+		
+		Point[][] flowField = grid.breadthFirstSearch(gMatrix);
+		
+		for (int i = 0; i < grid.getStartSpaces().length; i++) {
+			Point space = new Point(grid.getStartSpaces()[i].x, grid.getStartSpaces()[i].y);
+			if (flowField[space.x][space.y] == null) {
+				return true;
+			}
+		}
+		
+		return false;
 	}
 	
 	public void dragTower(Rectangle r) {
