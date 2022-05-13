@@ -50,7 +50,6 @@ public class GameScreen extends Screen{
 	public void draw() {
 		if (baseHealth > 0) {
 			surface.background(150,150,200);
-			fillGrid();
 			grid.draw(surface);
 			grid.next();
 			store.draw(surface);
@@ -84,30 +83,6 @@ public class GameScreen extends Screen{
 			surface.pop();
 		} else {
 			surface.switchScreen(ScreenSwitcher.END_SCREEN);
-		}
-	}
-	
-	private void fillGrid() {
-		float cellWidth = grid.getCellWidth();
-		
-		surface.fill(255);
-		surface.stroke(255);
-		
-		for (int col = 0; col < grid.getCols(); col++) {
-			for (int row = 0; row < grid.getRows(); row++) {
-				float cellX = grid.getX() + col*cellWidth;
-				float cellY = grid.getY() + row*cellWidth;
-				
-				// for testing
-				if (grid.getGridMatrix()[col][row] == Grid.GOAL_SPACE) {
-					surface.fill(255, 200, 0);
-					surface.stroke(255, 200, 0);
-				}
-				
-				surface.rect(cellX, cellY, cellWidth, cellWidth);
-				surface.fill(255);
-				surface.stroke(255);
-			}
 		}
 	}
 	
@@ -148,6 +123,10 @@ public class GameScreen extends Screen{
 			store.toggleItemSelect();
 		}
 		
+		if (store.getIsItemSelected()) {
+			placeTower();
+		}
+		
 		boolean inWaveButtonX = assumedCoords.x >= waveButtonX && assumedCoords.x <= waveButtonX+waveButtonWidth;
 		boolean inWaveButtonY = assumedCoords.y >= waveButtonY && assumedCoords.y <= waveButtonY+waveButtonHeight;
 		if (inWaveButtonX && inWaveButtonY) {
@@ -171,12 +150,6 @@ public class GameScreen extends Screen{
 //				grid.setSpace(cellCoord.x, cellCoord.y);
 //			}
 //		}
-	}
-	
-	public void mouseReleased() {
-		if (store.getIsItemSelected()) {
-			placeTower();
-		}
 	}
 	
 	private void placeTower() {

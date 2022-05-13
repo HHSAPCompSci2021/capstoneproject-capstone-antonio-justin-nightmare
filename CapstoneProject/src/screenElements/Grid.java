@@ -44,7 +44,8 @@ public class Grid extends ScreenElement{
 	
 	public void draw(DrawingSurface surface) {
 		surface.push();
-		surface.noFill();
+		surface.fill(255);
+		surface.stroke(255);
 		surface.rect(x, y, width, height);
 		
 		for (Tower t:towers) {
