@@ -22,7 +22,6 @@ public class Grid extends ScreenElement{
 	public static final int PATH_SPACE = 1;
 	public static final int GOAL_SPACE = 2;
 	private Point[][] flowField;
-	private int screenBorderWidth;
 	private GameScreen gScreen;
 	private int waveNum;
 	private Point[] startSpaces;
@@ -189,12 +188,8 @@ public class Grid extends ScreenElement{
 		return gridMatrix;
 	}
 	
-	public void setScreenBorderWidth(int w) {
-		screenBorderWidth = w;
-	}
-	
 	public int getScreenBorderWidth() {
-		return screenBorderWidth;
+		return gScreen.getBorderWidth();
 	}
 	
 	public void takeDamage(int amount) {

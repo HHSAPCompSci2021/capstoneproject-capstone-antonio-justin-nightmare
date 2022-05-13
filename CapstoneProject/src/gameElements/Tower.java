@@ -28,7 +28,6 @@ public class Tower extends GameElement{
 	}
 	
 	public void draw(DrawingSurface surface) {
-		surface.rectMode(DrawingSurface.CENTER);
 		surface.fill(color.getRed(), color.getGreen(), color.getBlue());
 		surface.stroke(0);
 		surface.rect(posX, posY, width, width);
