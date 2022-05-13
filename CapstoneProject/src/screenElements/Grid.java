@@ -203,4 +203,13 @@ public class Grid extends ScreenElement{
 	public Point[] getGoalSpaces() {
 		return new Point[] {goalSpace, new Point(goalSpace.x, goalSpace.y-1)};
 	}
+	
+	public Point[] getEnemySpaces() {
+		Point[] enemySpaces = new Point[enemies.size()];
+		for (int i = 0; i < enemies.size(); i++) {
+			enemySpaces[i] = enemies.get(i).getCurrentSpace(this);
+		}
+		
+		return enemySpaces;
+	}
 }

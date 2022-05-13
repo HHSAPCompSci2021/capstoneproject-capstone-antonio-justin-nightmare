@@ -164,10 +164,13 @@ public class GameScreen extends Screen{
 		if (gridPos.x < 0 || gridPos.x+1 >= grid.getCols() || gridPos.y < 0 || gridPos.y+1 >= grid.getRows()) {
 			return;
 		}
-		if (checkDoesTowerOverlap(gridPos.x, gridPos.y)) {
+		if (checkDoesTowerOverlap(gridPos)) {
 			return;
 		}
 		if (checkIsPathBlocked(gridPos)) {
+			return;
+		}
+		if (checkIsOnEnemy(gridPos)) {
 			return;
 		}
 		
@@ -190,14 +193,14 @@ public class GameScreen extends Screen{
 		return index*grid.getCellWidth() + BORDER_WIDTH;
 	}
 	
-	private boolean checkDoesTowerOverlap(int col, int row) {
-		return grid.getGridMatrix()[col][row] == Grid.BLOCKED_SPACE ||
-				grid.getGridMatrix()[col+1][row] == Grid.BLOCKED_SPACE ||
-				grid.getGridMatrix()[col][row+1] == Grid.BLOCKED_SPACE ||
-				grid.getGridMatrix()[col+1][row+1] == Grid.BLOCKED_SPACE;
+	private boolean checkDoesTowerOverlap(Point space) {
+		return grid.getGridMatrix()[space.x][space.y] == Grid.BLOCKED_SPACE ||
+				grid.getGridMatrix()[space.x+1][space.y] == Grid.BLOCKED_SPACE ||
+				grid.getGridMatrix()[space.x][space.y+1] == Grid.BLOCKED_SPACE ||
+				grid.getGridMatrix()[space.x+1][space.y+1] == Grid.BLOCKED_SPACE;
 	}
 	
-	private boolean checkIsPathBlocked(Point pos) {
+	private boolean checkIsPathBlocked(Point gPos) {
 		int[][] gMatrix = new int[grid.getCols()][grid.getRows()];
 		for (int col = 0; col < grid.getCols(); col++) {
 			for (int row = 0; row < grid.getRows(); row++) {
@@ -206,17 +209,31 @@ public class GameScreen extends Screen{
 		}
 		grid.clearGridPathSpaces(gMatrix);
 		
-		gMatrix[pos.x][pos.y] = Grid.BLOCKED_SPACE;
-		gMatrix[pos.x+1][pos.y] = Grid.BLOCKED_SPACE;
-		gMatrix[pos.x][pos.y+1] = Grid.BLOCKED_SPACE;
-		gMatrix[pos.x+1][pos.y+1] = Grid.BLOCKED_SPACE;
+		gMatrix[gPos.x][gPos.y] = Grid.BLOCKED_SPACE;
+		gMatrix[gPos.x+1][gPos.y] = Grid.BLOCKED_SPACE;
+		gMatrix[gPos.x][gPos.y+1] = Grid.BLOCKED_SPACE;
+		gMatrix[gPos.x+1][gPos.y+1] = Grid.BLOCKED_SPACE;
 		
 		Point[][] flowField = grid.breadthFirstSearch(gMatrix);
 		
-		for (int i = 0; i < grid.getStartSpaces().length; i++) {
-			Point space = new Point(grid.getStartSpaces()[i].x, grid.getStartSpaces()[i].y);
+		for (Point space : grid.getStartSpaces()) {
 			if (flowField[space.x][space.y] == null) {
 				return true;
+			}
+		}
+		
+		return false;
+	}
+	
+	private boolean checkIsOnEnemy(Point gPos) {
+		Point[] enemySpaces = grid.getEnemySpaces();
+		for (Point space : enemySpaces) {
+			boolean result = gPos.x == space.x && gPos.y == space.y ||
+					gPos.x+1 == space.x && gPos.y == space.y ||
+					gPos.x == space.x && gPos.y+1 == space.y ||
+					gPos.x+1 == space.x && gPos.y+1 == space.y;
+			if (result == true) {
+				return true; 
 			}
 		}
 		

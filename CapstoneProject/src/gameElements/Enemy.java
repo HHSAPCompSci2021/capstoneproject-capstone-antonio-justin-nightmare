@@ -101,7 +101,7 @@ public class Enemy extends GameElement{
 //		}
 	}
 	
-	private Point getCurrentSpace(Grid g) {
+	public Point getCurrentSpace(Grid g) {
 		int col = (int)((posX - g.getScreenBorderWidth())/g.getCellWidth());
 		int row = (int)((posY - g.getScreenBorderWidth())/g.getCellWidth());
 		
