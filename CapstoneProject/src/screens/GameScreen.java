@@ -1,4 +1,5 @@
 package screens;
+import java.awt.Color;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
@@ -13,10 +14,13 @@ public class GameScreen extends Screen{
 	private static final int WIDTH = 1280;
 	private static final int HEIGHT = 720;
 	private static final int BORDER_WIDTH = 20;
+	private static final int GRID_WIDTH = 960;
 	private DrawingSurface surface;
 	private Grid grid;
 	private Store store;
 	private double gold;
+	private int highlightedX, highlightedY;
+	private Color highlightedColor;
 	private int dragOffsetX, dragOffsetY;
 	private Rectangle storeItemRect;
 	private boolean hasClickedTower;
@@ -25,11 +29,11 @@ public class GameScreen extends Screen{
 	private int baseHealth;
 	public GameScreen(DrawingSurface surface) {
 		super(WIDTH, HEIGHT);
-		grid = new Grid(BORDER_WIDTH,BORDER_WIDTH,960,HEIGHT - BORDER_WIDTH*2,this);
-		grid.setScreenBorderWidth(BORDER_WIDTH);
+		grid = new Grid(BORDER_WIDTH,BORDER_WIDTH,GRID_WIDTH,HEIGHT - BORDER_WIDTH*2,this);
 		store = new Store(1000,BORDER_WIDTH,WIDTH-1000-BORDER_WIDTH,HEIGHT - BORDER_WIDTH*2,this);
 		this.surface = surface;
 		gold = 0;
+		highlightedColor = new Color(0, 255, 0, 100);
 		storeItemRect = new Rectangle();
 		hasClickedTower = false;
 		isDraggingTower = false;
@@ -47,6 +51,7 @@ public class GameScreen extends Screen{
 			surface.fill(store.getItemColor().getRed(), store.getItemColor().getGreen(), store.getItemColor().getBlue(), draggedTowerAlpha);
 			surface.stroke(0);
 			surface.rect(storeItemRect.x, storeItemRect.y, storeItemRect.width, storeItemRect.height);
+			highlightGrid();
 			processKeyPresses();
 			
 			surface.push();
@@ -72,30 +77,10 @@ public class GameScreen extends Screen{
 				float cellX = grid.getX() + col*cellWidth;
 				float cellY = grid.getY() + row*cellWidth;
 				
-				boolean test = false;
-				
-				if (isDraggingTower) {
-					Point assumedCoords = surface.actualCoordinatesToAssumed(new Point(surface.mouseX,surface.mouseY));
-					boolean inX = cellX <= assumedCoords.getX() && assumedCoords.getX() < cellX + cellWidth;
-					boolean inY = cellY <= assumedCoords.getY() && assumedCoords.getY() < cellY + cellWidth;
-					
-					if (inX && inY) {
-						surface.fill(0, 255, 0);
-						surface.stroke(0, 255, 0);
-						test = true;
-					}
-				}
-				
+				// for testing
 				if (grid.getGridMatrix()[col][row] == Grid.GOAL_SPACE) {
-					// for testing
 					surface.fill(255, 200, 0);
 					surface.stroke(255, 200, 0);
-				}
-				
-				if (test) {
-					surface.rect(cellX - cellWidth, cellY, cellWidth, cellWidth);
-					surface.rect(cellX, cellY - cellWidth, cellWidth, cellWidth);
-					surface.rect(cellX - cellWidth, cellY - cellWidth, cellWidth, cellWidth);
 				}
 				
 				surface.rect(cellX, cellY, cellWidth, cellWidth);
@@ -119,6 +104,20 @@ public class GameScreen extends Screen{
 	// assumes index is in bounds
 	public int indexToPos(int index) {
 		return index*grid.getCellWidth() + BORDER_WIDTH + grid.getCellWidth()/2;
+	}
+	
+	private void highlightGrid() {
+		Point assumedCoords = surface.actualCoordinatesToAssumed(new Point(surface.mouseX,surface.mouseY));
+		if (assumedCoords.x < BORDER_WIDTH || assumedCoords.x > GRID_WIDTH || assumedCoords.y < BORDER_WIDTH || assumedCoords.y > HEIGHT - BORDER_WIDTH*2) {
+			return;
+		}
+		
+		Point mouseGridPos = realPosToGridPos(assumedCoords);
+		highlightedX = indexToPosNoBuffer(mouseGridPos.x);
+		highlightedY = indexToPosNoBuffer(mouseGridPos.y);
+		surface.fill(highlightedColor.getRed(), highlightedColor.getGreen(), highlightedColor.getBlue(), highlightedColor.getAlpha());
+		surface.stroke(highlightedColor.getRed(), highlightedColor.getGreen(), highlightedColor.getBlue(), highlightedColor.getAlpha());
+		surface.rect(highlightedX, highlightedY, grid.getCellWidth()*2, grid.getCellWidth()*2);
 	}
 	
 	public void mousePressed() {
@@ -170,17 +169,20 @@ public class GameScreen extends Screen{
 		if (gridPos == null) {
 			return;
 		}
-		if (gridPos.x-1 < 0 || gridPos.x >= grid.getCols() || gridPos.y-1 < 0 || gridPos.y >= grid.getRows()) {
+		if (gridPos.x < 0 || gridPos.x+1 >= grid.getCols() || gridPos.y < 0 || gridPos.y+1 >= grid.getRows()) {
 			return;
 		}
 		if (checkDoesTowerOverlap(gridPos.x, gridPos.y)) {
 			return;
 		}
+		if (checkIsPathBlocked(gridPos)) {
+			return;
+		}
 		
 		grid.setSpace(gridPos.x, gridPos.y, Grid.BLOCKED_SPACE);
-		grid.setSpace(gridPos.x-1, gridPos.y, Grid.BLOCKED_SPACE);
-		grid.setSpace(gridPos.x, gridPos.y-1, Grid.BLOCKED_SPACE);
-		grid.setSpace(gridPos.x-1, gridPos.y-1, Grid.BLOCKED_SPACE);
+		grid.setSpace(gridPos.x+1, gridPos.y, Grid.BLOCKED_SPACE);
+		grid.setSpace(gridPos.x, gridPos.y+1, Grid.BLOCKED_SPACE);
+		grid.setSpace(gridPos.x+1, gridPos.y+1, Grid.BLOCKED_SPACE);
 		int x = indexToPosNoBuffer(gridPos.x);
 		int y = indexToPosNoBuffer(gridPos.y);
 		grid.addToGrid(new Tower(x, y, grid.getCellWidth()*2, store));
@@ -192,9 +194,34 @@ public class GameScreen extends Screen{
 	
 	private boolean checkDoesTowerOverlap(int col, int row) {
 		return grid.getGridMatrix()[col][row] == Grid.BLOCKED_SPACE ||
-				grid.getGridMatrix()[col-1][row] == Grid.BLOCKED_SPACE ||
-				grid.getGridMatrix()[col][row-1] == Grid.BLOCKED_SPACE ||
-				grid.getGridMatrix()[col-1][row-1] == Grid.BLOCKED_SPACE;
+				grid.getGridMatrix()[col+1][row] == Grid.BLOCKED_SPACE ||
+				grid.getGridMatrix()[col][row+1] == Grid.BLOCKED_SPACE ||
+				grid.getGridMatrix()[col+1][row+1] == Grid.BLOCKED_SPACE;
+	}
+	
+	private boolean checkIsPathBlocked(Point pos) {
+		int[][] gMatrix = new int[grid.getCols()][grid.getRows()];
+		for (int col = 0; col < grid.getCols(); col++) {
+			for (int row = 0; row < grid.getRows(); row++) {
+				gMatrix[col][row] = grid.getGridMatrix()[col][row];
+			}
+		}
+		
+		gMatrix[pos.x][pos.y] = Grid.BLOCKED_SPACE;
+		gMatrix[pos.x+1][pos.y] = Grid.BLOCKED_SPACE;
+		gMatrix[pos.x][pos.y+1] = Grid.BLOCKED_SPACE;
+		gMatrix[pos.x+1][pos.y+1] = Grid.BLOCKED_SPACE;
+		
+		Point[][] flowField = grid.breadthFirstSearch(gMatrix);
+		
+		for (int i = 0; i < grid.getStartSpaces().length; i++) {
+			Point space = new Point(grid.getStartSpaces()[i].x, grid.getStartSpaces()[i].y);
+			if (flowField[space.x][space.y] == null) {
+				return true;
+			}
+		}
+		
+		return false;
 	}
 	
 	public void dragTower(Rectangle r) {
@@ -209,6 +236,10 @@ public class GameScreen extends Screen{
 		dragOffsetX = surface.mouseX - storeItemRect.x;
 		dragOffsetY = surface.mouseY - storeItemRect.y;
 		isDraggingTower = true;
+	}
+	
+	public int getBorderWidth() {
+		return BORDER_WIDTH;
 	}
 	
 	// for testing

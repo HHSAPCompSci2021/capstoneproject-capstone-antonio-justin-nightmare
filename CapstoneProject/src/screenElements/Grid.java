@@ -21,11 +21,10 @@ public class Grid extends ScreenElement{
 	public static final int BLOCKED_SPACE = -1;
 	public static final int PATH_SPACE = 1;
 	public static final int GOAL_SPACE = 2;
-	private Queue<Point> frontier;
 	private Point[][] flowField;
-	private int screenBorderWidth;
 	private GameScreen gScreen;
 	private int waveNum;
+	private Point[] startSpaces;
 	public Grid(int x, int y, int width, int height,GameScreen sc) {
 		super(x,y,width,height);
 		cols = width/CELL_WIDTH;
@@ -35,9 +34,12 @@ public class Grid extends ScreenElement{
 		towers = new ArrayList<Tower>();
 		goal = new Point(cols-1, rows/2);
 		gridMatrix[goal.x][goal.y] = GOAL_SPACE;
-		frontier = new LinkedList<Point>();
 		gScreen = sc;
 		waveNum = 1;
+		startSpaces = new Point[rows];
+		for (int i = 0; i < gridMatrix[0].length; i++) {
+			startSpaces[i] = new Point(0, i);
+		}
 	}
 	
 	public void draw(DrawingSurface surface) {
@@ -67,13 +69,15 @@ public class Grid extends ScreenElement{
 			t.act(enemies);
 		}
 	}
+	
 	// Returns a 2D array of points. Each point in the array are the coordinates of where
 	// the enemy should from their current coordinates, where the current coordinates is
 	// the 2D index of the point in the array. In other words, this method returns a
 	// flow field of where the enemy should given any coordinates in the grid.
-	private Point[][] breadthFirstSearch() {
+	public Point[][] breadthFirstSearch(int[][] matrix) {
 		Point[][] flowField = new Point[cols][rows];
 		flowField[goal.x][goal.y] = new Point(goal.x, goal.y);
+		Queue<Point> frontier = new LinkedList<Point>();
 		frontier.add(new Point(goal.x, goal.y));
 		boolean[][] reachedSpaces = new boolean[cols][rows];
 		reachedSpaces[goal.x][goal.y] = true;
@@ -82,10 +86,10 @@ public class Grid extends ScreenElement{
 			Point currentSpace = frontier.poll();
 			Point[] adjacentSpaces = new Point[4];
 			
-			adjacentSpaces[0] = getValidPoint(currentSpace.x+1, currentSpace.y);
-			adjacentSpaces[1] = getValidPoint(currentSpace.x, currentSpace.y+1);
-			adjacentSpaces[2] = getValidPoint(currentSpace.x, currentSpace.y-1);
-			adjacentSpaces[3] = getValidPoint(currentSpace.x-1, currentSpace.y);
+			adjacentSpaces[0] = getValidSpace(currentSpace.x+1, currentSpace.y, matrix);
+			adjacentSpaces[1] = getValidSpace(currentSpace.x, currentSpace.y+1, matrix);
+			adjacentSpaces[2] = getValidSpace(currentSpace.x, currentSpace.y-1, matrix);
+			adjacentSpaces[3] = getValidSpace(currentSpace.x-1, currentSpace.y, matrix);
 			
 			for (int i = 0; i < adjacentSpaces.length; i++) {
 				if (adjacentSpaces[i] == null) {
@@ -95,7 +99,7 @@ public class Grid extends ScreenElement{
 				if (!reachedSpaces[adjacentSpaces[i].x][adjacentSpaces[i].y]) {
 					frontier.add(adjacentSpaces[i]);
 					reachedSpaces[adjacentSpaces[i].x][adjacentSpaces[i].y] = true;
-					gridMatrix[adjacentSpaces[i].x][adjacentSpaces[i].y] = PATH_SPACE;
+					matrix[adjacentSpaces[i].x][adjacentSpaces[i].y] = PATH_SPACE;
 					flowField[adjacentSpaces[i].x][adjacentSpaces[i].y] = new Point(currentSpace.x, currentSpace.y);
 				}
 			}
@@ -104,20 +108,20 @@ public class Grid extends ScreenElement{
 		return flowField;
 	}
 	
-	private Point getValidPoint(int x, int y) {
-		if (x < 0 || x >= cols || y < 0 || y >= rows) {
+	private Point getValidSpace(int col, int row, int[][] matrix) {
+		if (col < 0 || col >= cols || row < 0 || row >= rows) {
 			return null;
 		}
 		
-		if (gridMatrix[x][y] == BLOCKED_SPACE) {
+		if (matrix[col][row] == BLOCKED_SPACE) {
 			return null;
 		}
 		
-		if (gridMatrix[x][y] == PATH_SPACE) {
+		if (matrix[col][row] == PATH_SPACE) {
 			return null;
 		}
 		
-		return new Point(x, y);
+		return new Point(col, row);
 	}
 	
 	public void setSpace(int col, int row, int val) {
@@ -127,7 +131,7 @@ public class Grid extends ScreenElement{
 	// for testing
 	public void go() {
 		resetGridMatrix();
-		flowField = breadthFirstSearch();
+		flowField = breadthFirstSearch(gridMatrix);
 		spawnWave(waveNum);
 		waveNum++;
 	}
@@ -184,15 +188,15 @@ public class Grid extends ScreenElement{
 		return gridMatrix;
 	}
 	
-	public void setScreenBorderWidth(int w) {
-		screenBorderWidth = w;
-	}
-	
 	public int getScreenBorderWidth() {
-		return screenBorderWidth;
+		return gScreen.getBorderWidth();
 	}
 	
 	public void takeDamage(int amount) {
 		gScreen.takeDamage(amount);
+	}
+	
+	public Point[] getStartSpaces() {
+		return startSpaces;
 	}
 }

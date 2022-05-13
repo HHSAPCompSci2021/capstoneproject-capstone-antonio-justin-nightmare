@@ -36,11 +36,9 @@ public class Enemy extends GameElement{
 		Point nextPos = findNextPos(g);
 		if (!nextPos.equals(new Point(posX,posY))) {
 			move(nextPos);
-			return health > 0;
-		} else {
-			g.takeDamage(1);
-			return false;
 		}
+		
+		return health > 0;
 	}
 	
 
@@ -63,7 +61,6 @@ public class Enemy extends GameElement{
 		
 		Point nextSpace = flowField[currentSpace.x][currentSpace.y];
 		if (nextSpace == null) {
-			System.out.println("goal is not reachable");
 			return new Point(posX, posY);
 		}
 		
@@ -72,15 +69,13 @@ public class Enemy extends GameElement{
 		
 		if (nextSpace.x - currentSpace.x > 0) {
 			moveX = 1;
-		}
-		else if (nextSpace.x - currentSpace.x < 0) {
+		} else if (nextSpace.x - currentSpace.x < 0) {
 			moveX = -1;
 		}
 		
 		if (nextSpace.y - currentSpace.y > 0) {
 			moveY = 1;
-		}
-		else if (nextSpace.y - currentSpace.y < 0) {
+		} else if (nextSpace.y - currentSpace.y < 0) {
 			moveY = -1;
 		}
 		
