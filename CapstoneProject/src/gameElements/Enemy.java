@@ -26,7 +26,6 @@ public class Enemy extends GameElement{
 		surface.fill(0,0,0);
 		surface.textSize(10);
 		surface.text(health, posX, posY);
-//		act(g);
 	}
 	/**
 	 * Moves the enemy by 1 step
@@ -36,9 +35,13 @@ public class Enemy extends GameElement{
 		Point nextPos = findNextPos(g);
 		if (!nextPos.equals(new Point(posX,posY))) {
 			move(nextPos);
+			return health > 0;
+		}
+		else {
+			g.takeDamage(1);
+			return false;
 		}
 		
-		return health > 0;
 	}
 	
 
