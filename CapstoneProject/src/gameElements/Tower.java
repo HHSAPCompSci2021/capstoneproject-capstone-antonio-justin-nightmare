@@ -4,13 +4,14 @@ import java.awt.Color;
 import java.util.ArrayList;
 
 import core.DrawingSurface;
+import processing.core.PConstants;
 import screenElements.Store;
 
 public class Tower extends GameElement{
 	private int width;
 	private Color color;
 	private final int price,attackDamage;
-	private final double attackSpeed;
+	private final double attackSpeed,attackRange;
 	// It stands for Time Between Attacks (in 60ths of a second)
 	private final int TBA;
 	private int attackCooldown;
@@ -22,6 +23,7 @@ public class Tower extends GameElement{
 		price = 100;
 		attackDamage = 2;
 		attackSpeed = 2;
+		attackRange = 100;
 		TBA = (int) (60/attackSpeed);
 		attackCooldown = TBA;
 		projectiles = new ArrayList<Projectile>();
@@ -30,7 +32,11 @@ public class Tower extends GameElement{
 	public void draw(DrawingSurface surface) {
 		surface.fill(color.getRed(), color.getGreen(), color.getBlue());
 		surface.stroke(0);
+		surface.rectMode(PConstants.CENTER);
 		surface.rect(posX, posY, width, width);
+		surface.noFill();
+		surface.circle(posX, posY, (float)(2*attackRange));
+		surface.fill(0);
 		for (Projectile p:projectiles) {
 			p.draw(surface);
 		}
@@ -55,7 +61,7 @@ public class Tower extends GameElement{
 	
 	private void attack(ArrayList<Enemy> enemies) {
 		if (enemies.size() > 0) {
-			double shortestDist = Double.MAX_VALUE;
+			double shortestDist = attackRange;
 			Enemy closestEnemy= null;
 			for (Enemy e:enemies) {
 				if (this.distanceTo(e) < shortestDist) {
@@ -63,7 +69,9 @@ public class Tower extends GameElement{
 					closestEnemy = e;
 				}
 			}
-			projectiles.add(new Projectile(attackDamage,posX+width/2,posY+width/2,closestEnemy));
+			if (closestEnemy != null) {
+				projectiles.add(new Projectile(attackDamage,posX+width/2,posY+width/2,closestEnemy));
+			}
 		}
 	}
 	
