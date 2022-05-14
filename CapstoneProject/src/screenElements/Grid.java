@@ -267,9 +267,10 @@ public class Grid extends ScreenElement{
 		int playerY = player.getY();
 		if (playerX < gScreen.getBorderWidth()) {
 			player.moveTo(gScreen.getBorderWidth(), playerY);
-		} else if (playerX > gScreen.getBorderWidth() + CELL_WIDTH*cols) {
-			player.moveTo(gScreen.getBorderWidth() + CELL_WIDTH*cols, playerY);
+		} else if (playerX > gScreen.getBorderWidth() + CELL_WIDTH*(cols-1)) {
+			player.moveTo(gScreen.getBorderWidth() + CELL_WIDTH*(cols-1), playerY);
 		}
+		playerX = player.getX();
 		if (playerY < gScreen.getBorderWidth()) {
 			player.moveTo(playerX, gScreen.getBorderWidth());
 		} else if (playerY > gScreen.getBorderWidth() + CELL_WIDTH*rows) {
