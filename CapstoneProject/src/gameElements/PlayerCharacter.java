@@ -12,13 +12,14 @@ public class PlayerCharacter extends GameElement{
 		super(x,y);
 		realPosX = x;
 		realPosY = y;
-		weapon = new Weapon(x,y);
+		weapon = new Weapon(this);
 		moveSpeed = 2;
 	}
 	
 	public void draw(DrawingSurface surface) {
 		surface.fill(0);
 		surface.circle(posX, posY, 10);
+		weapon.draw(surface);
 	}
 	
 	public void move(double[] moveAmounts) {
