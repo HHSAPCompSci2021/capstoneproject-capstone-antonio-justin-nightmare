@@ -15,8 +15,8 @@ public class Store extends ScreenElement{
 	private boolean isItemSelected;
 	private Color highlightColor;
 	private int highlightWeight;
-	private GameScreen gScreen;
-	public Store (int x, int y, int width, int height, GameScreen sc) {
+	private int towerPrice;
+	public Store (int x, int y, int width, int height) {
 		super(x,y,width,height);
 		color = new Color(200, 150, 0);
 		itemWidth = (int)(width*0.25);
@@ -27,7 +27,7 @@ public class Store extends ScreenElement{
 		isItemSelected = false;
 		highlightColor = new Color(0, 255, 0);
 		highlightWeight = 5;
-		gScreen = sc;
+		towerPrice = 100;
 	}
 	
 	public void draw(DrawingSurface surface) {
@@ -47,6 +47,10 @@ public class Store extends ScreenElement{
 			surface.strokeWeight(1);
 		}
 		surface.rect(itemX, itemY, itemWidth, itemWidth);
+		surface.fill(0);
+		surface.textSize(15);
+		surface.text("Tower", itemX, itemY+itemWidth+15);
+		surface.text("Cost: " + towerPrice, itemX, itemY+itemWidth+30);
 		surface.pop();
 	}
 	
@@ -68,5 +72,9 @@ public class Store extends ScreenElement{
 	
 	public boolean getIsItemSelected() {
 		return isItemSelected;
+	}
+	
+	public int getTowerPrice() {
+		return towerPrice;
 	}
 }

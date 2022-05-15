@@ -2,7 +2,6 @@ package screens;
 import java.awt.Color;
 import java.awt.Point;
 import java.awt.event.KeyEvent;
-import java.util.Arrays;
 
 import core.DrawingSurface;
 import gameElements.*;
@@ -40,10 +39,10 @@ public class GameScreen extends Screen{
 		waveButtonY = BORDER_WIDTH + waveButtonPadding/2;
 		grid = new Grid(BORDER_WIDTH,BORDER_WIDTH,GRID_WIDTH,HEIGHT - BORDER_WIDTH*2, this);
 		store = new Store(storeX, BORDER_WIDTH + waveButtonHeight + waveButtonPadding,
-				WIDTH-storeX-BORDER_WIDTH, HEIGHT - BORDER_WIDTH*2 - waveButtonHeight - waveButtonPadding, this);
+				WIDTH-storeX-BORDER_WIDTH, HEIGHT - BORDER_WIDTH*2 - waveButtonHeight - waveButtonPadding);
 		this.surface = surface;
 		waveButtonColor = new Color(255, 200, 200);
-		gold = 400;
+		gold = 1000;
 		highlightedColor = new Color(0, 255, 0, 100);
 		baseHealth = 20;
 	}
@@ -51,14 +50,14 @@ public class GameScreen extends Screen{
 	public void draw() {
 		if (baseHealth > 0) {
 			surface.background(150,150,200);
-			grid.draw(surface);
-			grid.next();
 			surface.fill(255);
 			surface.stroke(255);
 			surface.rect(indexToPosNoBuffer(grid.getGoalSpaces()[0].x), indexToPosNoBuffer(grid.getGoalSpaces()[0].y),
 					grid.getCellWidth(), grid.getCellWidth());
 			surface.rect(indexToPosNoBuffer(grid.getGoalSpaces()[1].x), indexToPosNoBuffer(grid.getGoalSpaces()[1].y),
 					grid.getCellWidth(), grid.getCellWidth());
+			grid.draw(surface);
+			grid.next();
 			store.draw(surface);
 			highlightGrid();
 			processKeyPresses();
@@ -178,6 +177,9 @@ public class GameScreen extends Screen{
 		if (checkIsPathBlocked(gridPos)) {
 			return;
 		}
+		if (checkIsBlockingSymmetricGoal(gridPos)) {
+			return;
+		}
 		if (checkIsOnEnemy(gridPos)) {
 			return;
 		}
@@ -185,7 +187,7 @@ public class GameScreen extends Screen{
 		int x = indexToPosNoBuffer(gridPos.x+1);
 		int y = indexToPosNoBuffer(gridPos.y+1);
 		Tower tower = new Tower(x, y, grid.getCellWidth()*2, store);
-		if (gold - tower.getPrice() < 0) {
+		if (gold - store.getTowerPrice() < 0) {
 			return;
 		}
 		grid.setSpace(gridPos.x, gridPos.y, Grid.BLOCKED_SPACE);
@@ -194,7 +196,7 @@ public class GameScreen extends Screen{
 		grid.setSpace(gridPos.x+1, gridPos.y+1, Grid.BLOCKED_SPACE);
 		grid.computeFlowField();
 		grid.addToGrid(tower);
-		gold -= tower.getPrice();
+		gold -= store.getTowerPrice();
 	}
 	
 	private int indexToPosNoBuffer(int index) {
@@ -248,6 +250,15 @@ public class GameScreen extends Screen{
 		return false;
 	}
 	
+	private boolean checkIsBlockingSymmetricGoal(Point gPos) {
+		Point space = grid.getGoalSpaces()[1];
+		space.setLocation(space.x-1, space.y);
+		return gPos.x == space.x && gPos.y == space.y ||
+				gPos.x+1 == space.x && gPos.y == space.y ||
+				gPos.x == space.x && gPos.y+1 == space.y ||
+				gPos.x+1 == space.x && gPos.y+1 == space.y;
+	}
+	
 	public int getBorderWidth() {
 		return BORDER_WIDTH;
 	}
@@ -272,10 +283,6 @@ public class GameScreen extends Screen{
 	
 	public void addGold(int amount) {
 		gold += amount;
-	}
-	
-	public void removeGold(int amount) {
-		gold -= amount;
 	}
 	
 	public void takeDamage(int amount) {

@@ -57,13 +57,13 @@ public class Grid extends ScreenElement{
 		surface.fill(255);
 		surface.stroke(255);
 		surface.rect(x, y, width, height);
-		player.draw(surface);
 		for (Tower t:towers) {
 			t.draw(surface);
 		}
 		for (Enemy e:enemies) {
 			e.draw(surface,this);
 		}
+		player.draw(surface);
 		surface.pop();
 	}
 	
@@ -95,6 +95,8 @@ public class Grid extends ScreenElement{
 				gScreen.addGold(currentE.getGoldValue());
 				enemies.remove(i);
 				i--;
+			} else if (currentE.getHasReachedGoal()) {
+				enemies.remove(i);
 			}
 		}
 		for (Tower t:towers) {

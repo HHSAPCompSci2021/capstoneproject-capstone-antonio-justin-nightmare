@@ -8,10 +8,12 @@ public class Enemy extends GameElement{
 	private int health;
 	private int diameter;
 	private static final int goldValue = 10;
+	private boolean hasReachedGoal;
 	public Enemy(int x, int y) {
 		super(x,y);
 		health = 10;
 		diameter = 18;
+		hasReachedGoal = false;
 	}
 	
 	@Override
@@ -35,7 +37,8 @@ public class Enemy extends GameElement{
 		Point currentSpace = getCurrentSpace(g);
 		if (currentSpace.equals(g.getGoalSpaces()[0]) || currentSpace.equals(g.getGoalSpaces()[1])) {
 			g.takeDamage(1);
-			return false;
+			hasReachedGoal = true;
+			return true;
 		} else {
 			Point nextPos = findNextPos(g);
 			move(nextPos);
@@ -115,5 +118,9 @@ public class Enemy extends GameElement{
 
 	public int getGoldValue() {
 		return goldValue;
+	}
+	
+	public boolean getHasReachedGoal() {
+		return hasReachedGoal;
 	}
 }

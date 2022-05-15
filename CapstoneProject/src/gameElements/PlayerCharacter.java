@@ -1,7 +1,5 @@
 package gameElements;
 
-import java.util.Arrays;
-
 import core.DrawingSurface;
 
 public class PlayerCharacter extends GameElement{

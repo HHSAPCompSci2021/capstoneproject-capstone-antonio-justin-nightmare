@@ -10,7 +10,7 @@ import screenElements.Store;
 public class Tower extends GameElement{
 	private int width;
 	private Color color;
-	private final int price,attackDamage;
+	private final int attackDamage;
 	private final double attackSpeed,attackRange;
 	// It stands for Time Between Attacks (in 60ths of a second)
 	private final int TBA;
@@ -20,7 +20,6 @@ public class Tower extends GameElement{
 		super(x,y);
 		width = w;
 		color = st.getItemColor();
-		price = 100;
 		attackDamage = 2;
 		attackSpeed = 2;
 		attackRange = 100;
@@ -73,9 +72,5 @@ public class Tower extends GameElement{
 				projectiles.add(new Projectile(attackDamage,posX,posY,closestEnemy));
 			}
 		}
-	}
-	
-	public int getPrice() {
-		return price;
 	}
 }
