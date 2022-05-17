@@ -39,19 +39,18 @@ public class Tower extends GameElement{
 	
 	public void draw(DrawingSurface surface) {
 		surface.push();
-		surface.fill(color.getRed(), color.getGreen(), color.getBlue());
 		if (isSelected) {
 			surface.stroke(highlightColor.getRed(), highlightColor.getGreen(), highlightColor.getBlue());
 			surface.strokeWeight(2);
+			surface.noFill();
+			surface.circle(posX, posY, (float)(2*attackRange));
 		} else {
 			surface.stroke(0);
 			surface.strokeWeight(1);
 		}
+		surface.fill(color.getRed(), color.getGreen(), color.getBlue());
 		surface.rectMode(PConstants.CENTER);
 		surface.rect(posX, posY, width, width);
-		surface.noFill();
-		surface.circle(posX, posY, (float)(2*attackRange));
-		surface.fill(0);
 		surface.pop();
 		for (Projectile p:projectiles) {
 			p.draw(surface);
