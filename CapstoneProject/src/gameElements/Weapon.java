@@ -11,20 +11,19 @@ public class Weapon extends GameElement{
 	int attackDamage;
 	double attackSpeed;
 	PlayerCharacter playerChar;
-	int endX,endY;
+	double angle;
 	private final double WEAPON_LENGTH = 20;
 	public Weapon(PlayerCharacter playerCharacter) {
 		super(playerCharacter.getX(),playerCharacter.getY());
 		attackDamage = 3;
 		attackSpeed = 1;
 		playerChar = playerCharacter;
-		endX = (int) (playerChar.getX()-WEAPON_LENGTH);
-		endY = playerChar.getY();
+		angle = 0;
 	}
 
 	public void draw(DrawingSurface surface) {
 		surface.stroke(100,0,100);
-		surface.line(playerChar.getX(), playerChar.getY(), endX, endY);
+		surface.line(playerChar.getX(), playerChar.getY(), (float)(playerChar.getX()+Math.cos(angle)*WEAPON_LENGTH), (float)(playerChar.getY()+Math.sin(angle)*WEAPON_LENGTH));
 	}
 	
 	public int getAttackDamage() {
@@ -36,7 +35,10 @@ public class Weapon extends GameElement{
 	}
 
 	public void turnTo(double angle) {
-		endX = (int)(playerChar.getX()+Math.cos(angle)*WEAPON_LENGTH);
-		endY = (int)(playerChar.getY()+Math.sin(angle)*WEAPON_LENGTH);
+		this.angle = angle;
+	}
+	
+	public void updateEndpoints() {
+		
 	}
 }
