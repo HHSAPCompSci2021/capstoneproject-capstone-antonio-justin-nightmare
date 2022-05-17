@@ -36,7 +36,7 @@ public class Weapon extends GameElement{
 	}
 
 	public void turnTo(double angle) {
-		endX = (int)(playerChar.getX()+Math.cos(angle)*20*WEAPON_LENGTH);
-		endY = (int)(playerChar.getY()+Math.sin(angle)*20*WEAPON_LENGTH);
+		endX = (int)(playerChar.getX()+Math.cos(angle)*WEAPON_LENGTH);
+		endY = (int)(playerChar.getY()+Math.sin(angle)*WEAPON_LENGTH);
 	}
 }
