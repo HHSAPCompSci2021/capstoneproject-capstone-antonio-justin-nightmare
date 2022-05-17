@@ -150,7 +150,10 @@ public class GameScreen extends Screen{
 		
 		if (store.getIsItemSelected()) {
 			placeTower();
+		} else {
+			grid.playerAttack(assumedCoords);
 		}
+		
 		
 		boolean inWaveButtonX = assumedCoords.x >= waveButtonX && assumedCoords.x <= waveButtonX+waveButtonWidth;
 		boolean inWaveButtonY = assumedCoords.y >= waveButtonY && assumedCoords.y <= waveButtonY+waveButtonHeight;

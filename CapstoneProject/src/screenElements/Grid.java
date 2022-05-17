@@ -349,4 +349,8 @@ public class Grid extends ScreenElement{
 			player.moveTo(playerX, gScreen.getBorderWidth() + CELL_WIDTH*rows);
 		}
 	}
+	
+	public void playerAttack(Point targetCoords) {
+		player.attack(targetCoords);
+	}
 }

@@ -1,5 +1,7 @@
 package gameElements;
 
+import java.awt.Point;
+
 import core.DrawingSurface;
 
 /**
@@ -38,8 +40,9 @@ public class PlayerCharacter extends GameElement{
 		posX = (int) realPosX;
 		posY = (int) realPosY;
 	}
-	public void attack() {
-		
+	
+	public void attack(Point targetCoords) {
+		weapon.turnTo(Math.atan2(targetCoords.y-posY,targetCoords.x-posX));
 	}
 	
 	public double getMoveSpeed() {
