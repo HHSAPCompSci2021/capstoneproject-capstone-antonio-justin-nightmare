@@ -24,6 +24,14 @@ public class Tower extends GameElement{
 	private boolean isSelected;
 	private Color highlightColor;
 	ArrayList<Projectile> projectiles;
+	
+	/**
+	 * Creates a tower with given coordinates and width
+	 * @param x The x-coordinate of the center of the tower
+	 * @param y The y-coordinate of the center of the tower
+	 * @param w The width of the tower
+	 * @param st
+	 */
 	public Tower(int x, int y, int w, Store st) {
 		super(x,y);
 		width = w;
@@ -37,6 +45,7 @@ public class Tower extends GameElement{
 		highlightColor = new Color(0, 255, 0);
 	}
 	
+	@Override
 	public void draw(DrawingSurface surface) {
 		surface.push();
 		if (isSelected) {
@@ -57,6 +66,10 @@ public class Tower extends GameElement{
 		}
 	}
 	
+	/**
+	 * Moves the state of the tower forward 1 step (Also all projectiles being fired by it)
+	 * @param enemies The ArrayList of all enemies in the grid
+	 */
 	public void act(ArrayList<Enemy> enemies) {
 		if (attackCooldown == TBA) {
 			attack(enemies);
@@ -74,6 +87,10 @@ public class Tower extends GameElement{
 		}
 	}
 	
+	/**
+	 * Creates a projectile targeting the nearest enemy
+	 * @param enemies The ArrayList of all enemies in the grid
+	 */
 	private void attack(ArrayList<Enemy> enemies) {
 		if (enemies.size() > 0) {
 			double shortestDist = attackRange;
