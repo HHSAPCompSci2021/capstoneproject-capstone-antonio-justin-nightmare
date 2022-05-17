@@ -296,6 +296,10 @@ public class GameScreen extends Screen{
 	
 	private void upgradeTower(Point p) {
 		if (isTowerSelected && store.checkIsPointInUpgradeButton(p)) {
+			if (gold - store.getTowerUpgradePrice() < 0) {
+				return;
+			}
+			
 			selectedTower.upgradeTower();
 			gold -= store.getTowerUpgradePrice();
 		}
