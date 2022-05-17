@@ -18,7 +18,7 @@ public class Weapon extends GameElement{
 		attackDamage = 3;
 		attackSpeed = 1;
 		playerChar = playerCharacter;
-		angle = 0;
+		angle = Math.PI;
 	}
 
 	public void draw(DrawingSurface surface) {
