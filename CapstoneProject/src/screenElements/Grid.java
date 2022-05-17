@@ -246,7 +246,7 @@ public class Grid extends ScreenElement{
 			addToGrid(new Enemy(gScreen.indexToPos(0),gScreen.indexToPos((int)(Math.random()*rows))));
 		}
 		*/
-		activeWaves.add(new int[] {waveNum,waveNum,0});
+		activeWaves.add(new int[] {waveNum,waveNum+10,0});
 		waveNum++;
 	}
 	
