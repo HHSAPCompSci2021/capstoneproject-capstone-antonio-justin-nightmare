@@ -5,10 +5,18 @@ import java.awt.Point;
 import core.DrawingSurface;
 import processing.core.PConstants;
 
+/**
+ * This class represents the menu screen.
+ * @author Antonio Cuan
+ *
+ */
 public class MenuScreen extends Screen{
 	private static final int WIDTH = 1280;
 	private static final int HEIGHT = 720;
 	private DrawingSurface surface;
+	/**
+	 * creates a menu screen
+	 */
 	public MenuScreen(DrawingSurface surface) {
 		super(WIDTH,HEIGHT);
 		this.surface = surface;

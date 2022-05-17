@@ -2,6 +2,11 @@ package gameElements;
 
 import core.DrawingSurface;
 
+/**
+ * This class represents a weapon.
+ * @author Antonio Cuan and Justin Yen
+ *
+ */
 public class Weapon extends GameElement{
 	int attackDamage;
 	double attackSpeed;

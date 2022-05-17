@@ -9,6 +9,11 @@ import processing.core.PConstants;
 import screenElements.Grid;
 import screenElements.Store;
 
+/**
+ * This class represents the game screen, where the player plays the game.
+ * @author Antonio Cuan and Justin Yen
+ *
+ */
 public class GameScreen extends Screen{
 	private static final int WIDTH = 1280;
 	private static final int HEIGHT = 720;
@@ -28,6 +33,9 @@ public class GameScreen extends Screen{
 	private int highlightedX, highlightedY;
 	private Color highlightedColor;
 	private int baseHealth;
+	/**
+	 * creates a GameScreen
+	 */
 	public GameScreen(DrawingSurface surface) {
 		super(WIDTH, HEIGHT);
 		storeX = 1000;
@@ -89,6 +97,11 @@ public class GameScreen extends Screen{
 		}
 	}
 	
+	/**
+	 * calculates the grid position of a real screen position
+	 * @param p screen position
+	 * @return grid position
+	 */
 	public Point realPosToGridPos(Point p) {
 		int gridX = (int)((p.x - BORDER_WIDTH)/grid.getCellWidth());
 		int gridY = (int)((p.y - BORDER_WIDTH)/grid.getCellWidth());
@@ -100,7 +113,12 @@ public class GameScreen extends Screen{
 		return new Point(gridX, gridY);
 	}
 	
-	// assumes index is in bounds
+	/**
+	 * calculates the grid index of a real screen x or y position
+	 * @param index grid index
+	 * @return screen x or y position
+	 * @precondition index is in bounds for the grid
+	 */
 	public int indexToPos(int index) {
 		return index*grid.getCellWidth() + BORDER_WIDTH + grid.getCellWidth()/2;
 	}
@@ -139,24 +157,6 @@ public class GameScreen extends Screen{
 		if (inWaveButtonX && inWaveButtonY) {
 			grid.spawnWave();
 		}
-		
-		// for testing
-//		Point assumedCoords = surface.actualCoordinatesToAssumed(new Point(surface.mouseX,surface.mouseY));
-//		Point cellCoord = realPosToGridPos(assumedCoords);
-//		if (cellCoord != null) {
-//			grid.setSpace(cellCoord.x, cellCoord.y);
-//		}
-	}
-	
-	public void mouseDragged() {
-		// for testing
-//		if (surface.mouseButton == PConstants.LEFT) {
-//			Point assumedCoords = surface.actualCoordinatesToAssumed(new Point(surface.mouseX,surface.mouseY));
-//			Point cellCoord = realPosToGridPos(assumedCoords);
-//			if (cellCoord != null) {
-//				grid.setSpace(cellCoord.x, cellCoord.y);
-//			}
-//		}
 	}
 	
 	private void placeTower() {
@@ -281,10 +281,18 @@ public class GameScreen extends Screen{
 		grid.movePlayer(directions);
 	}
 	
+	/**
+	 * adds gold to the player's gold amount
+	 * @param amount amount of gold to add
+	 */
 	public void addGold(int amount) {
 		gold += amount;
 	}
 	
+	/**
+	 * makes the player's base take damage by the specified amount
+	 * @param amount amount of damage to deal
+	 */
 	public void takeDamage(int amount) {
 		baseHealth -= amount;
 	}

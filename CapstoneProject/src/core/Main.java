@@ -6,8 +6,18 @@ import javax.swing.JFrame;
 import processing.awt.PSurfaceAWT;
 import processing.core.PApplet;
 
+/**
+ * This class represents the head of the program. All other classes "branch out" from this class.
+ * @author Antonio Cuan and Justin Yen
+ *
+ */
 public class Main {
 
+	/**
+	 * creates a JFrame window and runs the program
+	 * 
+	 * @param args
+	 */
 	public static void main(String args[]) {
 
 		DrawingSurface drawing = new DrawingSurface();

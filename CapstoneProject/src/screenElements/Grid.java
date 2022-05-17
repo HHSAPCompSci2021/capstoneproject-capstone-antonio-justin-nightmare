@@ -9,6 +9,11 @@ import core.DrawingSurface;
 import gameElements.*;
 import screens.GameScreen;
 
+/**
+ * This class represents a grid.
+ * @author Antonio Cuan and Justin Yen
+ *
+ */
 public class Grid extends ScreenElement{
 	private int cols;
 	private int rows;
@@ -28,6 +33,13 @@ public class Grid extends ScreenElement{
 	private int TIME_BETWEEN_SPAWNS = 60;
 	private Point[] startSpaces;
 	private PlayerCharacter player;
+	/**
+	 * creates a grid with the specified position and dimensions
+	 * @param x x position
+	 * @param y y position
+	 * @param width width
+	 * @param height height
+	 */
 	public Grid(int x, int y, int width, int height,GameScreen sc) {
 		super(x,y,width,height);
 		cols = width/CELL_WIDTH + 1;
@@ -67,6 +79,9 @@ public class Grid extends ScreenElement{
 		surface.pop();
 	}
 	
+	/**
+	 * processes objects in the grid
+	 */
 	public void next() {
 		for (int i = 0; i < activeWaves.size(); i++) {
 			int[] currentWave = activeWaves.get(i);
@@ -104,10 +119,13 @@ public class Grid extends ScreenElement{
 		}
 	}
 	
-	// Returns a 2D array of points. Each point in the array are the coordinates of where
-	// the enemy should from their current coordinates, where the current coordinates is
-	// the 2D index of the point in the array. In other words, this method returns a
-	// flow field of where the enemy should given any coordinates in the grid.
+	/**
+	 * performs a breadth first search and returns a 2D array of points where each point is the coordinates of where the enemy should
+	 * move from their current grid position; in other words, this method returns a flow field of where the enemy should move given any
+	 * grid position
+	 * @param matrix grid matrix to perform a breadth first search on
+	 * @return a 2D array flow field
+	 */
 	public Point[][] breadthFirstSearch(int[][] matrix) {
 		Point[][] flowField = new Point[cols][rows];
 		flowField[goalSpace.x][goalSpace.y] = new Point(goalSpace.x, goalSpace.y);
@@ -158,6 +176,12 @@ public class Grid extends ScreenElement{
 		return new Point(col, row);
 	}
 	
+	/**
+	 * sets the grid position with the specified row and column in the grid matrix to the specified value
+	 * @param col column
+	 * @param row row
+	 * @param val value
+	 */
 	public void setSpace(int col, int row, int val) {
 		gridMatrix[col][row] = val;
 	}
@@ -172,15 +196,26 @@ public class Grid extends ScreenElement{
 		}
 	}
 	
+	/**
+	 * computes the flow field for the grid matrix
+	 */
 	public void computeFlowField() {
 		clearGridPathSpaces(gridMatrix);
 		flowField = breadthFirstSearch(gridMatrix);
 	}
 	
+	/**
+	 * returns the flow field for the grid matrix
+	 * @return a 2D array flow field
+	 */
 	public Point[][] getFlowField() {
 		return flowField;
 	}
 	
+	/**
+	 * adds the specified game element to the grid
+	 * @param e game element
+	 */
 	public void addToGrid(GameElement e) {
 		if (e instanceof Enemy) {
 			enemies.add((Enemy)e);
@@ -189,6 +224,10 @@ public class Grid extends ScreenElement{
 		}
 	}
 	
+	/**
+	 * removes the specified game element from the grid
+	 * @param e game element
+	 */
 	public void removeFromGrid(GameElement e) {
 		if (e instanceof Enemy) {
 			enemies.remove(e);
@@ -197,6 +236,9 @@ public class Grid extends ScreenElement{
 		}
 	}
 	
+	/**
+	 * spawns a wave of enemies
+	 */
 	public void spawnWave() {
 		computeFlowField();
 		/*
@@ -208,38 +250,74 @@ public class Grid extends ScreenElement{
 		waveNum++;
 	}
 	
+	/**
+	 * returns the number of rows in the grid
+	 * @return rows
+	 */
 	public int getRows() {
 		return rows;
 	}
 	
+	/**
+	 * returns the number of columns in the grid
+	 * @return columns
+	 */
 	public int getCols() {
 		return cols;
 	}
 	
+	/**
+	 * returns the width of each cell in the grid
+	 * @return cell width
+	 */
 	public int getCellWidth() {
 		return CELL_WIDTH;
 	}
 	
+	/**
+	 * returns the grid matrix
+	 * @return the 2D array grid matrix
+	 */
 	public int[][] getGridMatrix() {
 		return gridMatrix;
 	}
 	
+	/**
+	 * returns the screen border width
+	 * @return width
+	 */
 	public int getScreenBorderWidth() {
 		return gScreen.getBorderWidth();
 	}
 	
+	/**
+	 * makes the player's base take damage by the specified amount
+	 * @param amount amount of damage to deal
+	 */
 	public void takeDamage(int amount) {
 		gScreen.takeDamage(amount);
 	}
 	
+	/**
+	 * returns an array of the starting grid positions of enemies
+	 * @return array of grid positions
+	 */
 	public Point[] getStartSpaces() {
 		return startSpaces;
 	}
 	
+	/**
+	 * returns an array of the goal positions for enemies
+	 * @return array of grid positions
+	 */
 	public Point[] getGoalSpaces() {
 		return new Point[] {goalSpace, new Point(goalSpace.x, goalSpace.y-1)};
 	}
 	
+	/**
+	 * returns an array of all enemy grid positions
+	 * @return array of grid positions
+	 */
 	public Point[] getEnemySpaces() {
 		Point[] enemySpaces = new Point[enemies.size()];
 		for (int i = 0; i < enemies.size(); i++) {

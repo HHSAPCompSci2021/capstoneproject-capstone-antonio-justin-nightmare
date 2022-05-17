@@ -6,6 +6,11 @@ import java.awt.Point;
 import core.DrawingSurface;
 import screens.GameScreen;
 
+/**
+ * This class represents a store.
+ * @author Antonio Cuan and Justin Yen
+ *
+ */
 public class Store extends ScreenElement{
 	private Color color;
 	private int itemWidth;
@@ -16,6 +21,13 @@ public class Store extends ScreenElement{
 	private Color highlightColor;
 	private int highlightWeight;
 	private int towerPrice;
+	/**
+	 * creates a store with the specified position and dimensions
+	 * @param x x position
+	 * @param y y position
+	 * @param width width
+	 * @param height height
+	 */
 	public Store (int x, int y, int width, int height) {
 		super(x,y,width,height);
 		color = new Color(200, 150, 0);
@@ -54,10 +66,19 @@ public class Store extends ScreenElement{
 		surface.pop();
 	}
 	
+	/**
+	 * returns the tower item color
+	 * @return color
+	 */
 	public Color getItemColor() {
 		return itemColor;
 	}
 	
+	/**
+	 * returns status of the specified point being in the tower item
+	 * @param p position
+	 * @return true if the specified position is in the tower item, false otherwise
+	 */
 	public boolean checkIsPointInItem(Point p) {
 		if (p.x >= itemX && p.x <= itemX+itemWidth && p.y >= itemY && p.y <= itemY+itemWidth) {
 			return true;
@@ -66,14 +87,25 @@ public class Store extends ScreenElement{
 		return false;
 	}
 	
+	/**
+	 * toggles whether tower item is selected or not
+	 */
 	public void toggleItemSelect() {
 		isItemSelected = !isItemSelected;
 	}
 	
+	/**
+	 * returns status of the tower item being selected
+	 * @return true if tower item is selected, false otherwise
+	 */
 	public boolean getIsItemSelected() {
 		return isItemSelected;
 	}
 	
+	/**
+	 * returns the tower price
+	 * @return price
+	 */
 	public int getTowerPrice() {
 		return towerPrice;
 	}

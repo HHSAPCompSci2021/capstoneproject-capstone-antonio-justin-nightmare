@@ -4,11 +4,22 @@ import core.DrawingSurface;
 import screenElements.Grid;
 
 import java.awt.Point;
+
+/**
+ * This class represents the default enemy in the game.
+ * @author Antonio Cuan and Justin Yen
+ *
+ */
 public class Enemy extends GameElement{
 	private int health;
 	private int diameter;
 	private static final int goldValue = 10;
 	private boolean hasReachedGoal;
+	/**
+	 * creates an Enemy with position x, y
+	 * @param x x position
+	 * @param y y position
+	 */
 	public Enemy(int x, int y) {
 		super(x,y);
 		health = 10;
@@ -29,6 +40,7 @@ public class Enemy extends GameElement{
 		surface.textSize(10);
 		surface.text(health, posX, posY);
 	}
+	
 	/**
 	 * Moves the enemy by 1 step
 	 * @return true if enemy is still alive, false if it is not
@@ -57,6 +69,10 @@ public class Enemy extends GameElement{
 		return health > 0;
 	}
 	
+	/**
+	 * returns the next position that the enemy should move to
+	 * @return next position
+	 */
 	private Point findNextPos(Grid g) {
 		Point currentSpace = getCurrentSpace(g);
 		Point [][] flowField = g.getFlowField();
@@ -85,25 +101,12 @@ public class Enemy extends GameElement{
 		}
 		
 		return new Point(posX + moveX, posY + moveY);
-		
-//		ArrayList<int[]> possibleDirs = new ArrayList<int[]>();
-//		if (posY < g.getUpperGoal()[1]) {
-//			possibleDirs.add(new int[] {0,1});
-//		} else if (posY > g.getLowerGoal()[1]) {
-//			possibleDirs.add(new int[] {0,-1});
-//		}
-//		if (posX < g.getUpperGoal()[0]) {
-//			possibleDirs.add(new int[] {1,0});
-//		}
-//		if (possibleDirs.size() > 0) {
-//			int[] moveDist = possibleDirs.get((int)(Math.random()*possibleDirs.size()));
-//			return new Point(posX+moveDist[0],posY+moveDist[1]);
-//		} else {
-//			g.removeFromGrid(this);
-//			return new Point(0,0);
-//		}
 	}
 	
+	/**
+	 * calculates the current grid position of the enemy
+	 * @return grid position
+	 */
 	public Point getCurrentSpace(Grid g) {
 		int col = (int)((posX - g.getScreenBorderWidth())/g.getCellWidth());
 		int row = (int)((posY - g.getScreenBorderWidth())/g.getCellWidth());
@@ -116,10 +119,18 @@ public class Enemy extends GameElement{
 		posY = (int) p.getY();
 	}
 
+	/**
+	 * returns the enemy's gold value
+	 * @return gold value
+	 */
 	public int getGoldValue() {
 		return goldValue;
 	}
 	
+	/**
+	 * returns enemy's status of reaching the goal
+	 * @return true if the enemy has reached the goal, false otherwise
+	 */
 	public boolean getHasReachedGoal() {
 		return hasReachedGoal;
 	}

@@ -7,6 +7,11 @@ import core.DrawingSurface;
 import processing.core.PConstants;
 import screenElements.Store;
 
+/**
+ * This class represents a tower.
+ * @author Antonio Cuan and Justin Yen
+ *
+ */
 public class Tower extends GameElement{
 	private int width;
 	private Color color;

@@ -2,6 +2,11 @@ package gameElements;
 
 import core.DrawingSurface;
 
+/**
+ * This class represents the player character.
+ * @author Antonio Cuan and Justin Yen
+ *
+ */
 public class PlayerCharacter extends GameElement{
 	private Weapon weapon;
 	private double realPosX,realPosY;

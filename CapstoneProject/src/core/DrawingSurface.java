@@ -5,12 +5,20 @@ import java.util.ArrayList;
 import processing.core.PApplet;
 import screens.*;
 
+/**
+ * This class represents the drawing surface on which the game is displayed.
+ * @author Antonio Cuan and Justin Yen
+ *
+ */
 public class DrawingSurface extends PApplet implements ScreenSwitcher{
 	float ratioX, ratioY;
 	private ArrayList<Integer> keys;
 	private Screen activeScreen;
 	private ArrayList<Screen> screens;
 	
+	/**
+	 * initializes screens and displays the first screen
+	 */
 	public DrawingSurface() {
 		screens = new ArrayList<Screen>();
 		keys = new ArrayList<Integer>();
@@ -20,11 +28,11 @@ public class DrawingSurface extends PApplet implements ScreenSwitcher{
 		activeScreen = screens.get(0);
 	}
 	
-	
-	public void setup() {
-		for (Screen s : screens)
-			s.setup();
-	}
+	// delete if not needed
+//	public void setup() {
+//		for (Screen s : screens)
+//			s.setup();
+//	}
 	
 	public void draw() {
 		ratioX = (float)width/activeScreen.DRAWING_WIDTH;
@@ -67,22 +75,35 @@ public class DrawingSurface extends PApplet implements ScreenSwitcher{
 		activeScreen.mousePressed();
 	}
 	
-	public void mouseMoved() {
-		activeScreen.mouseMoved();
-	}
+	// remove if not needed
+//	public void mouseMoved() {
+//		activeScreen.mouseMoved();
+//	}
 	
-	public void mouseDragged() {
-		activeScreen.mouseDragged();
-	}
+	// remove if not needed
+//	public void mouseDragged() {
+//		activeScreen.mouseDragged();
+//	}
 	
-	public void mouseReleased() {
-		activeScreen.mouseReleased();
-	}
+	// remove if not needed
+//	public void mouseReleased() {
+//		activeScreen.mouseReleased();
+//	}
 	
+	/**
+	 * calculates the actual Java window coordinates of a Processing coordinate
+	 * @param assumed Processing coordinates of a point
+	 * @return actual Java coordinates
+	 */
 	public Point assumedCoordinatesToActual(Point assumed) {
 		return new Point((int)(assumed.getX()*ratioX), (int)(assumed.getY()*ratioY));
 	}
 
+	/**
+	 * calculates the assumed Processing coordinates of a Java window coordinate
+	 * @param actual Java coordinates
+	 * @return assumed Processing coordinates
+	 */
 	public Point actualCoordinatesToAssumed(Point actual) {
 		return new Point((int)(actual.getX()/ratioX) , (int)(actual.getY()/ratioY));
 	}

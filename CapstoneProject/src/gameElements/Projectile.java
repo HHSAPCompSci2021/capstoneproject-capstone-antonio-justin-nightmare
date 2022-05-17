@@ -2,6 +2,11 @@ package gameElements;
 
 import core.DrawingSurface;
 
+/**
+ * This class represents a projectile.
+ * @author Antonio Cuan and Justin Yen
+ *
+ */
 public class Projectile extends GameElement{
 	private int damage;
 	private Enemy target;
