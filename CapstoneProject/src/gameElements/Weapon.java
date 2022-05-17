@@ -11,14 +11,16 @@ import core.DrawingSurface;
  */
 public class Weapon extends GameElement{
 	int attackDamage;
-	double attackSpeed;
+	double attackSpeed, TBA;
+	double attackCooldown;
 	PlayerCharacter playerChar;
 	double angle;
-	private final double WEAPON_LENGTH = 20;
+	private final double WEAPON_LENGTH = 100;
 	public Weapon(PlayerCharacter playerCharacter) {
 		super(playerCharacter.getX(),playerCharacter.getY());
 		attackDamage = 3;
 		attackSpeed = 1;
+		TBA = 60/attackSpeed;
 		playerChar = playerCharacter;
 		angle = Math.PI;
 	}
@@ -41,8 +43,12 @@ public class Weapon extends GameElement{
 	}
 	
 	public void attack(ArrayList<Enemy> enemies) {
-		for (Enemy e:enemies) {
-			e.takeDamage(1);
+		if (attackCooldown == TBA) {
+			for (Enemy e:enemies) {
+				if (e.distanceTo(playerChar) < WEAPON_LENGTH) {
+					e.takeDamage(attackDamage);
+				}
+			}
 		}
 	}
 }

@@ -172,6 +172,7 @@ public class GameScreen extends Screen{
 	
 	public void mouseDragged() {
 		grid.playerMoveWeapon(surface.actualCoordinatesToAssumed(new Point(surface.mouseX,surface.mouseY)));
+		grid.playerAttack();
 	}
 	private void placeTower() {
 		Point assumedCoords = surface.actualCoordinatesToAssumed(new Point(surface.mouseX,surface.mouseY));
