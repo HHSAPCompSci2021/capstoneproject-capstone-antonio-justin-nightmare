@@ -2,6 +2,7 @@ package screens;
 import java.awt.Color;
 import java.awt.Point;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 
 import core.DrawingSurface;
 import gameElements.*;
@@ -33,6 +34,8 @@ public class GameScreen extends Screen{
 	private int highlightedX, highlightedY;
 	private Color highlightedColor;
 	private int baseHealth;
+	private boolean isTowerSelected;
+	private Tower selectedTower;
 	/**
 	 * creates a GameScreen
 	 */
@@ -47,12 +50,13 @@ public class GameScreen extends Screen{
 		waveButtonY = BORDER_WIDTH + waveButtonPadding/2;
 		grid = new Grid(BORDER_WIDTH,BORDER_WIDTH,GRID_WIDTH,HEIGHT - BORDER_WIDTH*2, this);
 		store = new Store(storeX, BORDER_WIDTH + waveButtonHeight + waveButtonPadding,
-				WIDTH-storeX-BORDER_WIDTH, HEIGHT - BORDER_WIDTH*2 - waveButtonHeight - waveButtonPadding);
+				WIDTH-storeX-BORDER_WIDTH, HEIGHT - BORDER_WIDTH*2 - waveButtonHeight - waveButtonPadding, this);
 		this.surface = surface;
 		waveButtonColor = new Color(255, 200, 200);
 		gold = 1000;
 		highlightedColor = new Color(0, 255, 0, 100);
 		baseHealth = 20;
+		isTowerSelected = false;
 	}
 
 	public void draw() {
@@ -154,12 +158,12 @@ public class GameScreen extends Screen{
 			grid.playerAttack(assumedCoords);
 		}
 		
-		
-		boolean inWaveButtonX = assumedCoords.x >= waveButtonX && assumedCoords.x <= waveButtonX+waveButtonWidth;
-		boolean inWaveButtonY = assumedCoords.y >= waveButtonY && assumedCoords.y <= waveButtonY+waveButtonHeight;
-		if (inWaveButtonX && inWaveButtonY) {
+		if (checkIsPointInWaveButton(assumedCoords)) {
 			grid.spawnWave();
 		}
+		
+		selectTower(assumedCoords);
+		upgradeTower(assumedCoords);
 	}
 	
 	private void placeTower() {
@@ -262,6 +266,45 @@ public class GameScreen extends Screen{
 				gPos.x+1 == space.x && gPos.y+1 == space.y;
 	}
 	
+	private boolean checkIsPointInWaveButton(Point p) {
+		boolean inWaveButtonX = p.x >= waveButtonX && p.x <= waveButtonX+waveButtonWidth;
+		boolean inWaveButtonY = p.y >= waveButtonY && p.y <= waveButtonY+waveButtonHeight;
+		return inWaveButtonX && inWaveButtonY;
+	}
+	
+	private void selectTower(Point p) {
+		if (store.checkIsPointInUpgradeButton(p)) {
+			return;
+		}
+		
+		ArrayList<Tower> towers = grid.getTowers();
+		for (Tower t : towers) {
+			if (t.getIsSelected()) {
+				t.toggleSelect();
+				isTowerSelected = false;
+			}
+		}
+		for (Tower t : towers) {
+			if (t.isPointInTower(p)) {
+				t.toggleSelect();
+				selectedTower = t;
+				isTowerSelected = true;
+				break;
+			}
+		}
+	}
+	
+	private void upgradeTower(Point p) {
+		if (isTowerSelected && store.checkIsPointInUpgradeButton(p)) {
+			selectedTower.upgradeTower();
+			gold -= store.getTowerUpgradePrice();
+		}
+	}
+	
+	/**
+	 * returns the border width
+	 * @return border width
+	 */
 	public int getBorderWidth() {
 		return BORDER_WIDTH;
 	}
@@ -298,5 +341,13 @@ public class GameScreen extends Screen{
 	 */
 	public void takeDamage(int amount) {
 		baseHealth -= amount;
+	}
+	
+	/**
+	 * returns status of a tower being selected
+	 * @return true if a tower is selected, false otherwise
+	 */
+	public boolean getIsTowerSelected() {
+		return isTowerSelected;
 	}
 }

@@ -28,7 +28,7 @@ public class MenuScreen extends Screen{
 		surface.textAlign(PConstants.CENTER);
 		surface.textSize(40);
 		surface.text("Polygon Protection", WIDTH/2, 100);
-		surface.fill(200, 150, 0);
+		surface.fill(255, 150, 0);
 		surface.rectMode(PConstants.CENTER);
 		surface.rect(WIDTH/2, HEIGHT/2, 200, 50);
 		surface.fill(0);

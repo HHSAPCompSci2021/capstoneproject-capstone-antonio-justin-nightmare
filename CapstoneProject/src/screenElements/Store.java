@@ -21,6 +21,10 @@ public class Store extends ScreenElement{
 	private Color highlightColor;
 	private int highlightWeight;
 	private int towerPrice;
+	private int towerUpgradePrice;
+	private GameScreen gScreen;
+	private int upgradeButtonX, upgradeButtonY;
+	private int upgradeButtonWidth, upgradeButtonHeight;
 	/**
 	 * creates a store with the specified position and dimensions
 	 * @param x x position
@@ -28,7 +32,7 @@ public class Store extends ScreenElement{
 	 * @param width width
 	 * @param height height
 	 */
-	public Store (int x, int y, int width, int height) {
+	public Store (int x, int y, int width, int height, GameScreen gs) {
 		super(x,y,width,height);
 		color = new Color(200, 150, 0);
 		itemWidth = (int)(width*0.25);
@@ -40,16 +44,24 @@ public class Store extends ScreenElement{
 		highlightColor = new Color(0, 255, 0);
 		highlightWeight = 5;
 		towerPrice = 100;
+		towerUpgradePrice = 50;
+		gScreen = gs;
+		upgradeButtonX = x + 10;
+		upgradeButtonY = height - width/8 - 40;
+		upgradeButtonWidth = width/2;
+		upgradeButtonHeight = width/8;
 	}
 	
 	public void draw(DrawingSurface surface) {
 		surface.push();
+		
 		surface.fill(color.getRed(), color.getGreen(), color.getBlue());
 		surface.stroke(0);
 		surface.rect(x, y, width, height);
 		surface.fill(0);
 		surface.textSize(headerSize);
 		surface.text("Store", x + width*0.1f, y + width*0.1f + headerSize*0.5f);
+		
 		surface.fill(itemColor.getRed(), itemColor.getGreen(), itemColor.getBlue());
 		if (isItemSelected) {
 			surface.stroke(highlightColor.getRed(), highlightColor.getGreen(), highlightColor.getBlue());
@@ -59,10 +71,29 @@ public class Store extends ScreenElement{
 			surface.strokeWeight(1);
 		}
 		surface.rect(itemX, itemY, itemWidth, itemWidth);
+		
 		surface.fill(0);
 		surface.textSize(15);
 		surface.text("Tower", itemX, itemY+itemWidth+15);
 		surface.text("Cost: " + towerPrice, itemX, itemY+itemWidth+30);
+		
+		if (gScreen.getIsTowerSelected()) {
+			surface.fill(255, 100, 0, 255);
+			surface.stroke(0, 0, 0, 255);
+		} else {
+			surface.fill(255, 100, 0, 100);
+			surface.stroke(0, 0, 0, 100);
+		}
+		surface.strokeWeight(1);
+		surface.rect(upgradeButtonX, upgradeButtonY, upgradeButtonWidth, upgradeButtonHeight);
+		
+		if (gScreen.getIsTowerSelected()) {
+			surface.fill(0, 0, 0, 255);
+		} else {
+			surface.fill(0, 0, 0, 100);
+		}
+		surface.text("Upgrade", upgradeButtonX + 30, upgradeButtonY + 20);
+		
 		surface.pop();
 	}
 	
@@ -108,5 +139,26 @@ public class Store extends ScreenElement{
 	 */
 	public int getTowerPrice() {
 		return towerPrice;
+	}
+	
+	/**
+	 * returns the tower upgrade price
+	 * @return price
+	 */
+	public int getTowerUpgradePrice() {
+		return towerUpgradePrice;
+	}
+	
+	/**
+	 * returns status of the specified position being in the upgrade button
+	 * @param p position
+	 * @return true if the specified position is in the upgrade button, false otherwise
+	 */
+	public boolean checkIsPointInUpgradeButton(Point p) {
+		if (p.x >= upgradeButtonX && p.x <= upgradeButtonX + upgradeButtonWidth && p.y >= upgradeButtonY && p.y <= upgradeButtonY + upgradeButtonHeight) {
+			return true;
+		}
+		
+		return false;
 	}
 }

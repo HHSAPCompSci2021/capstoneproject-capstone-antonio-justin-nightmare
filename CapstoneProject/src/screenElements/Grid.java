@@ -320,6 +320,14 @@ public class Grid extends ScreenElement{
 	}
 	
 	/**
+	 * returns the tower array list
+	 * @return array list
+	 */
+	public ArrayList<Tower> getTowers(){
+		return towers;
+	}
+	
+	/**
 	 * Moves the player in the specified direction (Will move at the same speed, even when diagonally moving)
 	 * @param directions First value: left-right movement, second value: up-down movement
 	 */
