@@ -41,10 +41,10 @@ public abstract class Screen {
 	}
 	
 	// delete if not needed
-//	public void mouseMoved() {
-//		// TODO Auto-generated method stub
-//		
-//	}
+	public void mouseMoved() {
+		// TODO Auto-generated method stub
+		
+	}
 	
 	// delete if not needed
 	public void mouseDragged() {

@@ -42,8 +42,11 @@ public class PlayerCharacter extends GameElement{
 		posY = (int) realPosY;
 	}
 	
-	public void attack(Point targetCoords, ArrayList<Enemy> enemies) {
+	public void moveWeapon(Point targetCoords) {
 		weapon.turnTo(Math.atan2(targetCoords.y-posY,targetCoords.x-posX));
+
+	}
+	public void attack(ArrayList<Enemy> enemies) {
 		weapon.attack(enemies);
 	}
 	

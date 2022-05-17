@@ -155,7 +155,7 @@ public class GameScreen extends Screen{
 		if (store.getIsItemSelected()) {
 			placeTower();
 		} else {
-			grid.playerAttack(assumedCoords);
+			grid.playerAttack();
 		}
 		
 		if (checkIsPointInWaveButton(assumedCoords)) {
@@ -166,6 +166,13 @@ public class GameScreen extends Screen{
 		upgradeTower(assumedCoords);
 	}
 	
+	public void mouseMoved() {
+		grid.playerMoveWeapon(surface.actualCoordinatesToAssumed(new Point(surface.mouseX,surface.mouseY)));
+	}
+	
+	public void mouseDragged() {
+		grid.playerMoveWeapon(surface.actualCoordinatesToAssumed(new Point(surface.mouseX,surface.mouseY)));
+	}
 	private void placeTower() {
 		Point assumedCoords = surface.actualCoordinatesToAssumed(new Point(surface.mouseX,surface.mouseY));
 		if (assumedCoords.x < BORDER_WIDTH || assumedCoords.x > GRID_WIDTH || assumedCoords.y < BORDER_WIDTH || assumedCoords.y > HEIGHT - BORDER_WIDTH*2) {
