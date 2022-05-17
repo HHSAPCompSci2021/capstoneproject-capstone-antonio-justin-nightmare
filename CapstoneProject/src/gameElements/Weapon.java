@@ -1,5 +1,7 @@
 package gameElements;
 
+import java.util.ArrayList;
+
 import core.DrawingSurface;
 
 /**
@@ -38,7 +40,9 @@ public class Weapon extends GameElement{
 		this.angle = angle;
 	}
 	
-	public void updateEndpoints() {
-		
+	public void attack(ArrayList<Enemy> enemies) {
+		for (Enemy e:enemies) {
+			e.takeDamage(1);
+		}
 	}
 }

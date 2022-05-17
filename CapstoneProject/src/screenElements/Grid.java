@@ -359,6 +359,6 @@ public class Grid extends ScreenElement{
 	}
 	
 	public void playerAttack(Point targetCoords) {
-		player.attack(targetCoords);
+		player.attack(targetCoords,enemies);
 	}
 }
