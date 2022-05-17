@@ -2,6 +2,7 @@ package gameElements;
 
 import core.DrawingSurface;
 import screenElements.Grid;
+import screens.GameScreen;
 
 import java.awt.Point;
 
@@ -15,24 +16,23 @@ public class Enemy extends GameElement{
 	private int diameter;
 	private static final int goldValue = 10;
 	private boolean hasReachedGoal;
+	private Grid grid;
+	private GameScreen gScreen;
 	/**
 	 * creates an Enemy with position x, y
 	 * @param x x position
 	 * @param y y position
 	 */
-	public Enemy(int x, int y) {
+	public Enemy(int x, int y, Grid g, GameScreen sc) {
 		super(x,y);
 		health = 10;
 		diameter = 18;
 		hasReachedGoal = false;
+		grid = g;
+		gScreen = sc;
 	}
 	
-	@Override
 	public void draw(DrawingSurface surface) {
-		surface.circle(posX, posY, diameter);
-	}
-	
-	public void draw(DrawingSurface surface, Grid g) {
 		surface.fill(200,200,0);
 		surface.stroke(100,100,0);
 		surface.circle(posX, posY, diameter);
@@ -45,14 +45,14 @@ public class Enemy extends GameElement{
 	 * Moves the enemy by 1 step
 	 * @return true if enemy is still alive, false if it is not
 	 */
-	public boolean act(Grid g) {
-		Point currentSpace = getCurrentSpace(g);
-		if (currentSpace.equals(g.getGoalSpaces()[0]) || currentSpace.equals(g.getGoalSpaces()[1])) {
-			g.takeDamage(1);
+	public boolean act() {
+		Point currentSpace = getCurrentSpace();
+		if (currentSpace.equals(grid.getGoalSpaces()[0]) || currentSpace.equals(grid.getGoalSpaces()[1])) {
+			grid.takeDamage(1);
 			hasReachedGoal = true;
 			return true;
 		} else {
-			Point nextPos = findNextPos(g);
+			Point nextPos = findNextPos();
 			move(nextPos);
 			return health > 0;
 		}
@@ -73,12 +73,9 @@ public class Enemy extends GameElement{
 	 * returns the next position that the enemy should move to
 	 * @return next position
 	 */
-	private Point findNextPos(Grid g) {
-		Point currentSpace = getCurrentSpace(g);
-		Point [][] flowField = g.getFlowField();
-		if (flowField == null) {
-			return new Point(posX, posY);
-		}
+	private Point findNextPos() {
+		Point currentSpace = getCurrentSpace();
+		Point [][] flowField = grid.getFlowField();
 		
 		Point nextSpace = flowField[currentSpace.x][currentSpace.y];
 		if (nextSpace == null) {
@@ -107,9 +104,9 @@ public class Enemy extends GameElement{
 	 * calculates the current grid position of the enemy
 	 * @return grid position
 	 */
-	public Point getCurrentSpace(Grid g) {
-		int col = (int)((posX - g.getScreenBorderWidth())/g.getCellWidth());
-		int row = (int)((posY - g.getScreenBorderWidth())/g.getCellWidth());
+	public Point getCurrentSpace() {
+		int col = (int)((posX - gScreen.getBorderWidth())/grid.getCellWidth());
+		int row = (int)((posY - gScreen.getBorderWidth())/grid.getCellWidth());
 		
 		return new Point(col, row);
 	}

@@ -73,7 +73,7 @@ public class Grid extends ScreenElement{
 			t.draw(surface);
 		}
 		for (Enemy e:enemies) {
-			e.draw(surface,this);
+			e.draw(surface);
 		}
 		player.draw(surface);
 		surface.pop();
@@ -90,12 +90,12 @@ public class Grid extends ScreenElement{
 			int timeToNextSpawn = currentWave[2];
 			if (currentWaveLeft > 0) {
 				if (currentWaveNum == currentWaveLeft) {
-					addToGrid(new Enemy(gScreen.indexToPos(0),gScreen.indexToPos((int)(Math.random()*rows))));
+					addToGrid(new Enemy(gScreen.indexToPos(0),gScreen.indexToPos((int)(Math.random()*rows)), this, gScreen));
 					currentWave[1]--;
 				} else if (timeToNextSpawn < TIME_BETWEEN_SPAWNS) {
 					currentWave[2]++;
 				} else if (Math.random()*10<1) {
-					addToGrid(new Enemy(gScreen.indexToPos(0),gScreen.indexToPos((int)(Math.random()*rows))));
+					addToGrid(new Enemy(gScreen.indexToPos(0),gScreen.indexToPos((int)(Math.random()*rows)), this, gScreen));
 					currentWave[1]--;
 					currentWave[2] = 0;
 				}
@@ -106,7 +106,7 @@ public class Grid extends ScreenElement{
 		}
 		for (int i = 0; i < enemies.size(); i++) {
 			Enemy currentE = enemies.get(i);
-			if (!currentE.act(this)) {
+			if (!currentE.act()) {
 				gScreen.addGold(currentE.getGoldValue());
 				enemies.remove(i);
 				i--;
@@ -283,14 +283,6 @@ public class Grid extends ScreenElement{
 	}
 	
 	/**
-	 * returns the screen border width
-	 * @return width
-	 */
-	public int getScreenBorderWidth() {
-		return gScreen.getBorderWidth();
-	}
-	
-	/**
 	 * makes the player's base take damage by the specified amount
 	 * @param amount amount of damage to deal
 	 */
@@ -321,7 +313,7 @@ public class Grid extends ScreenElement{
 	public Point[] getEnemySpaces() {
 		Point[] enemySpaces = new Point[enemies.size()];
 		for (int i = 0; i < enemies.size(); i++) {
-			enemySpaces[i] = enemies.get(i).getCurrentSpace(this);
+			enemySpaces[i] = enemies.get(i).getCurrentSpace();
 		}
 		
 		return enemySpaces;
