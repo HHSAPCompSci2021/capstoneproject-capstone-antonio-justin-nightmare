@@ -18,6 +18,8 @@ public class Enemy extends GameElement{
 	private boolean hasReachedGoal;
 	private Grid grid;
 	private GameScreen gScreen;
+	private int prevMoveX, prevMoveY;
+	private boolean hasFoundNextPos;
 	/**
 	 * creates an Enemy with position x, y
 	 * @param x x position
@@ -30,6 +32,7 @@ public class Enemy extends GameElement{
 		hasReachedGoal = false;
 		grid = g;
 		gScreen = sc;
+		hasFoundNextPos = false;
 	}
 	
 	public void draw(DrawingSurface surface) {
@@ -76,7 +79,6 @@ public class Enemy extends GameElement{
 	private Point findNextPos() {
 		Point currentSpace = getCurrentSpace();
 		Point [][] flowField = grid.getFlowField();
-		
 		Point nextSpace = flowField[currentSpace.x][currentSpace.y];
 		if (nextSpace == null) {
 			return new Point(posX, posY);
@@ -96,6 +98,20 @@ public class Enemy extends GameElement{
 		} else if (nextSpace.y - currentSpace.y < 0) {
 			moveY = -1;
 		}
+		
+		if (hasFoundNextPos) {
+			if (moveX != prevMoveX || moveY != prevMoveY) {
+				int midX = gScreen.indexToPos(currentSpace.x);
+				int midY = gScreen.indexToPos(currentSpace.y);
+				if (posX != midX || posY != midY) {
+					return new Point(posX + prevMoveX, posY + prevMoveY);
+				}
+			}
+		}
+		
+		prevMoveX = moveX;
+		prevMoveY = moveY;
+		hasFoundNextPos = true;
 		
 		return new Point(posX + moveX, posY + moveY);
 	}
