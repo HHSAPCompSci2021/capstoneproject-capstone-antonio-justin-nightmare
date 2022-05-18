@@ -19,7 +19,7 @@ public class PlayerCharacter extends GameElement{
 		realPosX = x;
 		realPosY = y;
 		weapon = new Weapon(this);
-		moveSpeed = 2;
+		moveSpeed = 3;
 	}
 	
 	public void draw(DrawingSurface surface) {
@@ -46,15 +46,15 @@ public class PlayerCharacter extends GameElement{
 		weapon.turnTo(Math.atan2(targetCoords.y-posY,targetCoords.x-posX));
 
 	}
-	public void attack(ArrayList<Enemy> enemies) {
-		weapon.attack(enemies);
+	public void attack() {
+		weapon.attack();
 	}
 	
 	public double getMoveSpeed() {
 		return moveSpeed;
 	}
 
-	public void act() {
-		weapon.act();
+	public void act(ArrayList<Enemy> enemies) {
+		weapon.act(enemies);
 	}
 }

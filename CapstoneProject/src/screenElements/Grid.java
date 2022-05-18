@@ -117,7 +117,7 @@ public class Grid extends ScreenElement{
 		for (Tower t:towers) {
 			t.act(enemies);
 		}
-		player.act();
+		player.act(enemies);
 	}
 	
 	/**
@@ -363,6 +363,6 @@ public class Grid extends ScreenElement{
 		player.moveWeapon(p);
 	}
 	public void playerAttack() {
-		player.attack(enemies);
+		player.attack();
 	}
 }
