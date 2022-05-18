@@ -1,5 +1,6 @@
 package gameElements;
 
+import java.awt.Point;
 import java.util.ArrayList;
 
 import core.DrawingSurface;
@@ -36,7 +37,8 @@ public class Weapon extends GameElement{
 
 	public void draw(DrawingSurface surface) {
 		surface.stroke(100,0,100);
-		surface.line(playerChar.getX(), playerChar.getY(), (float)(playerChar.getX()+Math.cos(angle+attackAngle)*WEAPON_LENGTH), (float)(playerChar.getY()+Math.sin(angle+attackAngle)*WEAPON_LENGTH));
+		double[] endpoints = getEndpoints();
+		surface.line(playerChar.getX(), playerChar.getY(), (float)endpoints[0], (float)endpoints[1]);
 	}
 	
 	public int getAttackDamage() {
@@ -58,14 +60,25 @@ public class Weapon extends GameElement{
 		}
 	}
 
+	private double[] getEndpoints(){
+		return new double[] {playerChar.getX()+Math.cos(angle+attackAngle)*WEAPON_LENGTH,playerChar.getY()+Math.sin(angle+attackAngle)*WEAPON_LENGTH};
+	}
+		
+		
 	public void act(ArrayList<Enemy> enemies) {
 		if (isAttacking) {
 			if (attackCooldown > 0) {
 				for (Enemy e:enemies) {
 					if (!hitEnemies.contains(e)) {
-						if (e.distanceTo(playerChar) < WEAPON_LENGTH) {
-							e.takeDamage(attackDamage);
-							hitEnemies.add(e);
+						double[] endpoints = getEndpoints();
+						if (posX < e.getX() && e.getX() < endpoints[0] ||
+								posX > e.getX() && e.getX() > endpoints[0]) {
+							if (posY < e.getY() && e.getY() < endpoints[1] ||
+									posY > e.getY() && e.getY() > endpoints[1]) {
+								e.takeDamage(attackDamage);
+								hitEnemies.add(e);
+							}
+							
 						}
 					}
 				}
@@ -77,7 +90,7 @@ public class Weapon extends GameElement{
 			}
 		} else {
 			if (attackAngle < 0) {
-				attackAngle += 0.4;
+				attackAngle += 0.3;
 			}
 		}
 		attackCooldown--;
