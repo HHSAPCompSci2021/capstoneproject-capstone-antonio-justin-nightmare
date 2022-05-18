@@ -71,6 +71,7 @@ public class Weapon extends GameElement{
 				for (Enemy e:enemies) {
 					if (!hitEnemies.contains(e)) {
 						double[] endpoints = getEndpoints();
+						// Checks if enemy is somewhere inside the attack area (is not very good)
 						if (posX < e.getX() && e.getX() < endpoints[0] ||
 								posX > e.getX() && e.getX() > endpoints[0]) {
 							if (posY < e.getY() && e.getY() < endpoints[1] ||
