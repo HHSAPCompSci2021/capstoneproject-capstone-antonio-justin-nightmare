@@ -331,8 +331,14 @@ public class GameScreen extends Screen{
 	
 	private void sellTower() {
 		isTowerSelected = false;
+		Point gridPos = realPosToGridPos(new Point(selectedTower.getX(), selectedTower.getY()));
+		grid.setSpace(gridPos.x, gridPos.y, Grid.EMPTY_SPACE);
+		grid.setSpace(gridPos.x-1, gridPos.y, Grid.EMPTY_SPACE);
+		grid.setSpace(gridPos.x, gridPos.y-1, Grid.EMPTY_SPACE);
+		grid.setSpace(gridPos.x-1, gridPos.y-1, Grid.EMPTY_SPACE);
 		grid.removeFromGrid(selectedTower);
 		gold += store.getTowerPrice();
+		grid.computeFlowField();
 	}
 	
 	/**
