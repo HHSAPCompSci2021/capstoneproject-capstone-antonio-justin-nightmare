@@ -23,6 +23,8 @@ public class Tower extends GameElement{
 	private int attackCooldown;
 	private boolean isSelected;
 	private Color highlightColor;
+	private int level;
+	private static final int MAX_LEVEL = 4;
 	ArrayList<Projectile> projectiles;
 	
 	/**
@@ -43,6 +45,7 @@ public class Tower extends GameElement{
 		attackCooldown = TBA;
 		projectiles = new ArrayList<Projectile>();
 		highlightColor = new Color(0, 255, 0);
+		level = 1;
 	}
 	
 	@Override
@@ -133,7 +136,38 @@ public class Tower extends GameElement{
 		return isSelected;
 	}
 	
+	/**
+	 * upgrades the tower
+	 */
 	public void upgradeTower() {
 		attackDamage++;
+		level++;
+		switch (level) {
+		case 2:
+			color = new Color(50, 125, 200);
+			break;
+		case 3:
+			color = new Color(100, 50, 200);
+			break;
+		case 4:
+			color = new Color(100, 0, 200);
+			break;
+		}
+	}
+	
+	/**
+	 * returns tower level
+	 * @return level
+	 */
+	public int getLevel() {
+		return level;
+	}
+	
+	/**
+	 * returns max tower level
+	 * @return max level
+	 */
+	public int getMaxLevel() {
+		return MAX_LEVEL;
 	}
 }

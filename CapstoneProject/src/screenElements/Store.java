@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Point;
 
 import core.DrawingSurface;
+import gameElements.Tower;
 import screens.GameScreen;
 
 /**
@@ -44,7 +45,7 @@ public class Store extends ScreenElement{
 		highlightColor = new Color(0, 255, 0);
 		highlightWeight = 5;
 		towerPrice = 100;
-		towerUpgradePrice = 50;
+		towerUpgradePrice = 80;
 		gScreen = gs;
 		upgradeButtonX = x + 10;
 		upgradeButtonY = height - width/8 - 40;
@@ -93,6 +94,12 @@ public class Store extends ScreenElement{
 			surface.fill(0, 0, 0, 100);
 		}
 		surface.text("Upgrade", upgradeButtonX + 30, upgradeButtonY + 20);
+		if (gScreen.getIsTowerSelected()) {
+			surface.fill(0, 0, 0, 255);
+		} else {
+			surface.fill(0, 0, 0, 0);
+		}
+		surface.text("Increases the damage\nof the tower", upgradeButtonX, upgradeButtonY + 50);
 		
 		surface.pop();
 	}
@@ -160,5 +167,13 @@ public class Store extends ScreenElement{
 		}
 		
 		return false;
+	}
+	
+	/**
+	 * displays to the screen the level of the specified tower
+	 * @param t tower
+	 */
+	public void displayTowerLevel(DrawingSurface surface, Tower t) {
+		surface.text("Tower level: " + t.getLevel(), upgradeButtonX + upgradeButtonWidth + 5, upgradeButtonY + 20);
 	}
 }

@@ -95,6 +95,10 @@ public class GameScreen extends Screen{
 					WIDTH-BORDER_WIDTH-statusOffset,
 					BORDER_WIDTH+20 + waveButtonHeight + waveButtonPadding,
 					200, 20);
+			if (isTowerSelected) {
+				surface.textAlign(PConstants.LEFT);
+				store.displayTowerLevel(surface, selectedTower);
+			}
 			surface.pop();
 		} else {
 			surface.switchScreen(ScreenSwitcher.END_SCREEN);
@@ -305,6 +309,10 @@ public class GameScreen extends Screen{
 	private void upgradeTower(Point p) {
 		if (isTowerSelected && store.checkIsPointInUpgradeButton(p)) {
 			if (gold - store.getTowerUpgradePrice() < 0) {
+				return;
+			}
+			
+			if (selectedTower.getLevel() + 1 > selectedTower.getMaxLevel()) {
 				return;
 			}
 			
