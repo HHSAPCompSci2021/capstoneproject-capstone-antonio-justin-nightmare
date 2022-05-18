@@ -21,6 +21,7 @@ public class Weapon extends GameElement{
 		attackDamage = 3;
 		attackSpeed = 1;
 		TBA = 60/attackSpeed;
+		attackCooldown = 0;
 		playerChar = playerCharacter;
 		angle = Math.PI;
 	}
@@ -43,12 +44,17 @@ public class Weapon extends GameElement{
 	}
 	
 	public void attack(ArrayList<Enemy> enemies) {
-		if (attackCooldown == TBA) {
+		if (attackCooldown <= 0) {
 			for (Enemy e:enemies) {
 				if (e.distanceTo(playerChar) < WEAPON_LENGTH) {
 					e.takeDamage(attackDamage);
 				}
 			}
+			attackCooldown = TBA;
 		}
+	}
+
+	public void act() {
+		attackCooldown--;
 	}
 }

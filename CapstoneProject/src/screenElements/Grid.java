@@ -117,6 +117,7 @@ public class Grid extends ScreenElement{
 		for (Tower t:towers) {
 			t.act(enemies);
 		}
+		player.act();
 	}
 	
 	/**

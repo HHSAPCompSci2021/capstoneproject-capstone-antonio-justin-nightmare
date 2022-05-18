@@ -53,4 +53,8 @@ public class PlayerCharacter extends GameElement{
 	public double getMoveSpeed() {
 		return moveSpeed;
 	}
+
+	public void act() {
+		weapon.act();
+	}
 }
