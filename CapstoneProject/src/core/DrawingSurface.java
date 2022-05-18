@@ -83,11 +83,6 @@ public class DrawingSurface extends PApplet implements ScreenSwitcher{
 		activeScreen.mouseDragged();
 	}
 	
-	// remove if not needed
-//	public void mouseReleased() {
-//		activeScreen.mouseReleased();
-//	}
-	
 	/**
 	 * calculates the actual Java window coordinates of a Processing coordinate
 	 * @param assumed Processing coordinates of a point

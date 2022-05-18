@@ -99,7 +99,7 @@ public class Store extends ScreenElement{
 		} else {
 			surface.fill(0, 0, 0, 0);
 		}
-		surface.text("Increases the damage\nof the tower", upgradeButtonX, upgradeButtonY + 50);
+		surface.text("Cost: " + towerUpgradePrice + "\nIncreases the damage\nof the tower", upgradeButtonX, upgradeButtonY + 50);
 		
 		surface.pop();
 	}
