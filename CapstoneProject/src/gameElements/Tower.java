@@ -144,13 +144,13 @@ public class Tower extends GameElement{
 		level++;
 		switch (level) {
 		case 2:
-			color = new Color(50, 125, 200);
+			color = new Color(200, 0, 255);
 			break;
 		case 3:
-			color = new Color(100, 50, 200);
+			color = new Color(255, 220, 0);
 			break;
 		case 4:
-			color = new Color(100, 0, 200);
+			color = new Color(255, 0, 0);
 			break;
 		}
 	}
