@@ -26,6 +26,8 @@ public class Store extends ScreenElement{
 	private GameScreen gScreen;
 	private int upgradeButtonX, upgradeButtonY;
 	private int upgradeButtonWidth, upgradeButtonHeight;
+	private int sellButtonX, sellButtonY;
+	private int sellButtonWidth, sellButtonHeight;
 	/**
 	 * creates a store with the specified position and dimensions
 	 * @param x x position
@@ -51,6 +53,10 @@ public class Store extends ScreenElement{
 		upgradeButtonY = height - width/8 - 40;
 		upgradeButtonWidth = width/2;
 		upgradeButtonHeight = width/8;
+		sellButtonX = x + 10;
+		sellButtonY = height - width/8 - 100;
+		sellButtonWidth = width/2;
+		sellButtonHeight = width/8;
 	}
 	
 	public void draw(DrawingSurface surface) {
@@ -87,6 +93,7 @@ public class Store extends ScreenElement{
 		}
 		surface.strokeWeight(1);
 		surface.rect(upgradeButtonX, upgradeButtonY, upgradeButtonWidth, upgradeButtonHeight);
+		surface.rect(sellButtonX, sellButtonY, sellButtonWidth, sellButtonHeight);
 		
 		if (gScreen.getIsTowerSelected()) {
 			surface.fill(0, 0, 0, 255);
@@ -94,6 +101,7 @@ public class Store extends ScreenElement{
 			surface.fill(0, 0, 0, 100);
 		}
 		surface.text("Upgrade", upgradeButtonX + 30, upgradeButtonY + 20);
+		surface.text("Sell", sellButtonX + 50, sellButtonY + 20);
 		if (gScreen.getIsTowerSelected()) {
 			surface.fill(0, 0, 0, 255);
 		} else {
@@ -175,5 +183,18 @@ public class Store extends ScreenElement{
 	 */
 	public void displayTowerLevel(DrawingSurface surface, Tower t) {
 		surface.text("Tower level: " + t.getLevel(), upgradeButtonX + upgradeButtonWidth + 5, upgradeButtonY + 20);
+	}
+	
+	/**
+	 * returns status of the specified position being in the sell button
+	 * @param p position
+	 * @return true if the specified position is in the sell button, false otherwise
+	 */
+	public boolean checkIsPointInSellButton(Point p) {
+		if (p.x >= sellButtonX && p.x <= sellButtonX + sellButtonWidth && p.y >= sellButtonY && p.y <= sellButtonY + sellButtonHeight) {
+			return true;
+		}
+		
+		return false;
 	}
 }

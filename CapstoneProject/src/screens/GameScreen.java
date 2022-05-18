@@ -167,7 +167,16 @@ public class GameScreen extends Screen{
 		}
 		
 		selectTower(assumedCoords);
-		upgradeTower(assumedCoords);
+		
+		if (isTowerSelected) {
+			if (store.checkIsPointInUpgradeButton(assumedCoords)) {
+				upgradeTower();
+			}
+			
+			if (store.checkIsPointInSellButton(assumedCoords)) {
+				sellTower();
+			}
+		}
 	}
 	
 	public void mouseMoved() {
@@ -285,7 +294,7 @@ public class GameScreen extends Screen{
 	}
 	
 	private void selectTower(Point p) {
-		if (store.checkIsPointInUpgradeButton(p)) {
+		if (store.checkIsPointInUpgradeButton(p) || store.checkIsPointInSellButton(p)) {
 			return;
 		}
 		
@@ -306,19 +315,24 @@ public class GameScreen extends Screen{
 		}
 	}
 	
-	private void upgradeTower(Point p) {
-		if (isTowerSelected && store.checkIsPointInUpgradeButton(p)) {
-			if (gold - store.getTowerUpgradePrice() < 0) {
-				return;
-			}
-			
-			if (selectedTower.getLevel() + 1 > selectedTower.getMaxLevel()) {
-				return;
-			}
-			
-			selectedTower.upgradeTower();
-			gold -= store.getTowerUpgradePrice();
+	private void upgradeTower() {
+		if (gold - store.getTowerUpgradePrice() < 0) {
+			return;
 		}
+		
+		if (selectedTower.getLevel() + 1 > selectedTower.getMaxLevel()) {
+			return;
+		}
+		
+		selectedTower.upgradeTower();
+		gold -= store.getTowerUpgradePrice();
+		
+	}
+	
+	private void sellTower() {
+		isTowerSelected = false;
+		grid.removeFromGrid(selectedTower);
+		gold += store.getTowerPrice();
 	}
 	
 	/**
