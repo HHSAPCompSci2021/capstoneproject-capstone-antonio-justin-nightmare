@@ -72,11 +72,7 @@ public class Enemy extends GameElement{
 		return health > 0;
 	}
 	
-	/**
-	 * returns the next position that the enemy should move to
-	 * @return next position
-	 */
-	private Point findNextPos() {
+	protected Point findNextPos() {
 		Point currentSpace = getCurrentSpace();
 		Point [][] flowField = grid.getFlowField();
 		Point nextSpace = flowField[currentSpace.x][currentSpace.y];
@@ -127,7 +123,7 @@ public class Enemy extends GameElement{
 		return new Point(col, row);
 	}
 	
-	private void move(Point p) {
+	protected void move(Point p) {
 		posX = (int) p.getX();
 		posY = (int) p.getY();
 	}
