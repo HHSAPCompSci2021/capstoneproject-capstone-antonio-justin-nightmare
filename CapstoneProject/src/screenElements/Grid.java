@@ -57,7 +57,7 @@ public class Grid extends ScreenElement{
 		enemies = new ArrayList<Enemy>();
 		towers = new ArrayList<Tower>();
 		gScreen = sc;
-		waveNum = 1;
+		waveNum = 12;
 		activeWaves = new ArrayList<int[]>();
 		startSpaces = new Point[rows];
 		for (int i = 0; i < gridMatrix[0].length; i++) {
@@ -94,12 +94,12 @@ public class Grid extends ScreenElement{
 			int timeToNextSpawn = currentWave[2];
 			if (currentWaveLeft > 0) {
 				if (currentWaveNum == currentWaveLeft) {
-					spawnEnemy(currentWaveNum);
+					spawnEnemy(currentWaveNum, currentWave);
 					currentWave[1]--;
 				} else if (timeToNextSpawn < timeBetweenSpawns) {
 					currentWave[2]++;
 				} else if (Math.random()*10<1) {
-					spawnEnemy(currentWaveNum);
+					spawnEnemy(currentWaveNum, currentWave);
 					currentWave[1]--;
 					currentWave[2] = 0;
 				}
@@ -124,11 +124,12 @@ public class Grid extends ScreenElement{
 		player.act(enemies);
 	}
 	
-	private void spawnEnemy(int currentWaveNum) {
+	private void spawnEnemy(int currentWaveNum, int[] currentWave) {
 		if (currentWaveNum % bigEnemyOnlyWave == 0) {
 			addToGrid(new BigEnemy(gScreen.indexToPos(0),gScreen.indexToPos((int)(Math.random()*rows)), this, gScreen));
+			currentWave[1]--;
 		} else if (currentWaveNum % regAndBigEnemyWave == 0) {
-			boolean shouldSpawnBigEnemy = (int)(Math.random()*2) < 1;
+			boolean shouldSpawnBigEnemy = Math.random()*2 < 1;
 			if (shouldSpawnBigEnemy) {
 				addToGrid(new BigEnemy(gScreen.indexToPos(0),gScreen.indexToPos((int)(Math.random()*rows)), this, gScreen));
 			} else {
