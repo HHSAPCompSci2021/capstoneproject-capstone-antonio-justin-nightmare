@@ -24,6 +24,7 @@ public class PlayerCharacter extends GameElement{
 	
 	public void draw(DrawingSurface surface) {
 		surface.fill(0);
+		surface.stroke(0);
 		surface.circle(posX, posY, 20);
 		weapon.draw(surface);
 	}

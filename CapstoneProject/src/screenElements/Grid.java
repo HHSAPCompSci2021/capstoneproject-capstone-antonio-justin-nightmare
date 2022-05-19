@@ -34,7 +34,6 @@ public class Grid extends ScreenElement{
 	private Point[] startSpaces;
 	private PlayerCharacter player;
 	private int bigEnemyOnlyWave;
-	private int regAndBigEnemyWave;
 	/**
 	 * creates a grid with the specified position and dimensions
 	 * @param x x position
@@ -65,7 +64,6 @@ public class Grid extends ScreenElement{
 		}
 		player = new PlayerCharacter((goalSpace.x-1)*CELL_WIDTH+gScreen.getBorderWidth(),(goalSpace.y)*CELL_WIDTH+gScreen.getBorderWidth());
 		bigEnemyOnlyWave = 8;
-		regAndBigEnemyWave = 12;
 	}
 	
 	public void draw(DrawingSurface surface) {
@@ -128,7 +126,7 @@ public class Grid extends ScreenElement{
 		if (currentWaveNum % bigEnemyOnlyWave == 0) {
 			addToGrid(new BigEnemy(gScreen.indexToPos(0),gScreen.indexToPos((int)(Math.random()*rows)), this, gScreen));
 			currentWave[1]--;
-		} else if (currentWaveNum % regAndBigEnemyWave == 0) {
+		} else if (currentWaveNum > bigEnemyOnlyWave) {
 			boolean shouldSpawnBigEnemy = Math.random()*2 < 1;
 			if (shouldSpawnBigEnemy) {
 				addToGrid(new BigEnemy(gScreen.indexToPos(0),gScreen.indexToPos((int)(Math.random()*rows)), this, gScreen));
