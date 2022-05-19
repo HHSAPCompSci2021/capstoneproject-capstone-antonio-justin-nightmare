@@ -183,9 +183,11 @@ public class GameScreen extends Screen{
 	}
 	
 	public void mouseDragged() {
-		grid.playerMoveWeapon(surface.actualCoordinatesToAssumed(new Point(surface.mouseX,surface.mouseY)));
-		grid.playerAttack();
+		if (!grid.getIsPlayerAttacking()) {
+			grid.playerMoveWeapon(surface.actualCoordinatesToAssumed(new Point(surface.mouseX,surface.mouseY)));
+		}
 	}
+	
 	private void placeTower() {
 		Point assumedCoords = surface.actualCoordinatesToAssumed(new Point(surface.mouseX,surface.mouseY));
 		if (assumedCoords.x < BORDER_WIDTH || assumedCoords.x > GRID_WIDTH || assumedCoords.y < BORDER_WIDTH || assumedCoords.y > HEIGHT - BORDER_WIDTH*2) {

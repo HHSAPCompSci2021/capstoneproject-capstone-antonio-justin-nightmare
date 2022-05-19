@@ -393,4 +393,7 @@ public class Grid extends ScreenElement{
 	public void playerAttack() {
 		player.attack();
 	}
+	public boolean getIsPlayerAttacking() {
+		return player.getIsAttacking();
+	}
 }

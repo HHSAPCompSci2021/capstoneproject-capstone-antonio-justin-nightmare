@@ -96,4 +96,8 @@ public class Weapon extends GameElement{
 		}
 		attackCooldown--;
 	}
+	
+	public boolean getIsAttacking() {
+		return isAttacking;
+	}
 }

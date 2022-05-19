@@ -57,4 +57,8 @@ public class PlayerCharacter extends GameElement{
 	public void act(ArrayList<Enemy> enemies) {
 		weapon.act(enemies);
 	}
+	
+	public boolean getIsAttacking() {
+		return weapon.getIsAttacking();
+	}
 }
