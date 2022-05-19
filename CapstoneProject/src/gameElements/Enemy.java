@@ -7,14 +7,14 @@ import screens.GameScreen;
 import java.awt.Point;
 
 /**
- * This class represents the default enemy in the game.
+ * This class represents an enemy.
  * @author Antonio Cuan and Justin Yen
  *
  */
-public class Enemy extends GameElement{
-	private int health;
-	private int diameter;
-	private int goldValue;
+public abstract class Enemy extends GameElement{
+	protected int health;
+	protected int diameter;
+	protected int goldValue;
 	private boolean hasReachedGoal;
 	private Grid grid;
 	private GameScreen gScreen;
@@ -27,23 +27,13 @@ public class Enemy extends GameElement{
 	 */
 	public Enemy(int x, int y, Grid g, GameScreen sc) {
 		super(x,y);
-		health = 10;
-		diameter = 18;
-		goldValue = 10;
 		hasReachedGoal = false;
 		grid = g;
 		gScreen = sc;
 		hasFoundNextPos = false;
 	}
 	
-	public void draw(DrawingSurface surface) {
-		surface.fill(200,200,0);
-		surface.stroke(100,100,0);
-		surface.circle(posX, posY, diameter);
-		surface.fill(0,0,0);
-		surface.textSize(10);
-		surface.text(health, posX, posY);
-	}
+	public abstract void draw(DrawingSurface surface);
 	
 	/**
 	 * Moves the enemy by 1 step

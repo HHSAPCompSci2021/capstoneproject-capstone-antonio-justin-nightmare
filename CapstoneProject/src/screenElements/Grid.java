@@ -126,19 +126,16 @@ public class Grid extends ScreenElement{
 	
 	private void spawnEnemy(int currentWaveNum) {
 		if (currentWaveNum % bigEnemyOnlyWave == 0) {
-			addToGrid(new Enemy(gScreen.indexToPos(0),gScreen.indexToPos((int)(Math.random()*rows)), this, gScreen));
-//			addToGrid(new BigEnemy(gScreen.indexToPos(0),gScreen.indexToPos((int)(Math.random()*rows)), this, gScreen));
+			addToGrid(new BigEnemy(gScreen.indexToPos(0),gScreen.indexToPos((int)(Math.random()*rows)), this, gScreen));
 		} else if (currentWaveNum % regAndBigEnemyWave == 0) {
 			boolean shouldSpawnBigEnemy = (int)(Math.random()*2) < 1;
 			if (shouldSpawnBigEnemy) {
-				addToGrid(new Enemy(gScreen.indexToPos(0),gScreen.indexToPos((int)(Math.random()*rows)), this, gScreen));
-//				addToGrid(new BigEnemy(gScreen.indexToPos(0),gScreen.indexToPos((int)(Math.random()*rows)), this, gScreen));
+				addToGrid(new BigEnemy(gScreen.indexToPos(0),gScreen.indexToPos((int)(Math.random()*rows)), this, gScreen));
 			} else {
-				addToGrid(new Enemy(gScreen.indexToPos(0),gScreen.indexToPos((int)(Math.random()*rows)), this, gScreen));
+				addToGrid(new RegularEnemy(gScreen.indexToPos(0),gScreen.indexToPos((int)(Math.random()*rows)), this, gScreen));
 			}
-			
 		} else {
-			addToGrid(new Enemy(gScreen.indexToPos(0),gScreen.indexToPos((int)(Math.random()*rows)), this, gScreen));
+			addToGrid(new RegularEnemy(gScreen.indexToPos(0),gScreen.indexToPos((int)(Math.random()*rows)), this, gScreen));
 		}
 	}
 	
