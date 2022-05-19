@@ -302,6 +302,7 @@ public class GameScreen extends Screen{
 		if (selectedTower != null) {
 			if (selectedTower.getIsSelected()) {
 				selectedTower.toggleSelect();
+				isTowerSelected = false;
 			}
 		}
 		
