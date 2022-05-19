@@ -14,7 +14,7 @@ import java.awt.Point;
 public class Enemy extends GameElement{
 	private int health;
 	private int diameter;
-	private static final int goldValue = 10;
+	private int goldValue;
 	private boolean hasReachedGoal;
 	private Grid grid;
 	private GameScreen gScreen;
@@ -29,6 +29,7 @@ public class Enemy extends GameElement{
 		super(x,y);
 		health = 10;
 		diameter = 18;
+		goldValue = 10;
 		hasReachedGoal = false;
 		grid = g;
 		gScreen = sc;

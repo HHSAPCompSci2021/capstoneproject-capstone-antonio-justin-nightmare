@@ -53,7 +53,7 @@ public class GameScreen extends Screen{
 				WIDTH-storeX-BORDER_WIDTH, HEIGHT - BORDER_WIDTH*2 - waveButtonHeight - waveButtonPadding, this);
 		this.surface = surface;
 		waveButtonColor = new Color(255, 200, 200);
-		gold = 1000;
+		gold = 400;
 		highlightedColor = new Color(0, 255, 0, 100);
 		baseHealth = 20;
 		isTowerSelected = false;
@@ -91,10 +91,9 @@ public class GameScreen extends Screen{
 					WIDTH-BORDER_WIDTH-statusOffset,
 					BORDER_WIDTH + waveButtonHeight + waveButtonPadding,
 					200, 20);
-			surface.text("Base health: "+baseHealth,
-					WIDTH-BORDER_WIDTH-statusOffset,
-					BORDER_WIDTH+20 + waveButtonHeight + waveButtonPadding,
-					200, 20);
+			surface.text("Base health: "+baseHealth, WIDTH-BORDER_WIDTH-statusOffset, 5, 200, 20);
+			surface.textAlign(PConstants.LEFT);
+			surface.text("Wave: "+(grid.getWaveNum()-1), storeX, 5, 200, 20);
 			if (isTowerSelected) {
 				surface.textAlign(PConstants.LEFT);
 				store.displayTowerLevel(surface, selectedTower);

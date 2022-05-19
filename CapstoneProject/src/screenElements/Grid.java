@@ -30,9 +30,11 @@ public class Grid extends ScreenElement{
 	private GameScreen gScreen;
 	private int waveNum;
 	private ArrayList<int[]> activeWaves;
-	private int TIME_BETWEEN_SPAWNS = 60;
+	private int timeBetweenSpawns = 60;
 	private Point[] startSpaces;
 	private PlayerCharacter player;
+	private int bigEnemyOnlyWave;
+	private int regAndBigEnemyWave;
 	/**
 	 * creates a grid with the specified position and dimensions
 	 * @param x x position
@@ -62,6 +64,8 @@ public class Grid extends ScreenElement{
 			startSpaces[i] = new Point(0, i);
 		}
 		player = new PlayerCharacter((goalSpace.x-1)*CELL_WIDTH+gScreen.getBorderWidth(),(goalSpace.y)*CELL_WIDTH+gScreen.getBorderWidth());
+		bigEnemyOnlyWave = 8;
+		regAndBigEnemyWave = 12;
 	}
 	
 	public void draw(DrawingSurface surface) {
@@ -90,12 +94,12 @@ public class Grid extends ScreenElement{
 			int timeToNextSpawn = currentWave[2];
 			if (currentWaveLeft > 0) {
 				if (currentWaveNum == currentWaveLeft) {
-					addToGrid(new Enemy(gScreen.indexToPos(0),gScreen.indexToPos((int)(Math.random()*rows)), this, gScreen));
+					spawnEnemy(currentWaveNum);
 					currentWave[1]--;
-				} else if (timeToNextSpawn < TIME_BETWEEN_SPAWNS) {
+				} else if (timeToNextSpawn < timeBetweenSpawns) {
 					currentWave[2]++;
 				} else if (Math.random()*10<1) {
-					addToGrid(new Enemy(gScreen.indexToPos(0),gScreen.indexToPos((int)(Math.random()*rows)), this, gScreen));
+					spawnEnemy(currentWaveNum);
 					currentWave[1]--;
 					currentWave[2] = 0;
 				}
@@ -118,6 +122,24 @@ public class Grid extends ScreenElement{
 			t.act(enemies);
 		}
 		player.act(enemies);
+	}
+	
+	private void spawnEnemy(int currentWaveNum) {
+		if (currentWaveNum % bigEnemyOnlyWave == 0) {
+			addToGrid(new Enemy(gScreen.indexToPos(0),gScreen.indexToPos((int)(Math.random()*rows)), this, gScreen));
+//			addToGrid(new BigEnemy(gScreen.indexToPos(0),gScreen.indexToPos((int)(Math.random()*rows)), this, gScreen));
+		} else if (currentWaveNum % regAndBigEnemyWave == 0) {
+			boolean shouldSpawnBigEnemy = (int)(Math.random()*2) < 1;
+			if (shouldSpawnBigEnemy) {
+				addToGrid(new Enemy(gScreen.indexToPos(0),gScreen.indexToPos((int)(Math.random()*rows)), this, gScreen));
+//				addToGrid(new BigEnemy(gScreen.indexToPos(0),gScreen.indexToPos((int)(Math.random()*rows)), this, gScreen));
+			} else {
+				addToGrid(new Enemy(gScreen.indexToPos(0),gScreen.indexToPos((int)(Math.random()*rows)), this, gScreen));
+			}
+			
+		} else {
+			addToGrid(new Enemy(gScreen.indexToPos(0),gScreen.indexToPos((int)(Math.random()*rows)), this, gScreen));
+		}
 	}
 	
 	/**
@@ -326,6 +348,14 @@ public class Grid extends ScreenElement{
 	 */
 	public ArrayList<Tower> getTowers(){
 		return towers;
+	}
+	
+	/**
+	 * returns the wave number
+	 * @return wave number
+	 */
+	public int getWaveNum() {
+		return waveNum;
 	}
 	
 	/**
