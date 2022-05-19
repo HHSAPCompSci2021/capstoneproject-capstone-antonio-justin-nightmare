@@ -299,13 +299,13 @@ public class GameScreen extends Screen{
 			return;
 		}
 		
-		ArrayList<Tower> towers = grid.getTowers();
-		for (Tower t : towers) {
-			if (t.getIsSelected()) {
-				t.toggleSelect();
-				isTowerSelected = false;
+		if (selectedTower != null) {
+			if (selectedTower.getIsSelected()) {
+				selectedTower.toggleSelect();
 			}
 		}
+		
+		ArrayList<Tower> towers = grid.getTowers();
 		for (Tower t : towers) {
 			if (t.isPointInTower(p)) {
 				t.toggleSelect();
