@@ -367,6 +367,12 @@ public class GameScreen extends Screen{
 			directions[0]++;
 		}
 		grid.movePlayer(directions);
+		
+		if (surface.isPressed(KeyEvent.VK_SPACE)) {
+			if (store.getIsItemSelected()) {
+				store.toggleItemSelect();
+			}
+		}
 	}
 	
 	/**
