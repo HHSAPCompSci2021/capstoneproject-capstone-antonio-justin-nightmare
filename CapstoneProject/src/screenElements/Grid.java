@@ -57,7 +57,7 @@ public class Grid extends ScreenElement{
 		enemies = new ArrayList<Enemy>();
 		towers = new ArrayList<Tower>();
 		gScreen = sc;
-		waveNum = 12;
+		waveNum = 1;
 		activeWaves = new ArrayList<int[]>();
 		startSpaces = new Point[rows];
 		for (int i = 0; i < gridMatrix[0].length; i++) {
