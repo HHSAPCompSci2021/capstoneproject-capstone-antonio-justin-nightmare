@@ -40,10 +40,12 @@ public class Grid extends ScreenElement{
 	private int minTimeSpawns;
 	private int timeSpawnDecreasePeriod;
 	private int enemyHealthIncreaseFactor;
+	private int enemyGoldIncreaseFactor;
 	private PlayerCharacter player;
 	private boolean canSpawnNextWave;
 	private int bigEnemyOnlyWave;
 	private int increaseEnemyHealthWave;
+	private int increaseEnemyGoldWave;
 	/**
 	 * creates a grid with the specified position and dimensions
 	 * @param x x position
@@ -85,6 +87,7 @@ public class Grid extends ScreenElement{
 		canSpawnNextWave = true;
 		bigEnemyOnlyWave = 4;
 		increaseEnemyHealthWave = 6;
+		increaseEnemyGoldWave = 7;
 	}
 	
 	public void draw(DrawingSurface surface) {
@@ -407,14 +410,6 @@ public class Grid extends ScreenElement{
 	}
 	
 	/**
-	 * returns enemy health increase factor
-	 * @return factor
-	 */
-	public int getEnemyHealthIncreaseFactor() {
-		return enemyHealthIncreaseFactor;
-	}
-	
-	/**
 	 * returns the wave that enemy health should be increased
 	 * @return wave
 	 */
@@ -423,11 +418,27 @@ public class Grid extends ScreenElement{
 	}
 	
 	/**
-	 * returns status of increasing enemy health
-	 * @return true if should increase enemy health, false otherwise
+	 * returns enemy health increase factor
+	 * @return factor
 	 */
-	public boolean checkShouldIncreaseEnemyHealth() {
-		return waveNum > increaseEnemyHealthWave;
+	public int getEnemyHealthIncreaseFactor() {
+		return enemyHealthIncreaseFactor;
+	}
+	
+	/**
+	 * returns the wave that enemy gold value should be increased
+	 * @return wave
+	 */
+	public int getIncreaseEnemyGoldWave() {
+		return increaseEnemyGoldWave;
+	}
+	
+	/**
+	 * returns the enemy gold increase factor
+	 * @return factor
+	 */
+	public int getEnemyGoldIncreaseFactor() {
+		return enemyGoldIncreaseFactor;
 	}
 	
 	/**

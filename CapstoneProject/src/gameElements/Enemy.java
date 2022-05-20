@@ -139,8 +139,14 @@ public abstract class Enemy extends GameElement{
 	}
 	
 	protected void increaseHealth(Grid g) {
-		if (g.checkShouldIncreaseEnemyHealth()) {
+		if (g.getWaveNum() > g.getIncreaseEnemyHealthWave()) {
 			health = health*(g.getEnemyHealthIncreaseFactor()+(g.getWaveNum()-g.getIncreaseEnemyHealthWave()-1));
+		}
+	}
+	
+	protected void increaseGoldValue(Grid g) {
+		if (g.getWaveNum() > g.getIncreaseEnemyGoldWave()) {
+			goldValue = goldValue*(g.getEnemyGoldIncreaseFactor()+(g.getWaveNum()-g.getIncreaseEnemyGoldWave()-1));
 		}
 	}
 }
