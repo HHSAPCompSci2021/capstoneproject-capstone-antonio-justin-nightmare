@@ -137,4 +137,10 @@ public abstract class Enemy extends GameElement{
 	public boolean getHasReachedGoal() {
 		return hasReachedGoal;
 	}
+	
+	protected void increaseHealth(Grid g) {
+		if (g.checkShouldIncreaseEnemyHealth()) {
+			health = health*(g.getEnemyHealthIncreaseFactor()+(g.getWaveNum()-g.getIncreaseEnemyHealthWave()-1));
+		}
+	}
 }

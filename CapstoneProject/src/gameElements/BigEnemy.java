@@ -18,6 +18,7 @@ public class BigEnemy extends Enemy{
 	public BigEnemy(int x, int y, Grid g, GameScreen sc) {
 		super(x, y, g, sc);
 		health = 40;
+		super.increaseHealth(g);
 		diameter = 36;
 		goldValue = 20;
 	}

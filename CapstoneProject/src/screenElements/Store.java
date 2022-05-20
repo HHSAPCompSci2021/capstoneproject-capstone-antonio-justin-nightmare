@@ -47,7 +47,7 @@ public class Store extends ScreenElement{
 		highlightColor = new Color(0, 255, 0);
 		highlightWeight = 5;
 		towerPrice = 100;
-		towerUpgradePrice = 80;
+		towerUpgradePrice = 150;
 		gScreen = gs;
 		upgradeButtonX = x + 10;
 		upgradeButtonY = height - width/8 - 40;

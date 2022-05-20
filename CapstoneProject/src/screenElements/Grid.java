@@ -39,9 +39,11 @@ public class Grid extends ScreenElement{
 	private int timeSpawnDecrease;
 	private int minTimeSpawns;
 	private int timeSpawnDecreasePeriod;
+	private int enemyHealthIncreaseFactor;
 	private PlayerCharacter player;
-	private int bigEnemyOnlyWave;
 	private boolean canSpawnNextWave;
+	private int bigEnemyOnlyWave;
+	private int increaseEnemyHealthWave;
 	/**
 	 * creates a grid with the specified position and dimensions
 	 * @param x x position
@@ -78,9 +80,11 @@ public class Grid extends ScreenElement{
 		timeSpawnDecrease = 6;
 		minTimeSpawns = 6;
 		timeSpawnDecreasePeriod = 5;
+		enemyHealthIncreaseFactor = 2;
 		player = new PlayerCharacter((goalSpace.x-1)*CELL_WIDTH+gScreen.getBorderWidth(),(goalSpace.y)*CELL_WIDTH+gScreen.getBorderWidth());
-		bigEnemyOnlyWave = 4;
 		canSpawnNextWave = true;
+		bigEnemyOnlyWave = 4;
+		increaseEnemyHealthWave = 6;
 	}
 	
 	public void draw(DrawingSurface surface) {
@@ -400,6 +404,30 @@ public class Grid extends ScreenElement{
 	 */
 	public void setCanSpawnWaveFalse() {
 		canSpawnNextWave = false;
+	}
+	
+	/**
+	 * returns enemy health increase factor
+	 * @return factor
+	 */
+	public int getEnemyHealthIncreaseFactor() {
+		return enemyHealthIncreaseFactor;
+	}
+	
+	/**
+	 * returns the wave that enemy health should be increased
+	 * @return wave
+	 */
+	public int getIncreaseEnemyHealthWave() {
+		return increaseEnemyHealthWave;
+	}
+	
+	/**
+	 * returns status of increasing enemy health
+	 * @return true if should increase enemy health, false otherwise
+	 */
+	public boolean checkShouldIncreaseEnemyHealth() {
+		return waveNum > increaseEnemyHealthWave;
 	}
 	
 	/**

@@ -24,6 +24,7 @@ public class Tower extends GameElement{
 	private boolean isSelected;
 	private Color highlightColor;
 	private int level;
+	private static final int UPGRADE_DAMAGE_INCREASE = 6;
 	private static final int MAX_LEVEL = 4;
 	ArrayList<Projectile> projectiles;
 	
@@ -140,7 +141,7 @@ public class Tower extends GameElement{
 	 * upgrades the tower
 	 */
 	public void upgradeTower() {
-		attackDamage++;
+		attackDamage += UPGRADE_DAMAGE_INCREASE;
 		level++;
 		switch (level) {
 		case 2:

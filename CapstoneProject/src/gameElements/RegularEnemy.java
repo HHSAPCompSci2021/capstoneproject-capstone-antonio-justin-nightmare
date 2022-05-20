@@ -18,6 +18,7 @@ public class RegularEnemy extends Enemy{
 	public RegularEnemy(int x, int y, Grid g, GameScreen sc) {
 		super(x, y, g, sc);
 		health = 10;
+		super.increaseHealth(g);
 		diameter = 18;
 		goldValue = 10;
 	}
