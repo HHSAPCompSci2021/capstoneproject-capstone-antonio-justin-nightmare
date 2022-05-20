@@ -18,17 +18,10 @@ public abstract class Screen {
 		this.DRAWING_HEIGHT = height;
 	}
 	
-	// delete if not needed
-//	public void setup() {
-//		// TODO Auto-generated method stub
-//		
-//	}
-	
 	/**
 	 * draws the screen
 	 */
 	public void draw() {
-		// TODO Auto-generated method stub
 		
 	}
 	
@@ -36,31 +29,20 @@ public abstract class Screen {
 	 * detects mouse presses
 	 */
 	public void mousePressed() {
-		// TODO Auto-generated method stub
 		
 	}
 	
-	// delete if not needed
 	/**
 	 * detects mouse movement
 	 */
 	public void mouseMoved() {
-		// TODO Auto-generated method stub
 		
 	}
 	
-	// delete if not needed
 	/**
 	 * detects the mouse being moved while clicked
 	 */
 	public void mouseDragged() {
-		// TODO Auto-generated method stub
 		
 	}
-	
-	// delete if not needed
-//	public void mouseReleased() {
-//		// TODO Auto-generated method stub
-//		
-//	}
 }
