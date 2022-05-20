@@ -97,11 +97,11 @@ public class Tower extends GameElement{
 	 */
 	private void attack(ArrayList<Enemy> enemies) {
 		if (enemies.size() > 0) {
-			double shortestDist = attackRange;
+			double shortestDistSq = attackRange*attackRange;
 			Enemy closestEnemy= null;
 			for (Enemy e:enemies) {
-				if (this.distanceTo(e) < shortestDist) {
-					shortestDist = this.distanceTo(e);
+				if (this.distanceToSq(e) < shortestDistSq) {
+					shortestDistSq = this.distanceToSq(e);
 					closestEnemy = e;
 				}
 			}

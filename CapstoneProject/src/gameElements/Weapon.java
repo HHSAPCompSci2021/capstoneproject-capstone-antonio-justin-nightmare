@@ -41,18 +41,33 @@ public class Weapon extends GameElement{
 		surface.line(playerChar.getX(), playerChar.getY(), (float)endpoints[0], (float)endpoints[1]);
 	}
 	
+	/**
+	 * Gets the attack damage of the weapon.
+	 * @return The attack damage of the weapon
+	 */
 	public int getAttackDamage() {
 		return attackDamage;
 	}
 	
+	/**
+	 * Gets the attack speed of the weapon.
+	 * @return The attack speed of the weapon
+	 */
 	public double getAttackSpeed() {
 		return attackSpeed;
 	}
 
+	/**
+	 * Turns the weapon to a specific angle
+	 * @param angle The angle that the player is now facing
+	 */
 	public void turnTo(double angle) {
 		this.angle = angle+Math.PI/2;
 	}
 	
+	/**
+	 * If the attack is no longer on cooldown, begins attacking
+	 */
 	public void attack() {
 		if (attackCooldown <= 0) {
 			isAttacking = true;
@@ -64,7 +79,10 @@ public class Weapon extends GameElement{
 		return new double[] {playerChar.getX()+Math.cos(angle+attackAngle)*WEAPON_LENGTH,playerChar.getY()+Math.sin(angle+attackAngle)*WEAPON_LENGTH};
 	}
 		
-		
+	/**
+	 * Performs 1 step of the weapon's actions, moving if it is currently attacking
+	 * @param enemies All enemies in the grid
+	 */
 	public void act(ArrayList<Enemy> enemies) {
 		if (isAttacking) {
 			if (attackCooldown > 0) {
@@ -97,6 +115,10 @@ public class Weapon extends GameElement{
 		attackCooldown--;
 	}
 	
+	/**
+	 * Returns whether or not the weapon is currently attacking
+	 * @return True if weapon is attacking, false if weapon is not attacking
+	 */
 	public boolean getIsAttacking() {
 		return isAttacking;
 	}

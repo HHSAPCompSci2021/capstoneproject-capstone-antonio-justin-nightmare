@@ -26,9 +26,17 @@ public abstract class GameElement {
 	 * @return distance
 	 */
 	public double distanceTo(GameElement g) {
-		return (Math.sqrt(Math.pow(posX-g.getX(), 2)+Math.pow(posY-g.getY(), 2)));
+		return Math.sqrt(distanceToSq(g));
 	}
 	
+	/**
+	 * Calculates the distance to another game element, without the square root part of the Pythagorean Theorem (In order to reduce processing time when enemies are in large numbers)
+	 * @param g
+	 * @return distance squared
+	 */
+	public double distanceToSq(GameElement g) {
+		return Math.pow(posX-g.getX(), 2)+Math.pow(posY-g.getY(), 2);
+	}
 	/**
 	 * draws the game element
 	 * @param surface
