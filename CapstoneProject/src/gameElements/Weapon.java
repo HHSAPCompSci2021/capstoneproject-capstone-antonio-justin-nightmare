@@ -23,7 +23,7 @@ public class Weapon extends GameElement{
 	private ArrayList<Enemy> hitEnemies;
 	public Weapon(PlayerCharacter playerCharacter) {
 		super(playerCharacter.getX(),playerCharacter.getY());
-		attackDamage = 3;
+		attackDamage = 5;
 		attackSpeed = 1;
 		TBA = 60/attackSpeed;
 		attackCooldown = 0;

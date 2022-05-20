@@ -30,8 +30,15 @@ public class Grid extends ScreenElement{
 	private GameScreen gScreen;
 	private int waveNum;
 	private ArrayList<int[]> activeWaves;
-	private int timeBetweenSpawns = 60;
 	private Point[] startSpaces;
+	private int timeBetweenSpawns;
+	private int numStartingEnemies;
+	private int enemyIncreaseFactor;
+	private int enemyMultiplier;
+	private int enemyMultiplierPeriod;
+	private int timeSpawnDecrease;
+	private int minTimeSpawns;
+	private int timeSpawnDecreasePeriod;
 	private PlayerCharacter player;
 	private int bigEnemyOnlyWave;
 	private boolean canSpawnNextWave;
@@ -63,8 +70,16 @@ public class Grid extends ScreenElement{
 		for (int i = 0; i < gridMatrix[0].length; i++) {
 			startSpaces[i] = new Point(0, i);
 		}
+		timeBetweenSpawns = 30;
+		numStartingEnemies = 30;
+		enemyIncreaseFactor = 4;
+		enemyMultiplier = 1;
+		enemyMultiplierPeriod = 3;
+		timeSpawnDecrease = 6;
+		minTimeSpawns = 6;
+		timeSpawnDecreasePeriod = 5;
 		player = new PlayerCharacter((goalSpace.x-1)*CELL_WIDTH+gScreen.getBorderWidth(),(goalSpace.y)*CELL_WIDTH+gScreen.getBorderWidth());
-		bigEnemyOnlyWave = 8;
+		bigEnemyOnlyWave = 4;
 		canSpawnNextWave = true;
 	}
 	
@@ -94,12 +109,16 @@ public class Grid extends ScreenElement{
 			int timeToNextSpawn = currentWave[2];
 			if (currentWaveLeft > 0) {
 				if (currentWaveNum == currentWaveLeft) {
-					spawnEnemy(currentWaveNum, currentWave);
+					for (int j = 0; j < enemyMultiplier; j++) {
+						spawnEnemy(currentWaveNum, currentWave);
+					}
 					currentWave[1]--;
 				} else if (timeToNextSpawn < timeBetweenSpawns) {
 					currentWave[2]++;
 				} else if (Math.random()*10<1) {
-					spawnEnemy(currentWaveNum, currentWave);
+					for (int j = 0; j < enemyMultiplier; j++) {
+						spawnEnemy(currentWaveNum, currentWave);
+					}
 					currentWave[1]--;
 					currentWave[2] = 0;
 				}
@@ -108,7 +127,7 @@ public class Grid extends ScreenElement{
 				i--;
 			}
 			
-			if (currentWaveLeft == 0) {
+			if (currentWaveLeft <= 0) {
 				canSpawnNextWave = true;
 			}
 		}
@@ -271,7 +290,15 @@ public class Grid extends ScreenElement{
 			addToGrid(new Enemy(gScreen.indexToPos(0),gScreen.indexToPos((int)(Math.random()*rows))));
 		}
 		*/
-		activeWaves.add(new int[] {waveNum,waveNum+10,0});
+		activeWaves.add(new int[] {waveNum,waveNum*enemyIncreaseFactor + numStartingEnemies, 0});
+		if (waveNum % enemyMultiplierPeriod == 0) {
+			enemyMultiplier++;
+		}
+		if (waveNum % timeSpawnDecreasePeriod == 0) {
+			if (timeBetweenSpawns - timeSpawnDecrease >= minTimeSpawns) {
+				timeBetweenSpawns -= timeSpawnDecrease;
+			}
+		}
 		waveNum++;
 	}
 	

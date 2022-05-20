@@ -100,7 +100,7 @@ public class Store extends ScreenElement{
 		} else {
 			surface.fill(0, 0, 0, 100);
 		}
-		surface.text("Upgrade", upgradeButtonX + 30, upgradeButtonY + 20);
+		surface.text("Upgrade", upgradeButtonX + 35, upgradeButtonY + 20);
 		surface.text("Sell", sellButtonX + 50, sellButtonY + 20);
 		if (gScreen.getIsTowerSelected()) {
 			surface.fill(0, 0, 0, 255);

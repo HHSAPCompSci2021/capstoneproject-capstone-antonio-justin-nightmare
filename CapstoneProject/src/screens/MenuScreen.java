@@ -33,7 +33,7 @@ public class MenuScreen extends Screen{
 		surface.rect(WIDTH/2, HEIGHT/2, 200, 50);
 		surface.fill(0);
 		surface.textSize(30);
-		surface.text("Start", WIDTH/2, HEIGHT/2 + 8);
+		surface.text("Play", WIDTH/2, HEIGHT/2 + 8);
 	}
 	
 	public void mousePressed() {
