@@ -75,10 +75,19 @@ public class GameScreen extends Screen{
 			processKeyPresses();
 			
 			surface.push();
-			surface.fill(waveButtonColor.getRed(), waveButtonColor.getGreen(), waveButtonColor.getBlue());
-			surface.stroke(0);
+			if (grid.getCanSpawnNextWave()) {
+				surface.fill(waveButtonColor.getRed(), waveButtonColor.getGreen(), waveButtonColor.getBlue(), 255);
+				surface.stroke(0, 0, 0, 255);
+			} else {
+				surface.fill(waveButtonColor.getRed(), waveButtonColor.getGreen(), waveButtonColor.getBlue(), 100);
+				surface.stroke(0, 0, 0, 100);
+			}
 			surface.rect(waveButtonX, waveButtonY, waveButtonWidth, waveButtonHeight);
-			surface.fill(0);
+			if (grid.getCanSpawnNextWave()) {
+				surface.fill(0, 0, 0, 255);
+			} else {
+				surface.fill(0, 0, 0, 100);
+			}
 			surface.textSize(18);
 			surface.textAlign(PConstants.CENTER);
 			surface.text("Start Next Wave",
@@ -161,8 +170,9 @@ public class GameScreen extends Screen{
 			grid.playerAttack();
 		}
 		
-		if (checkIsPointInWaveButton(assumedCoords)) {
+		if (checkIsPointInWaveButton(assumedCoords) && grid.getCanSpawnNextWave()) {
 			grid.spawnWave();
+			grid.setCanSpawnWaveFalse();
 		}
 		
 		selectTower(assumedCoords);

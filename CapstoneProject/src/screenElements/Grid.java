@@ -34,6 +34,7 @@ public class Grid extends ScreenElement{
 	private Point[] startSpaces;
 	private PlayerCharacter player;
 	private int bigEnemyOnlyWave;
+	private boolean canSpawnNextWave;
 	/**
 	 * creates a grid with the specified position and dimensions
 	 * @param x x position
@@ -64,6 +65,7 @@ public class Grid extends ScreenElement{
 		}
 		player = new PlayerCharacter((goalSpace.x-1)*CELL_WIDTH+gScreen.getBorderWidth(),(goalSpace.y)*CELL_WIDTH+gScreen.getBorderWidth());
 		bigEnemyOnlyWave = 8;
+		canSpawnNextWave = true;
 	}
 	
 	public void draw(DrawingSurface surface) {
@@ -104,6 +106,10 @@ public class Grid extends ScreenElement{
 			} else {
 				activeWaves.remove(i);
 				i--;
+			}
+			
+			if (currentWaveLeft == 0) {
+				canSpawnNextWave = true;
 			}
 		}
 		for (int i = 0; i < enemies.size(); i++) {
@@ -352,6 +358,21 @@ public class Grid extends ScreenElement{
 	 */
 	public int getWaveNum() {
 		return waveNum;
+	}
+	
+	/**
+	 * returns the status of being able to spawn the next wave
+	 * @return true if can spawn next wave, false otherwise
+	 */
+	public boolean getCanSpawnNextWave() {
+		return canSpawnNextWave;
+	}
+	
+	/**
+	 * makes it so a wave cannot be spawned
+	 */
+	public void setCanSpawnWaveFalse() {
+		canSpawnNextWave = false;
 	}
 	
 	/**
