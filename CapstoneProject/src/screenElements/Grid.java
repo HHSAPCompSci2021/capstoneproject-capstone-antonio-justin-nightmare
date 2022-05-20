@@ -46,6 +46,8 @@ public class Grid extends ScreenElement{
 	private int bigEnemyOnlyWave;
 	private int increaseEnemyHealthWave;
 	private int increaseEnemyGoldWave;
+	private int finalWave;
+	private boolean hasWonGame;
 	/**
 	 * creates a grid with the specified position and dimensions
 	 * @param x x position
@@ -88,6 +90,8 @@ public class Grid extends ScreenElement{
 		bigEnemyOnlyWave = 4;
 		increaseEnemyHealthWave = 6;
 		increaseEnemyGoldWave = 7;
+		finalWave = 15;
+		hasWonGame = false;
 	}
 	
 	public void draw(DrawingSurface surface) {
@@ -135,7 +139,13 @@ public class Grid extends ScreenElement{
 			}
 			
 			if (currentWaveLeft <= 0) {
-				canSpawnNextWave = true;
+				if (waveNum <= finalWave) {
+					canSpawnNextWave = true;
+				}
+				
+				if (waveNum > finalWave) {
+					hasWonGame = true;
+				}
 			}
 		}
 		for (int i = 0; i < enemies.size(); i++) {
@@ -480,5 +490,9 @@ public class Grid extends ScreenElement{
 	}
 	public boolean getIsPlayerAttacking() {
 		return player.getIsAttacking();
+	}
+	
+	public boolean getHasWonGame() {
+		return hasWonGame;
 	}
 }

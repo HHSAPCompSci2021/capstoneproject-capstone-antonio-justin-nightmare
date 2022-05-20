@@ -107,6 +107,12 @@ public class GameScreen extends Screen{
 				surface.textAlign(PConstants.LEFT);
 				store.displayTowerLevel(surface, selectedTower);
 			}
+			
+			if (grid.getHasWonGame()) {
+				surface.textSize(50);
+				surface.textAlign(PConstants.CENTER);
+				surface.text("Game Complete!", WIDTH/2, HEIGHT/2);
+			}
 			surface.pop();
 		} else {
 			surface.switchScreen(ScreenSwitcher.END_SCREEN);
