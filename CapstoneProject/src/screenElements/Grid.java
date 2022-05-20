@@ -302,11 +302,6 @@ public class Grid extends ScreenElement{
 	 */
 	public void spawnWave() {
 		computeFlowField();
-		/*
-		for (int i = 0; i < waveNum; i++) {
-			addToGrid(new Enemy(gScreen.indexToPos(0),gScreen.indexToPos((int)(Math.random()*rows))));
-		}
-		*/
 		activeWaves.add(new int[] {waveNum,waveNum*enemyIncreaseFactor + numStartingEnemies, 0});
 		if (waveNum % enemyMultiplierPeriod == 0) {
 			enemyMultiplier++;
