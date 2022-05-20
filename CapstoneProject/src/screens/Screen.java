@@ -41,12 +41,18 @@ public abstract class Screen {
 	}
 	
 	// delete if not needed
+	/**
+	 * detects mouse movement
+	 */
 	public void mouseMoved() {
 		// TODO Auto-generated method stub
 		
 	}
 	
 	// delete if not needed
+	/**
+	 * detects the mouse being moved while clicked
+	 */
 	public void mouseDragged() {
 		// TODO Auto-generated method stub
 		
