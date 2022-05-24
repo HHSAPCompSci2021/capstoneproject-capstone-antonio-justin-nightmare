@@ -69,7 +69,7 @@ public class Weapon extends GameElement{
 	 * If the attack is no longer on cooldown, begins attacking
 	 */
 	public void attack() {
-		if (attackCooldown <= 0) {
+		if (attackCooldown <= 0 && !isAttacking) {
 			isAttacking = true;
 			attackCooldown = swingSpeed;
 		}
@@ -85,7 +85,7 @@ public class Weapon extends GameElement{
 	 */
 	public void act(ArrayList<Enemy> enemies) {
 		if (isAttacking) {
-			if (attackCooldown > 1) {
+			if (attackCooldown > 0) {
 				for (Enemy e:enemies) {
 					if (!hitEnemies.contains(e)) {
 						double[] endpoints = getEndpoints();
