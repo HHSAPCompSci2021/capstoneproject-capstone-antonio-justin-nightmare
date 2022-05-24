@@ -73,6 +73,9 @@ public class GameScreen extends Screen{
 			store.draw(surface);
 			highlightGrid();
 			processKeyPresses();
+			if (surface.mousePressed) {
+				grid.playerAttack();
+			}
 			
 			surface.push();
 			if (grid.getCanSpawnNextWave()) {

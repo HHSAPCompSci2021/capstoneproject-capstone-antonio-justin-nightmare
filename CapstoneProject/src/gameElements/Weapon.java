@@ -85,7 +85,7 @@ public class Weapon extends GameElement{
 	 */
 	public void act(ArrayList<Enemy> enemies) {
 		if (isAttacking) {
-			if (attackCooldown > 0) {
+			if (attackCooldown > 1) {
 				for (Enemy e:enemies) {
 					if (!hitEnemies.contains(e)) {
 						double[] endpoints = getEndpoints();
