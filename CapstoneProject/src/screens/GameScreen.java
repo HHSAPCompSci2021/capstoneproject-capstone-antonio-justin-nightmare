@@ -73,7 +73,7 @@ public class GameScreen extends Screen{
 			store.draw(surface);
 			highlightGrid();
 			processKeyPresses();
-			if (surface.mousePressed) {
+			if (surface.mousePressed && !store.getIsItemSelected()) {
 				grid.playerAttack();
 			}
 			
