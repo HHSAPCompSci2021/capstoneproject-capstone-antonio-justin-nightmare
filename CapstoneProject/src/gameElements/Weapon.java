@@ -90,10 +90,10 @@ public class Weapon extends GameElement{
 					if (!hitEnemies.contains(e)) {
 						double[] endpoints = getEndpoints();
 						// Checks if enemy is somewhere inside the attack area (is not very good)
-						if (posX < e.getX() && e.getX() < endpoints[0] ||
-								posX > e.getX() && e.getX() > endpoints[0]) {
-							if (posY < e.getY() && e.getY() < endpoints[1] ||
-									posY > e.getY() && e.getY() > endpoints[1]) {
+						if ((playerChar.getX() < e.getX() && e.getX() < endpoints[0]) ||
+								(playerChar.getX() > e.getX() && e.getX() > endpoints[0])) {
+							if ((playerChar.getY() < e.getY() && e.getY() < endpoints[1]) ||
+									(playerChar.getY() > e.getY() && e.getY() > endpoints[1])) {
 								e.takeDamage(attackDamage);
 								hitEnemies.add(e);
 							}
